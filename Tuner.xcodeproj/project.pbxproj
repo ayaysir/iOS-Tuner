@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		440DF81726B4F79800FDA3AA /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 440DF81626B4F79800FDA3AA /* AudioKit */; };
 		440DF81A26B500E600FDA3AA /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 440DF81926B500E600FDA3AA /* SoundpipeAudioKit */; };
+		440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */; };
 		442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F0FDA26B44309004D2100 /* PitchDetector.swift */; };
 		444EEE4126B4370000454428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EEE4026B4370000454428 /* AppDelegate.swift */; };
 		444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EEE4226B4370000454428 /* SceneDelegate.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		087577D37AE85CA890BA062C /* Pods_Tuner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tuner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqTableViewController.swift; sourceTree = "<group>"; };
 		442F0FDA26B44309004D2100 /* PitchDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchDetector.swift; sourceTree = "<group>"; };
 		444EEE3D26B4370000454428 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444EEE4026B4370000454428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				444EEE5126B4370200454428 /* Info.plist */,
 				444EEE4926B4370000454428 /* Tuner.xcdatamodeld */,
 				442F0FDA26B44309004D2100 /* PitchDetector.swift */,
+				440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */,
 			);
 			path = Tuner;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				444EEE4B26B4370000454428 /* Tuner.xcdatamodeld in Sources */,
 				444EEE4526B4370000454428 /* ViewController.swift in Sources */,
 				444EEE4126B4370000454428 /* AppDelegate.swift in Sources */,
+				440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */,
 				442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */,
 				444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */,
 			);

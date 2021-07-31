@@ -42,7 +42,11 @@ class ViewController: UIViewController {
     @objc func levelTimerCallback() {
         lblFreq.text = "\(conductor.data.pitch)"
     }
-
+    
+    @IBAction func btnTempFreqTable(_ sender: Any) {
+        performSegue(withIdentifier: "freqTable", sender: nil)
+    }
+    
     func initRecord() {
         
         switch AVAudioSession.sharedInstance().recordPermission {
