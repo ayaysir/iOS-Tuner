@@ -56,15 +56,55 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="jCO-j7-c0V">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="freqCell" id="jCO-j7-c0V" customClass="FreqCell" customModule="Tuner" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="21"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jCO-j7-c0V" id="DL7-co-J5B">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Kyg-2w-Zd2">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="21"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C#" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FtP-OY-cgB">
+                                                            <rect key="frame" x="0.0" y="0.0" width="22.5" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="34.65" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gl1-E7-mPM">
+                                                            <rect key="frame" x="169" y="0.0" width="45" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="995.74" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DnR-Xr-Ryc">
+                                                            <rect key="frame" x="360.5" y="0.0" width="53.5" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Kyg-2w-Zd2" firstAttribute="top" secondItem="DL7-co-J5B" secondAttribute="top" id="GMc-cG-6Nl"/>
+                                                <constraint firstAttribute="bottom" secondItem="Kyg-2w-Zd2" secondAttribute="bottom" id="bg7-qf-SrS"/>
+                                                <constraint firstItem="Kyg-2w-Zd2" firstAttribute="leading" secondItem="DL7-co-J5B" secondAttribute="leading" id="no2-ml-0Re"/>
+                                                <constraint firstAttribute="trailing" secondItem="Kyg-2w-Zd2" secondAttribute="trailing" id="opy-gl-x4h"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="lblFreq" destination="Gl1-E7-mPM" id="NBx-ff-W4V"/>
+                                            <outlet property="lblNoteName" destination="FtP-OY-cgB" id="Yhx-mi-KX4"/>
+                                            <outlet property="lblSpeedOfSound" destination="DnR-Xr-Ryc" id="B5N-QP-Enr"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ZTy-n7-SYo" id="tam-8A-fkN"/>
+                                    <outlet property="delegate" destination="ZTy-n7-SYo" id="mt6-PF-7xe"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SNo-or-D5r"/>

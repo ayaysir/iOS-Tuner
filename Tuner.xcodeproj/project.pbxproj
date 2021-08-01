@@ -10,6 +10,9 @@
 		440DF81726B4F79800FDA3AA /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 440DF81626B4F79800FDA3AA /* AudioKit */; };
 		440DF81A26B500E600FDA3AA /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 440DF81926B500E600FDA3AA /* SoundpipeAudioKit */; };
 		440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */; };
+		440DF82126B6D6B400FDA3AA /* FrequencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440DF82026B6D6B400FDA3AA /* FrequencyInfo.swift */; };
+		442663F826B6DE4200B5A5D9 /* TextUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442663F726B6DE4200B5A5D9 /* TextUtil.swift */; };
+		442663FB26B6E17600B5A5D9 /* Oscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442663FA26B6E17600B5A5D9 /* Oscillator.swift */; };
 		442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F0FDA26B44309004D2100 /* PitchDetector.swift */; };
 		444EEE4126B4370000454428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EEE4026B4370000454428 /* AppDelegate.swift */; };
 		444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EEE4226B4370000454428 /* SceneDelegate.swift */; };
@@ -24,6 +27,9 @@
 /* Begin PBXFileReference section */
 		087577D37AE85CA890BA062C /* Pods_Tuner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tuner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqTableViewController.swift; sourceTree = "<group>"; };
+		440DF82026B6D6B400FDA3AA /* FrequencyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyInfo.swift; sourceTree = "<group>"; };
+		442663F726B6DE4200B5A5D9 /* TextUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextUtil.swift; sourceTree = "<group>"; };
+		442663FA26B6E17600B5A5D9 /* Oscillator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Oscillator.swift; sourceTree = "<group>"; };
 		442F0FDA26B44309004D2100 /* PitchDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchDetector.swift; sourceTree = "<group>"; };
 		444EEE3D26B4370000454428 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444EEE4026B4370000454428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +68,31 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		440DF81F26B6D67100FDA3AA /* vo */ = {
+			isa = PBXGroup;
+			children = (
+				440DF82026B6D6B400FDA3AA /* FrequencyInfo.swift */,
+			);
+			path = vo;
+			sourceTree = "<group>";
+		};
+		442663F626B6DE3500B5A5D9 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				442663F726B6DE4200B5A5D9 /* TextUtil.swift */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		442663F926B6E0FC00B5A5D9 /* audiokit */ = {
+			isa = PBXGroup;
+			children = (
+				442F0FDA26B44309004D2100 /* PitchDetector.swift */,
+				442663FA26B6E17600B5A5D9 /* Oscillator.swift */,
+			);
+			path = audiokit;
+			sourceTree = "<group>";
+		};
 		444EEE3426B4370000454428 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +114,9 @@
 		444EEE3F26B4370000454428 /* Tuner */ = {
 			isa = PBXGroup;
 			children = (
+				442663F926B6E0FC00B5A5D9 /* audiokit */,
+				442663F626B6DE3500B5A5D9 /* util */,
+				440DF81F26B6D67100FDA3AA /* vo */,
 				444EEE4026B4370000454428 /* AppDelegate.swift */,
 				444EEE4226B4370000454428 /* SceneDelegate.swift */,
 				444EEE4426B4370000454428 /* ViewController.swift */,
@@ -91,7 +125,6 @@
 				444EEE4E26B4370200454428 /* LaunchScreen.storyboard */,
 				444EEE5126B4370200454428 /* Info.plist */,
 				444EEE4926B4370000454428 /* Tuner.xcdatamodeld */,
-				442F0FDA26B44309004D2100 /* PitchDetector.swift */,
 				440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */,
 			);
 			path = Tuner;
@@ -227,12 +260,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				442663FB26B6E17600B5A5D9 /* Oscillator.swift in Sources */,
 				444EEE4B26B4370000454428 /* Tuner.xcdatamodeld in Sources */,
 				444EEE4526B4370000454428 /* ViewController.swift in Sources */,
 				444EEE4126B4370000454428 /* AppDelegate.swift in Sources */,
 				440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */,
+				442663F826B6DE4200B5A5D9 /* TextUtil.swift in Sources */,
 				442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */,
 				444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */,
+				440DF82126B6D6B400FDA3AA /* FrequencyInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

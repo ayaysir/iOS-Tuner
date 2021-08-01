@@ -9,6 +9,11 @@ import UIKit
 
 class FreqTableViewController: UIViewController {
     
+    var freqArray: [FrequencyInfo] = []
+    
+    // tableview 최근 선택 행
+    var lastSelectedRow: Int?
+    
     let NOTE_NAMES = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
     let ALT_NOTE_NAMES: [String: String] = [
         "C♯": "D♭",
@@ -24,41 +29,31 @@ class FreqTableViewController: UIViewController {
     let NOTE_START = 1
     let NOTE_END = 7
     
+    let conductor = DynamicOscillatorConductor()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print(EXP)
-        drawTable()
+        makeFreqArray()
         
         // Do any additional setup after loading the view.
     }
     
-    func drawTable(baseFreq: Int = 440) {
+    func makeFreqArray(baseFreq: Int = 440) {
         let indexOfA = NOTE_NAMES.firstIndex {$0 == "A"}!
         let distanceFromBaseToLowest = NOTE_NAMES.count * (BASE_OCTAVE - NOTE_START) + indexOfA
         var distIndex = 0
         // draw initial table
         for octave in NOTE_START...NOTE_END {
             for note in NOTE_NAMES {
-                //                var td1 = $("<td/>")
-                //                var noteName = makeNoteStr(NOTES.names[j]) + "<sub>" + i + "</sub>"
-                //                if(NOTES.altNames[NOTES.names[j]]){
-                //                    noteName += " / " + makeNoteStr(NOTES.altNames[NOTES.names[j]]) + "<sub>" + i + "</sub>"
-                //                }
-                //                td1.html(noteName)
+                // 노트 옆에 옥타브를 아래 첨자로 표시
+                // 이명동음의 경우 / 로 구분해 표시
                 
                 let dist = distanceFromBaseToLowest * -1 + distIndex
                 distIndex += 1
                 let eachFreq = Float(baseFreq) * pow(EXP, Float(dist))
                 
-                //                var td2 = $("<td/>", {
-                //                    text: eachFreq.toFixed(2),
-                //                    class: "td-of-freq",
-                //                    "data-dist": dist
-                //                })
-                //                var td3 = $("<td/>", {
-                //                    text: (NOTES.speedOfSound / eachFreq).toFixed(2)
-                //                })
                 let speedOfSound = Float(SPEED_OF_SOUND) / eachFreq
                 
                 let numberOfPlaces = 2.0
@@ -66,30 +61,53 @@ class FreqTableViewController: UIViewController {
                 let eachFreqRounded = round(Double(eachFreq) * multiplier) / multiplier
                 let speedOfSoundRounded = round(Double(speedOfSound) * multiplier) / multiplier
                 print(note, octave, dist, distIndex, eachFreqRounded, speedOfSoundRounded)
+                freqArray.append(FrequencyInfo(note: note, octave: octave, distanceFromBaseFreq: dist, eachFreq: Double(eachFreq), speedOfSound: Double(speedOfSound)))
                 
-                //                var tr = $("<tr/>", {
-                //                    "onclick": "playOneNote(" + eachFreq + ", 1000, 'triangle')"
-                //                })
-                //                if (dist == 0) {
-                //                    tr.addClass("tr-of-base-note")
-                //                }
-                //                tr.append(td1, td2, td3)
-                //                tbody.append(tr)
+                // Base note (440)의 경우 하이라이트
                 
             }
-            
         }
     }
     
+}
+
+extension FreqTableViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return freqArray.count
+    }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "freqCell", for: indexPath) as? FreqCell else {
+            return UITableViewCell()
+        }
+        cell.update(freqInfo: freqArray[indexPath.row])
+        return cell
+    }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if lastSelectedRow != nil && lastSelectedRow! == indexPath.row {
+            tableView.deselectRow(at: indexPath, animated: true)
+            self.conductor.noteOff()
+            lastSelectedRow = nil
+        } else {
+            self.conductor.data.isPlaying = true
+            self.conductor.start()
+            self.conductor.noteOn(frequency: freqArray[indexPath.row].eachFreq)
+            lastSelectedRow = indexPath.row
+        }
+
+    }
+    
+}
+
+class FreqCell: UITableViewCell {
+    @IBOutlet weak var lblNoteName: UILabel!
+    @IBOutlet weak var lblFreq: UILabel!
+    @IBOutlet weak var lblSpeedOfSound: UILabel!
+    
+    func update(freqInfo: FrequencyInfo) {
+        lblNoteName.text = freqInfo.note + makeSubscriptOfNumber(freqInfo.octave)
+        lblFreq.text = String(freqInfo.eachFreq)
+        lblSpeedOfSound.text = String(freqInfo.speedOfSound)
+    }
 }
