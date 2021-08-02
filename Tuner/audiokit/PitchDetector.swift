@@ -28,6 +28,28 @@ class TunerConductor: ObservableObject {
     
     var data = TunerData()
     
+    init() {
+        guard let input = engine.input else {
+            fatalError()
+        }
+
+        mic = input
+        tappableNode1 = Fader(mic)
+        tappableNode2 = Fader(tappableNode1)
+        tappableNode3 = Fader(tappableNode2)
+        tappableNodeA = Fader(tappableNode3)
+        tappableNodeB = Fader(tappableNodeA)
+        tappableNodeC = Fader(tappableNodeB)
+        silence = Fader(tappableNodeC, gain: 0)
+        engine.output = silence
+        
+        tracker = PitchTap(mic) { pitch, amp in
+            DispatchQueue.main.async {
+                self.update(pitch[0], amp[0])
+            }
+        }
+    }
+    
     func update(_ pitch: AUValue, _ amp: AUValue) {
         data.pitch = pitch
         data.amplitude = amp
@@ -53,29 +75,6 @@ class TunerConductor: ObservableObject {
         let octave = Int(log2f(pitch / frequency))
         data.noteNameWithSharps = "\(noteNamesWithSharps[index])\(octave)"
         data.noteNameWithFlats = "\(noteNamesWithFlats[index])\(octave)"
-    }
-    
-    init() {
-        guard let input = engine.input else {
-            fatalError()
-        }
-
-        mic = input
-        tappableNode1 = Fader(mic)
-        tappableNode2 = Fader(tappableNode1)
-        tappableNode3 = Fader(tappableNode2)
-        tappableNodeA = Fader(tappableNode3)
-        tappableNodeB = Fader(tappableNodeA)
-        tappableNodeC = Fader(tappableNodeB)
-        silence = Fader(tappableNodeC, gain: 0)
-        engine.output = silence
-        
-        tracker = PitchTap(mic) { pitch, amp in
-            DispatchQueue.main.async {
-                self.update(pitch[0], amp[0])
-            }
-        }
-        
     }
     
     func start() {

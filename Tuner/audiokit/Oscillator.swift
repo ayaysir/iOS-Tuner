@@ -51,6 +51,7 @@ class DynamicOscillatorConductor: ObservableObject {
     }
     
     func noteOn(frequency: Double) {
+        data.isPlaying = true
         osc.start()
         data.frequency = Float(frequency)
         osc.$frequency.ramp(to: data.frequency, duration: 0)
@@ -58,6 +59,8 @@ class DynamicOscillatorConductor: ObservableObject {
     }
     
     func noteOff() {
+        data.isPlaying = false
+        data.frequency = 0.0
         osc.$amplitude.ramp(to: 0, duration: 0)
     }
 }

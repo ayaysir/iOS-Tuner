@@ -53,7 +53,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OCd-JB-dXJ">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="188" width="414" height="674"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="freqCell" id="jCO-j7-c0V" customClass="FreqCell" customModule="Tuner" customModuleProvider="target">
@@ -106,20 +106,46 @@
                                     <outlet property="delegate" destination="ZTy-n7-SYo" id="mt6-PF-7xe"/>
                                 </connections>
                             </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bDz-LC-Uf5">
+                                <rect key="frame" x="209" y="146" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4AI-NW-mBk">
+                                <rect key="frame" x="323" y="148" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="+"/>
+                                <connections>
+                                    <action selector="btnPlusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="2XT-PN-NR1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RBc-WK-Rpi">
+                                <rect key="frame" x="351" y="148" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="-"/>
+                                <connections>
+                                    <action selector="btnMinusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="3nD-qN-Cp3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SNo-or-D5r"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="SNo-or-D5r" firstAttribute="trailing" secondItem="OCd-JB-dXJ" secondAttribute="trailing" id="K15-t5-qnc"/>
-                            <constraint firstItem="OCd-JB-dXJ" firstAttribute="top" secondItem="SNo-or-D5r" secondAttribute="top" id="PQ5-Th-LiK"/>
+                            <constraint firstItem="OCd-JB-dXJ" firstAttribute="top" secondItem="SNo-or-D5r" secondAttribute="top" constant="100" id="PQ5-Th-LiK"/>
                             <constraint firstItem="OCd-JB-dXJ" firstAttribute="leading" secondItem="SNo-or-D5r" secondAttribute="leading" id="Zfg-sK-RCi"/>
                             <constraint firstItem="SNo-or-D5r" firstAttribute="bottom" secondItem="OCd-JB-dXJ" secondAttribute="bottom" id="oeR-Hf-bKf"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tblFreqList" destination="OCd-JB-dXJ" id="xv4-k6-bO9"/>
+                        <outlet property="textA4FreqOutlet" destination="bDz-LC-Uf5" id="pgI-Py-Dv7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vn8-Vk-DJ2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="941" y="94"/>
+            <point key="canvasLocation" x="1175" y="94"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pzf-35-kps">
