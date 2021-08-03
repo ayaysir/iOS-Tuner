@@ -35,7 +35,7 @@ class DynamicOscillatorConductor: ObservableObject {
     }
 
     func start() {
-        osc.amplitude = 0.2
+        osc.amplitude = 0.5
         osc.setWaveform(Table(.triangle))
         do {
             try engine.start()
@@ -50,12 +50,12 @@ class DynamicOscillatorConductor: ObservableObject {
         engine.stop()
     }
     
-    func noteOn(frequency: Double) {
+    func noteOn(frequency: Float) {
         data.isPlaying = true
         osc.start()
-        data.frequency = Float(frequency)
+        data.frequency = frequency
         osc.$frequency.ramp(to: data.frequency, duration: 0)
-        osc.$amplitude.ramp(to: 0.2, duration: 0)
+        osc.$amplitude.ramp(to: 0.5, duration: 0)
     }
     
     func noteOff() {

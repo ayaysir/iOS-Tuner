@@ -10,9 +10,9 @@ import UIKit
 // 넘버 패드에 리턴 기능 추가
 // https://stackoverflow.com/questions/28338981
 extension UITextField {
-    @IBInspectable var doneAccessory: Bool{
+    @IBInspectable var doneAccesory: Bool{
         get {
-            return self.doneAccessory
+            return self.doneAccesory
         }
         set(hasDone) {
             if hasDone {

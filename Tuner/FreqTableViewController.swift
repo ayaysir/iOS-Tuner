@@ -7,19 +7,28 @@
 
 import UIKit
 
+class GlobalOscillator {
+    static let sharedInstance = GlobalOscillator()
+    let conductor = DynamicOscillatorConductor()
+    var isShoudReplay: Bool = false
+    var replayRow: Int = -1
+}
+
 class FreqTableViewController: UIViewController {
     
     var freqArray: [FrequencyInfo] = []
     
     var baseFreq: Int = 440
+    var baseAmplitude: Double = 0.5
     
     @IBOutlet weak var textA4FreqOutlet: UITextField!
     @IBOutlet weak var tblFreqList: UITableView!
+    @IBOutlet weak var selectBackgroundPlay: UISwitch!
     
     // tableview 최근 선택 행
     var lastSelectedRow: Int?
     
-    let NOTE_NAMES = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
+    let NOTE_NAMES = ["C", "C♯ / D♭", "D", "D♯ / E♭", "E", "F", "F♯ / G♭", "G", "G♯ / A♭", "A", "A♯ / B♭", "B"]
     let ALT_NOTE_NAMES: [String: String] = [
         "C♯": "D♭",
         "D♯": "E♭",
@@ -34,8 +43,6 @@ class FreqTableViewController: UIViewController {
     let NOTE_START = 1
     let NOTE_END = 7
     
-    let conductor = DynamicOscillatorConductor()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,7 +53,45 @@ class FreqTableViewController: UIViewController {
         textA4FreqOutlet.addDoneButtonOnKeyboard()
         textA4FreqOutlet.delegate = self
         
+        selectBackgroundPlay.isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+        
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
+    }
+    
+    @objc func conductorDisappear() {
+        let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+        print(">> disappear")
+        if !isOn {
+            GlobalOscillator.sharedInstance.conductor.stop()
+        }
+    }
+    
+    @objc func conductorAppear() {
+        print(">> active")
+        let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+        let isShoudReplay = GlobalOscillator.sharedInstance.isShoudReplay
+        if !isOn && isShoudReplay {
+            GlobalOscillator.sharedInstance.conductor.start()
+            let lastFreq = GlobalOscillator.sharedInstance.conductor.data.frequency
+            GlobalOscillator.sharedInstance.conductor.noteOn(frequency: lastFreq)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print(#function)
+        conductorAppear()
+        let replayRow = GlobalOscillator.sharedInstance.replayRow
+        if replayRow != -1 {
+            tblFreqList.selectRow(at: IndexPath(row: replayRow, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.top)
+            lastSelectedRow = replayRow
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print(#function)
+        conductorDisappear()
     }
     
     func makeFreqArray(baseFreq: Int = 440) {
@@ -70,8 +115,8 @@ class FreqTableViewController: UIViewController {
                 let multiplier = pow(10.0, numberOfPlaces)
                 let eachFreqRounded = round(Double(eachFreq) * multiplier) / multiplier
                 let speedOfSoundRounded = round(Double(speedOfSound) * multiplier) / multiplier
-                print(note, octave, dist, distIndex, eachFreqRounded, speedOfSoundRounded)
-                freqArray.append(FrequencyInfo(note: note, octave: octave, distanceFromBaseFreq: dist, eachFreq: Double(eachFreq), speedOfSound: Double(speedOfSound)))
+//                print(note, octave, dist, distIndex, eachFreqRounded, speedOfSoundRounded)
+                freqArray.append(FrequencyInfo(note: note, octave: octave, distanceFromBaseFreq: dist, eachFreq: eachFreq, speedOfSound: Double(speedOfSound)))
                 
                 // Base note (440)의 경우 하이라이트
                 
@@ -83,8 +128,10 @@ class FreqTableViewController: UIViewController {
         let oldBaseFreq = baseFreq
         makeFreqArray(baseFreq: freq)
         tblFreqList.reloadData()
-        if conductor.osc.amplitude != 0.0 {
-            conductor.noteOn(frequency: Double(conductor.data.frequency as Float + Float(freq - oldBaseFreq)))
+        if GlobalOscillator.sharedInstance.conductor.osc.amplitude != 0.0 {
+            let lastFreq = GlobalOscillator.sharedInstance.conductor.data.frequency
+            GlobalOscillator.sharedInstance.conductor.noteOn(frequency:  lastFreq + Float(freq - oldBaseFreq))
+            GlobalOscillator.sharedInstance.isShoudReplay = true
         }
         baseFreq = freq
     }
@@ -94,14 +141,25 @@ class FreqTableViewController: UIViewController {
         guard let num = Int(text) else { return }
         textA4FreqOutlet.text = String(num + 1)
         reloadTable(freq: num + 1)
+        if lastSelectedRow != nil {
+            tblFreqList.selectRow(at: IndexPath(row: lastSelectedRow!, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
+        }
     }
+    
     @IBAction func btnMinusAct(_ sender: Any) {
         guard let text = textA4FreqOutlet.text else { return }
         guard let num = Int(text) else { return }
         textA4FreqOutlet.text = String(num - 1)
         reloadTable(freq: num - 1)
+        if lastSelectedRow != nil {
+            tblFreqList.selectRow(at: IndexPath(row: lastSelectedRow!, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
+        }
     }
     
+    @IBAction func selectBackgroundPlayAct(_ sender: Any) {
+        print(selectBackgroundPlay.isOn)
+        UserDefaults.standard.setValue(selectBackgroundPlay.isOn, forKey: "freq-bg-play")
+    }
     
 }
 
@@ -121,12 +179,16 @@ extension FreqTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if lastSelectedRow != nil && lastSelectedRow! == indexPath.row {
             tableView.deselectRow(at: indexPath, animated: true)
-            self.conductor.noteOff()
+            GlobalOscillator.sharedInstance.conductor.noteOff()
+            GlobalOscillator.sharedInstance.isShoudReplay = false
+            GlobalOscillator.sharedInstance.replayRow = -1
             lastSelectedRow = nil
         } else {
-            self.conductor.data.isPlaying = true
-            self.conductor.start()
-            self.conductor.noteOn(frequency: freqArray[indexPath.row].eachFreq)
+            GlobalOscillator.sharedInstance.conductor.data.isPlaying = true
+            GlobalOscillator.sharedInstance.conductor.start()
+            GlobalOscillator.sharedInstance.conductor.noteOn(frequency: freqArray[indexPath.row].eachFreq)
+            GlobalOscillator.sharedInstance.isShoudReplay = true
+            GlobalOscillator.sharedInstance.replayRow = indexPath.row
             lastSelectedRow = indexPath.row
         }
     }
@@ -152,7 +214,7 @@ extension FreqTableViewController: UITextFieldDelegate {
             return true
         }
         
-        let charSetExceptNumber = CharacterSet(charactersIn: "0123456789").inverted
+        let charSetExceptNumber = CharacterSet.decimalDigits.inverted
         let strComponents = string.components(separatedBy: charSetExceptNumber)
         let numberFiltered = strComponents.joined(separator: "")
         
@@ -161,7 +223,7 @@ extension FreqTableViewController: UITextFieldDelegate {
         let newString = currentString.replacingCharacters(in: range, with: string)
 
         if newString.count == maxLength && string.isNumber {
-            textField.text = textField.text! + string
+            textField.text = newString
             textField.resignFirstResponder()
             return false
         }
@@ -176,7 +238,5 @@ extension FreqTableViewController: UITextFieldDelegate {
             return
         }
         reloadTable(freq: freq)
-        
     }
-    
 }

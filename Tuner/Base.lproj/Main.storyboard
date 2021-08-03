@@ -54,32 +54,31 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OCd-JB-dXJ">
                                 <rect key="frame" x="0.0" y="188" width="414" height="674"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="freqCell" id="jCO-j7-c0V" customClass="FreqCell" customModule="Tuner" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="21"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="freqCell" rowHeight="63" id="jCO-j7-c0V" customClass="FreqCell" customModule="Tuner" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jCO-j7-c0V" id="DL7-co-J5B">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="21"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Kyg-2w-Zd2">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="21"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C#" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FtP-OY-cgB">
-                                                            <rect key="frame" x="0.0" y="0.0" width="22.5" height="21"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="22.5" height="63"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="34.65" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gl1-E7-mPM">
-                                                            <rect key="frame" x="169" y="0.0" width="45" height="21"/>
+                                                            <rect key="frame" x="169" y="0.0" width="45" height="63"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="995.74" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DnR-Xr-Ryc">
-                                                            <rect key="frame" x="360.5" y="0.0" width="53.5" height="21"/>
+                                                            <rect key="frame" x="360.5" y="0.0" width="53.5" height="63"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -112,20 +111,34 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4AI-NW-mBk">
-                                <rect key="frame" x="323" y="148" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="+"/>
-                                <connections>
-                                    <action selector="btnPlusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="2XT-PN-NR1"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RBc-WK-Rpi">
-                                <rect key="frame" x="351" y="148" width="30" height="30"/>
+                                <rect key="frame" x="331" y="148" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="-"/>
                                 <connections>
                                     <action selector="btnMinusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="3nD-qN-Cp3"/>
+                                </connections>
+                            </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" title="Allow background play" translatesAutoresizingMaskIntoConstraints="NO" id="Uq0-Fp-LSK">
+                                <rect key="frame" x="36" y="107" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="selectBackgroundPlayAct:" destination="ZTy-n7-SYo" eventType="valueChanged" id="yu2-4T-T4l"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="백그라운드 재생" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffe-Sq-WHJ">
+                                <rect key="frame" x="91" y="112" width="108" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4AI-NW-mBk">
+                                <rect key="frame" x="357" y="148" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="+"/>
+                                <connections>
+                                    <action selector="btnPlusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="2XT-PN-NR1"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -139,13 +152,14 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="selectBackgroundPlay" destination="Uq0-Fp-LSK" id="f1E-af-Uww"/>
                         <outlet property="tblFreqList" destination="OCd-JB-dXJ" id="xv4-k6-bO9"/>
                         <outlet property="textA4FreqOutlet" destination="bDz-LC-Uf5" id="pgI-Py-Dv7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vn8-Vk-DJ2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1175" y="94"/>
+            <point key="canvasLocation" x="1173.913043478261" y="93.75"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pzf-35-kps">
