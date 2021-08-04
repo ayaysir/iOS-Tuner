@@ -106,7 +106,7 @@
                                 </connections>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bDz-LC-Uf5">
-                                <rect key="frame" x="227" y="97" width="97" height="34"/>
+                                <rect key="frame" x="253" y="97" width="71" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -146,7 +146,25 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Scale Select"/>
                                 <connections>
-                                    <action selector="btnSclaeSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="ucG-Mi-58v"/>
+                                    <action selector="btnTuningSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="ucG-Mi-58v"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-e7-2bO">
+                                <rect key="frame" x="160" y="137" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="A"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RqR-24-apt">
+                                <rect key="frame" x="192" y="137" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="4"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fVd-gI-FqZ">
+                                <rect key="frame" x="282" y="137" width="38" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Scale"/>
+                                <connections>
+                                    <action selector="btnScaleSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="O8d-Qa-FJ5"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -160,7 +178,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="btnScaleSelect" destination="eMW-Xm-NMS" id="bBj-wR-dAx"/>
+                        <outlet property="btnScaleSelect" destination="fVd-gI-FqZ" id="kCe-c4-kyg"/>
+                        <outlet property="btnTuningSelect" destination="eMW-Xm-NMS" id="bBj-wR-dAx"/>
                         <outlet property="menuScale" destination="Y47-ka-Vg3" id="eWP-As-OkE"/>
                         <outlet property="selectBackgroundPlay" destination="Uq0-Fp-LSK" id="f1E-af-Uww"/>
                         <outlet property="tblFreqList" destination="OCd-JB-dXJ" id="xv4-k6-bO9"/>
@@ -170,7 +189,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vn8-Vk-DJ2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <command title="DSS" id="Y47-ka-Vg3"/>
             </objects>
-            <point key="canvasLocation" x="1054" y="-149"/>
+            <point key="canvasLocation" x="1053.6231884057972" y="-149.33035714285714"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pzf-35-kps">

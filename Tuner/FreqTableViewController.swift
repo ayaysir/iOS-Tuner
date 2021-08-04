@@ -9,7 +9,7 @@ import UIKit
 import DropDown
 
 class GlobalOscillator {
-    static let sharedInstance = GlobalOscillator()
+    static let shared = GlobalOscillator()
     let conductor = DynamicOscillatorConductor()
     var isShoudReplay: Bool = false
     var replayRow: Int = -1
@@ -22,13 +22,15 @@ class FreqTableViewController: UIViewController {
     var baseFreq: Int = 440
     var baseAmplitude: Double = 0.5
     
-    let dropDown = DropDown()
+    let tuningDropDown = DropDown()
+    let scaleDropDown = DropDown()
     var currentTuningSystem: TuningSystem = .equalTemperament
     
     @IBOutlet weak var textA4FreqOutlet: UITextField!
     @IBOutlet weak var tblFreqList: UITableView!
     @IBOutlet weak var selectBackgroundPlay: UISwitch!
     @IBOutlet var menuScale: UICommand!
+    @IBOutlet weak var btnTuningSelect: UIButton!
     @IBOutlet weak var btnScaleSelect: UIButton!
     
     // tableview 최근 선택 행
@@ -36,11 +38,12 @@ class FreqTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setDropDown()
+        print(#function)
+        setTuningDropDown()
+        setScaleDropDown()
         
         print(EXP)
-        freqArray = makeFreqArray(tuningSystem: .equalTemperament, baseFreq: baseFreq)
+        freqArray = makeFreqArray(tuningSystem: .equalTemperament, baseFreq: baseFreq, scale: nil)
         textA4FreqOutlet.text = String(baseFreq)
         
         textA4FreqOutlet.addDoneButtonOnKeyboard()
@@ -58,36 +61,63 @@ class FreqTableViewController: UIViewController {
         let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
         print(">> disappear")
         if !isOn {
-            GlobalOscillator.sharedInstance.conductor.stop()
+            GlobalOscillator.shared.conductor.stop()
         }
     }
     
     @objc func conductorAppear() {
         print(">> active")
         let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
-        let isShoudReplay = GlobalOscillator.sharedInstance.isShoudReplay
+        let isShoudReplay = GlobalOscillator.shared.isShoudReplay
         if !isOn && isShoudReplay {
-            GlobalOscillator.sharedInstance.conductor.start()
-            let lastFreq = GlobalOscillator.sharedInstance.conductor.data.frequency
-            GlobalOscillator.sharedInstance.conductor.noteOn(frequency: lastFreq)
+            GlobalOscillator.shared.conductor.start()
+            let lastFreq = GlobalOscillator.shared.conductor.data.frequency
+            GlobalOscillator.shared.conductor.noteOn(frequency: lastFreq)
         }
     }
     
-    func setDropDown() {
-        dropDown.dataSource = TuningSystem.allCases.map { $0.textValue }
-        dropDown.anchorView = btnScaleSelect
-        dropDown.cornerRadius = 15
-        btnScaleSelect.setTitle(currentTuningSystem.textValue, for: .normal)
+    func setTuningDropDown() {
+        tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue }
+        tuningDropDown.anchorView = btnTuningSelect
+        tuningDropDown.cornerRadius = 15
+        btnTuningSelect.setTitle(currentTuningSystem.textValue, for: .normal)
+        btnScaleSelect.isHidden = true
+        tuningDropDown.selectRow(0)
         
-        
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+        tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("선택한 아이템 : \(item)")
             print("인덱스 : \(index)")
             
+            if index == 0 {
+                btnScaleSelect.isHidden = true
+            } else {
+                btnScaleSelect.isHidden = false
+            }
+            
             let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
             reloadTable(freq: baseFreq, tuningSystem: tuningSystem)
-            btnScaleSelect.setTitle(tuningSystem.textValue, for: .normal)
-            GlobalOscillator.sharedInstance.conductor.stop()
+            btnTuningSelect.setTitle(tuningSystem.textValue, for: .normal)
+            GlobalOscillator.shared.conductor.stop()
+            lastSelectedRow = nil
+        }
+    }
+    
+    func setScaleDropDown() {
+        scaleDropDown.dataSource = Scale.allCases.map { key in
+            if key.textValueForSharp == key.textValueForFlat {
+                return key.textValueForSharp
+            } else {
+                return "\(key.textValueForSharp) / \(key.textValueForFlat)"
+            }
+        }
+        scaleDropDown.anchorView = btnScaleSelect
+        scaleDropDown.cornerRadius = 15
+        
+        scaleDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            let scale: Scale = Scale(rawValue: index) ?? Scale.C
+            reloadTable(freq: baseFreq, tuningSystem: currentTuningSystem, scale: scale)
+            btnScaleSelect.setTitle(item, for: .normal)
+            GlobalOscillator.shared.conductor.stop()
             lastSelectedRow = nil
         }
         
@@ -97,7 +127,7 @@ class FreqTableViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         print(#function)
         conductorAppear()
-        let replayRow = GlobalOscillator.sharedInstance.replayRow
+        let replayRow = GlobalOscillator.shared.replayRow
         if replayRow != -1 {
             tblFreqList.selectRow(at: IndexPath(row: replayRow, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.top)
             lastSelectedRow = replayRow
@@ -109,14 +139,14 @@ class FreqTableViewController: UIViewController {
         conductorDisappear()
     }
     
-    func reloadTable(freq: Int, tuningSystem: TuningSystem) {
+    func reloadTable(freq: Int, tuningSystem: TuningSystem, scale: Scale = Scale.C) {
         let oldBaseFreq = baseFreq
-        freqArray = makeFreqArray(tuningSystem: tuningSystem, baseFreq: freq)
+        freqArray = makeFreqArray(tuningSystem: tuningSystem, baseFreq: freq, scale: scale)
         tblFreqList.reloadData()
-        if GlobalOscillator.sharedInstance.conductor.osc.amplitude != 0.0 {
-            let lastFreq = GlobalOscillator.sharedInstance.conductor.data.frequency
-            GlobalOscillator.sharedInstance.conductor.noteOn(frequency:  lastFreq + Float(freq - oldBaseFreq))
-            GlobalOscillator.sharedInstance.isShoudReplay = true
+        if GlobalOscillator.shared.conductor.osc.amplitude != 0.0 {
+            let lastFreq = GlobalOscillator.shared.conductor.data.frequency
+            GlobalOscillator.shared.conductor.noteOn(frequency:  lastFreq + Float(freq - oldBaseFreq))
+            GlobalOscillator.shared.isShoudReplay = true
         }
         baseFreq = freq
         currentTuningSystem = tuningSystem
@@ -147,9 +177,14 @@ class FreqTableViewController: UIViewController {
         UserDefaults.standard.setValue(selectBackgroundPlay.isOn, forKey: "freq-bg-play")
     }
     
-    @IBAction func btnSclaeSelectAct(_ sender: Any) {
-        dropDown.show()
+    @IBAction func btnTuningSelectAct(_ sender: Any) {
+        tuningDropDown.show()
     }
+    
+    @IBAction func btnScaleSelectAct(_ sender: Any) {
+        scaleDropDown.show()
+    }
+    
     
 }
 
@@ -169,16 +204,16 @@ extension FreqTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if lastSelectedRow != nil && lastSelectedRow! == indexPath.row {
             tableView.deselectRow(at: indexPath, animated: true)
-            GlobalOscillator.sharedInstance.conductor.noteOff()
-            GlobalOscillator.sharedInstance.isShoudReplay = false
-            GlobalOscillator.sharedInstance.replayRow = -1
+            GlobalOscillator.shared.conductor.noteOff()
+            GlobalOscillator.shared.isShoudReplay = false
+            GlobalOscillator.shared.replayRow = -1
             lastSelectedRow = nil
         } else {
-            GlobalOscillator.sharedInstance.conductor.data.isPlaying = true
-            GlobalOscillator.sharedInstance.conductor.start()
-            GlobalOscillator.sharedInstance.conductor.noteOn(frequency: freqArray[indexPath.row].eachFreq)
-            GlobalOscillator.sharedInstance.isShoudReplay = true
-            GlobalOscillator.sharedInstance.replayRow = indexPath.row
+            GlobalOscillator.shared.conductor.data.isPlaying = true
+            GlobalOscillator.shared.conductor.start()
+            GlobalOscillator.shared.conductor.noteOn(frequency: freqArray[indexPath.row].eachFreq)
+            GlobalOscillator.shared.isShoudReplay = true
+            GlobalOscillator.shared.replayRow = indexPath.row
             lastSelectedRow = indexPath.row
         }
     }
