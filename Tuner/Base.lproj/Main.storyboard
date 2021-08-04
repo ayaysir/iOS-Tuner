@@ -106,13 +106,13 @@
                                 </connections>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bDz-LC-Uf5">
-                                <rect key="frame" x="209" y="146" width="97" height="34"/>
+                                <rect key="frame" x="227" y="97" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RBc-WK-Rpi">
-                                <rect key="frame" x="331" y="148" width="30" height="30"/>
+                                <rect key="frame" x="338" y="99" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="-"/>
                                 <connections>
@@ -120,25 +120,33 @@
                                 </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" title="Allow background play" translatesAutoresizingMaskIntoConstraints="NO" id="Uq0-Fp-LSK">
-                                <rect key="frame" x="36" y="107" width="49" height="31"/>
+                                <rect key="frame" x="10" y="99" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="selectBackgroundPlayAct:" destination="ZTy-n7-SYo" eventType="valueChanged" id="yu2-4T-T4l"/>
                                 </connections>
                             </switch>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4AI-NW-mBk">
+                                <rect key="frame" x="364" y="99" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="+"/>
+                                <connections>
+                                    <action selector="btnPlusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="2XT-PN-NR1"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="백그라운드 재생" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffe-Sq-WHJ">
-                                <rect key="frame" x="91" y="112" width="108" height="21"/>
+                                <rect key="frame" x="65" y="104" width="108" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4AI-NW-mBk">
-                                <rect key="frame" x="357" y="148" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMW-Xm-NMS">
+                                <rect key="frame" x="20" y="137" width="85" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="+"/>
+                                <state key="normal" title="Scale Select"/>
                                 <connections>
-                                    <action selector="btnPlusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="2XT-PN-NR1"/>
+                                    <action selector="btnSclaeSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="ucG-Mi-58v"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -152,14 +160,17 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnScaleSelect" destination="eMW-Xm-NMS" id="bBj-wR-dAx"/>
+                        <outlet property="menuScale" destination="Y47-ka-Vg3" id="eWP-As-OkE"/>
                         <outlet property="selectBackgroundPlay" destination="Uq0-Fp-LSK" id="f1E-af-Uww"/>
                         <outlet property="tblFreqList" destination="OCd-JB-dXJ" id="xv4-k6-bO9"/>
                         <outlet property="textA4FreqOutlet" destination="bDz-LC-Uf5" id="pgI-Py-Dv7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vn8-Vk-DJ2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <command title="DSS" id="Y47-ka-Vg3"/>
             </objects>
-            <point key="canvasLocation" x="1173.913043478261" y="93.75"/>
+            <point key="canvasLocation" x="1054" y="-149"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pzf-35-kps">

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		440DF81726B4F79800FDA3AA /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 440DF81626B4F79800FDA3AA /* AudioKit */; };
 		440DF81A26B500E600FDA3AA /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 440DF81926B500E600FDA3AA /* SoundpipeAudioKit */; };
 		440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */; };
 		440DF82126B6D6B400FDA3AA /* FrequencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440DF82026B6D6B400FDA3AA /* FrequencyInfo.swift */; };
@@ -15,6 +14,9 @@
 		442663FB26B6E17600B5A5D9 /* Oscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442663FA26B6E17600B5A5D9 /* Oscillator.swift */; };
 		442663FD26B8223B00B5A5D9 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442663FC26B8223B00B5A5D9 /* UIExtension.swift */; };
 		442663FF26B8347400B5A5D9 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442663FE26B8347400B5A5D9 /* StringExtension.swift */; };
+		4426640326BA5A7B00B5A5D9 /* FrequencyUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426640226BA5A7B00B5A5D9 /* FrequencyUtil.swift */; };
+		4426640526BA5C6E00B5A5D9 /* NumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */; };
+		4426640826BA622800B5A5D9 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4426640726BA622800B5A5D9 /* AudioKit */; };
 		442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F0FDA26B44309004D2100 /* PitchDetector.swift */; };
 		444EEE4126B4370000454428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EEE4026B4370000454428 /* AppDelegate.swift */; };
 		444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EEE4226B4370000454428 /* SceneDelegate.swift */; };
@@ -35,6 +37,8 @@
 		442663FC26B8223B00B5A5D9 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
 		442663FE26B8347400B5A5D9 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		4426640026B9629900B5A5D9 /* Tuner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tuner.entitlements; sourceTree = "<group>"; };
+		4426640226BA5A7B00B5A5D9 /* FrequencyUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyUtil.swift; sourceTree = "<group>"; };
+		4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberExtension.swift; sourceTree = "<group>"; };
 		442F0FDA26B44309004D2100 /* PitchDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchDetector.swift; sourceTree = "<group>"; };
 		444EEE3D26B4370000454428 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444EEE4026B4370000454428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				440DF81726B4F79800FDA3AA /* AudioKit in Frameworks */,
+				4426640826BA622800B5A5D9 /* AudioKit in Frameworks */,
 				B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */,
 				440DF81A26B500E600FDA3AA /* SoundpipeAudioKit in Frameworks */,
 			);
@@ -87,6 +91,7 @@
 				442663F726B6DE4200B5A5D9 /* TextUtil.swift */,
 				442663FC26B8223B00B5A5D9 /* UIExtension.swift */,
 				442663FE26B8347400B5A5D9 /* StringExtension.swift */,
+				4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -98,6 +103,14 @@
 				442663FA26B6E17600B5A5D9 /* Oscillator.swift */,
 			);
 			path = audiokit;
+			sourceTree = "<group>";
+		};
+		4426640126BA5A6500B5A5D9 /* frequency */ = {
+			isa = PBXGroup;
+			children = (
+				4426640226BA5A7B00B5A5D9 /* FrequencyUtil.swift */,
+			);
+			path = frequency;
 			sourceTree = "<group>";
 		};
 		444EEE3426B4370000454428 = {
@@ -121,6 +134,7 @@
 		444EEE3F26B4370000454428 /* Tuner */ = {
 			isa = PBXGroup;
 			children = (
+				4426640126BA5A6500B5A5D9 /* frequency */,
 				4426640026B9629900B5A5D9 /* Tuner.entitlements */,
 				442663F926B6E0FC00B5A5D9 /* audiokit */,
 				442663F626B6DE3500B5A5D9 /* util */,
@@ -165,8 +179,8 @@
 			);
 			name = Tuner;
 			packageProductDependencies = (
-				440DF81626B4F79800FDA3AA /* AudioKit */,
 				440DF81926B500E600FDA3AA /* SoundpipeAudioKit */,
+				4426640726BA622800B5A5D9 /* AudioKit */,
 			);
 			productName = Tuner;
 			productReference = 444EEE3D26B4370000454428 /* Tuner.app */;
@@ -272,8 +286,10 @@
 				444EEE4B26B4370000454428 /* Tuner.xcdatamodeld in Sources */,
 				444EEE4526B4370000454428 /* ViewController.swift in Sources */,
 				442663FD26B8223B00B5A5D9 /* UIExtension.swift in Sources */,
+				4426640526BA5C6E00B5A5D9 /* NumberExtension.swift in Sources */,
 				444EEE4126B4370000454428 /* AppDelegate.swift in Sources */,
 				440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */,
+				4426640326BA5A7B00B5A5D9 /* FrequencyUtil.swift in Sources */,
 				442663F826B6DE4200B5A5D9 /* TextUtil.swift in Sources */,
 				442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */,
 				444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */,
@@ -508,15 +524,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		440DF81626B4F79800FDA3AA /* AudioKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 440DF81526B4F79800FDA3AA /* XCRemoteSwiftPackageReference "AudioKit" */;
-			productName = AudioKit;
-		};
 		440DF81926B500E600FDA3AA /* SoundpipeAudioKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 440DF81826B500E600FDA3AA /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */;
 			productName = SoundpipeAudioKit;
+		};
+		4426640726BA622800B5A5D9 /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 440DF81526B4F79800FDA3AA /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DropDown
 
 class GlobalOscillator {
     static let sharedInstance = GlobalOscillator()
@@ -16,38 +17,30 @@ class GlobalOscillator {
 
 class FreqTableViewController: UIViewController {
     
-    var freqArray: [FrequencyInfo] = []
+    var freqArray: [FrequencyInfo]!
     
     var baseFreq: Int = 440
     var baseAmplitude: Double = 0.5
     
+    let dropDown = DropDown()
+    var currentTuningSystem: TuningSystem = .equalTemperament
+    
     @IBOutlet weak var textA4FreqOutlet: UITextField!
     @IBOutlet weak var tblFreqList: UITableView!
     @IBOutlet weak var selectBackgroundPlay: UISwitch!
+    @IBOutlet var menuScale: UICommand!
+    @IBOutlet weak var btnScaleSelect: UIButton!
     
     // tableview 최근 선택 행
     var lastSelectedRow: Int?
     
-    let NOTE_NAMES = ["C", "C♯ / D♭", "D", "D♯ / E♭", "E", "F", "F♯ / G♭", "G", "G♯ / A♭", "A", "A♯ / B♭", "B"]
-    let ALT_NOTE_NAMES: [String: String] = [
-        "C♯": "D♭",
-        "D♯": "E♭",
-        "F♯": "G♭",
-        "G♯": "A♭",
-        "A♯": "B♭"
-    ]
-    let BASE_NOTE = "A"
-    let BASE_OCTAVE = 4
-    let SPEED_OF_SOUND = 34500
-    let EXP = pow(2, (1 / 12) as Float)
-    let NOTE_START = 1
-    let NOTE_END = 7
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setDropDown()
+        
         print(EXP)
-        makeFreqArray()
+        freqArray = makeFreqArray(tuningSystem: .equalTemperament, baseFreq: baseFreq)
         textA4FreqOutlet.text = String(baseFreq)
         
         textA4FreqOutlet.addDoneButtonOnKeyboard()
@@ -58,6 +51,7 @@ class FreqTableViewController: UIViewController {
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
+        
     }
     
     @objc func conductorDisappear() {
@@ -79,6 +73,27 @@ class FreqTableViewController: UIViewController {
         }
     }
     
+    func setDropDown() {
+        dropDown.dataSource = TuningSystem.allCases.map { $0.textValue }
+        dropDown.anchorView = btnScaleSelect
+        dropDown.cornerRadius = 15
+        btnScaleSelect.setTitle(currentTuningSystem.textValue, for: .normal)
+        
+        
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            print("선택한 아이템 : \(item)")
+            print("인덱스 : \(index)")
+            
+            let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
+            reloadTable(freq: baseFreq, tuningSystem: tuningSystem)
+            btnScaleSelect.setTitle(tuningSystem.textValue, for: .normal)
+            GlobalOscillator.sharedInstance.conductor.stop()
+            lastSelectedRow = nil
+        }
+        
+        
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         print(#function)
         conductorAppear()
@@ -94,39 +109,9 @@ class FreqTableViewController: UIViewController {
         conductorDisappear()
     }
     
-    func makeFreqArray(baseFreq: Int = 440) {
-        freqArray = []
-        let indexOfA = NOTE_NAMES.firstIndex {$0 == "A"}!
-        let distanceFromBaseToLowest = NOTE_NAMES.count * (BASE_OCTAVE - NOTE_START) + indexOfA
-        var distIndex = 0
-        // draw initial table
-        for octave in NOTE_START...NOTE_END {
-            for note in NOTE_NAMES {
-                // 노트 옆에 옥타브를 아래 첨자로 표시
-                // 이명동음의 경우 / 로 구분해 표시
-                
-                let dist = distanceFromBaseToLowest * -1 + distIndex
-                distIndex += 1
-                let eachFreq = Float(baseFreq) * pow(EXP, Float(dist))
-                
-                let speedOfSound = Float(SPEED_OF_SOUND) / eachFreq
-                
-                let numberOfPlaces = 2.0
-                let multiplier = pow(10.0, numberOfPlaces)
-                let eachFreqRounded = round(Double(eachFreq) * multiplier) / multiplier
-                let speedOfSoundRounded = round(Double(speedOfSound) * multiplier) / multiplier
-//                print(note, octave, dist, distIndex, eachFreqRounded, speedOfSoundRounded)
-                freqArray.append(FrequencyInfo(note: note, octave: octave, distanceFromBaseFreq: dist, eachFreq: eachFreq, speedOfSound: Double(speedOfSound)))
-                
-                // Base note (440)의 경우 하이라이트
-                
-            }
-        }
-    }
-    
-    func reloadTable(freq: Int) {
+    func reloadTable(freq: Int, tuningSystem: TuningSystem) {
         let oldBaseFreq = baseFreq
-        makeFreqArray(baseFreq: freq)
+        freqArray = makeFreqArray(tuningSystem: tuningSystem, baseFreq: freq)
         tblFreqList.reloadData()
         if GlobalOscillator.sharedInstance.conductor.osc.amplitude != 0.0 {
             let lastFreq = GlobalOscillator.sharedInstance.conductor.data.frequency
@@ -134,13 +119,14 @@ class FreqTableViewController: UIViewController {
             GlobalOscillator.sharedInstance.isShoudReplay = true
         }
         baseFreq = freq
+        currentTuningSystem = tuningSystem
     }
     
     @IBAction func btnPlusAct(_ sender: Any) {
         guard let text = textA4FreqOutlet.text else { return }
         guard let num = Int(text) else { return }
         textA4FreqOutlet.text = String(num + 1)
-        reloadTable(freq: num + 1)
+        reloadTable(freq: num + 1, tuningSystem: currentTuningSystem)
         if lastSelectedRow != nil {
             tblFreqList.selectRow(at: IndexPath(row: lastSelectedRow!, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
         }
@@ -150,7 +136,7 @@ class FreqTableViewController: UIViewController {
         guard let text = textA4FreqOutlet.text else { return }
         guard let num = Int(text) else { return }
         textA4FreqOutlet.text = String(num - 1)
-        reloadTable(freq: num - 1)
+        reloadTable(freq: num - 1, tuningSystem: currentTuningSystem)
         if lastSelectedRow != nil {
             tblFreqList.selectRow(at: IndexPath(row: lastSelectedRow!, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
         }
@@ -159,6 +145,10 @@ class FreqTableViewController: UIViewController {
     @IBAction func selectBackgroundPlayAct(_ sender: Any) {
         print(selectBackgroundPlay.isOn)
         UserDefaults.standard.setValue(selectBackgroundPlay.isOn, forKey: "freq-bg-play")
+    }
+    
+    @IBAction func btnSclaeSelectAct(_ sender: Any) {
+        dropDown.show()
     }
     
 }
@@ -202,8 +192,8 @@ class FreqCell: UITableViewCell {
     
     func update(freqInfo: FrequencyInfo) {
         lblNoteName.text = freqInfo.note + makeSubscriptOfNumber(freqInfo.octave)
-        lblFreq.text = String(freqInfo.eachFreq)
-        lblSpeedOfSound.text = String(freqInfo.speedOfSound)
+        lblFreq.text = freqInfo.eachFreq.cleanFixTwo
+        lblSpeedOfSound.text = freqInfo.speedOfSound.cleanFixTwo
     }
 }
 
@@ -234,9 +224,9 @@ extension FreqTableViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text else { return }
         guard let freq = Int(text) else {
-            reloadTable(freq: 440)
+            reloadTable(freq: 440, tuningSystem: currentTuningSystem)
             return
         }
-        reloadTable(freq: freq)
+        reloadTable(freq: freq, tuningSystem: currentTuningSystem)
     }
 }

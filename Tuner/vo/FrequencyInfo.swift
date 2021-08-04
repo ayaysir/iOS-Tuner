@@ -10,14 +10,12 @@ import Foundation
 struct FrequencyInfo {
     var note: String
     var octave: Int
-    var distanceFromBaseFreq: Int
     var eachFreq: Float
-    var speedOfSound: Double
+    var speedOfSound: Float
     
-    init(note: String, octave: Int, distanceFromBaseFreq: Int, eachFreq: Float, speedOfSound: Double) {
+    init(note: String, octave: Int, eachFreq: Float, speedOfSound: Float) {
         self.note = note
         self.octave = octave
-        self.distanceFromBaseFreq = distanceFromBaseFreq
         self.eachFreq = eachFreq
         self.speedOfSound = speedOfSound
     }
