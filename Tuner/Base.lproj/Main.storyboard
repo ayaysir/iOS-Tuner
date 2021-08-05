@@ -109,7 +109,7 @@
                                 <rect key="frame" x="253" y="97" width="71" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RBc-WK-Rpi">
                                 <rect key="frame" x="338" y="99" width="30" height="30"/>
@@ -149,22 +149,20 @@
                                     <action selector="btnTuningSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="ucG-Mi-58v"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-e7-2bO">
-                                <rect key="frame" x="160" y="137" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="A"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RqR-24-apt">
-                                <rect key="frame" x="192" y="137" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="4"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fVd-gI-FqZ">
                                 <rect key="frame" x="282" y="137" width="38" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Scale"/>
                                 <connections>
                                     <action selector="btnScaleSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="O8d-Qa-FJ5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-e7-2bO">
+                                <rect key="frame" x="177" y="100" width="68" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="A₄"/>
+                                <connections>
+                                    <action selector="btnBaseNoteSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="NDh-4n-Hdh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -178,6 +176,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnBaseNoteSelect" destination="mfP-e7-2bO" id="ZYe-pF-PVH"/>
                         <outlet property="btnScaleSelect" destination="fVd-gI-FqZ" id="kCe-c4-kyg"/>
                         <outlet property="btnTuningSelect" destination="eMW-Xm-NMS" id="bBj-wR-dAx"/>
                         <outlet property="menuScale" destination="Y47-ka-Vg3" id="eWP-As-OkE"/>

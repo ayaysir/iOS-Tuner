@@ -8,12 +8,12 @@
 import Foundation
 
 struct FrequencyInfo {
-    var note: String
+    var note: Scale
     var octave: Int
     var eachFreq: Float
     var speedOfSound: Float
     
-    init(note: String, octave: Int, eachFreq: Float, speedOfSound: Float) {
+    init(note: Scale, octave: Int, eachFreq: Float, speedOfSound: Float) {
         self.note = note
         self.octave = octave
         self.eachFreq = eachFreq

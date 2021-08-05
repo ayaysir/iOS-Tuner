@@ -17,6 +17,7 @@
 		4426640326BA5A7B00B5A5D9 /* FrequencyUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426640226BA5A7B00B5A5D9 /* FrequencyUtil.swift */; };
 		4426640526BA5C6E00B5A5D9 /* NumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */; };
 		4426640826BA622800B5A5D9 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4426640726BA622800B5A5D9 /* AudioKit */; };
+		4426640A26BBE6B800B5A5D9 /* AlertUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426640926BBE6B800B5A5D9 /* AlertUtil.swift */; };
 		442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F0FDA26B44309004D2100 /* PitchDetector.swift */; };
 		444EEE4126B4370000454428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EEE4026B4370000454428 /* AppDelegate.swift */; };
 		444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EEE4226B4370000454428 /* SceneDelegate.swift */; };
@@ -39,6 +40,7 @@
 		4426640026B9629900B5A5D9 /* Tuner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tuner.entitlements; sourceTree = "<group>"; };
 		4426640226BA5A7B00B5A5D9 /* FrequencyUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyUtil.swift; sourceTree = "<group>"; };
 		4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberExtension.swift; sourceTree = "<group>"; };
+		4426640926BBE6B800B5A5D9 /* AlertUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtil.swift; sourceTree = "<group>"; };
 		442F0FDA26B44309004D2100 /* PitchDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchDetector.swift; sourceTree = "<group>"; };
 		444EEE3D26B4370000454428 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444EEE4026B4370000454428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				442663FC26B8223B00B5A5D9 /* UIExtension.swift */,
 				442663FE26B8347400B5A5D9 /* StringExtension.swift */,
 				4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */,
+				4426640926BBE6B800B5A5D9 /* AlertUtil.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				4426640326BA5A7B00B5A5D9 /* FrequencyUtil.swift in Sources */,
 				442663F826B6DE4200B5A5D9 /* TextUtil.swift in Sources */,
 				442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */,
+				4426640A26BBE6B800B5A5D9 /* AlertUtil.swift in Sources */,
 				444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */,
 				442663FF26B8347400B5A5D9 /* StringExtension.swift in Sources */,
 				440DF82126B6D6B400FDA3AA /* FrequencyInfo.swift in Sources */,
