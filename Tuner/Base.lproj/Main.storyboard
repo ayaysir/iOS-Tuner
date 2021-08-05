@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Tuner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="Tuner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,6 +24,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cIc-wz-QBM">
+                                <rect key="frame" x="73" y="334" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="btnShowMenu:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZXj-dr-7nb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -37,23 +45,22 @@
                     </navigationItem>
                     <connections>
                         <outlet property="lblFreq" destination="Ef3-Oo-NtB" id="Neg-Ax-w3m"/>
-                        <segue destination="ZTy-n7-SYo" kind="show" identifier="freqTable" id="gLQ-gs-WwH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="207" y="94"/>
+            <point key="canvasLocation" x="-930.43478260869574" y="-719.19642857142856"/>
         </scene>
         <!--Freq Table View Controller-->
         <scene sceneID="3Ku-Lb-eWT">
             <objects>
-                <viewController id="ZTy-n7-SYo" customClass="FreqTableViewController" customModule="Tuner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FreqTableViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZTy-n7-SYo" customClass="FreqTableViewController" customModule="Tuner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zls-2V-0Dz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OCd-JB-dXJ">
-                                <rect key="frame" x="0.0" y="188" width="414" height="674"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="718"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="freqCell" rowHeight="63" id="jCO-j7-c0V" customClass="FreqCell" customModule="Tuner" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="24.5" width="414" height="63"/>
@@ -175,6 +182,7 @@
                             <constraint firstItem="SNo-or-D5r" firstAttribute="bottom" secondItem="OCd-JB-dXJ" secondAttribute="bottom" id="oeR-Hf-bKf"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="3V0-PD-s4e"/>
                     <connections>
                         <outlet property="btnBaseNoteSelect" destination="mfP-e7-2bO" id="ZYe-pF-PVH"/>
                         <outlet property="btnScaleSelect" destination="fVd-gI-FqZ" id="kCe-c4-kyg"/>
@@ -188,30 +196,94 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vn8-Vk-DJ2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <command title="DSS" id="Y47-ka-Vg3"/>
             </objects>
-            <point key="canvasLocation" x="1053.6231884057972" y="-149.33035714285714"/>
+            <point key="canvasLocation" x="-83" y="-719"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Menu Navigation Controller-->
         <scene sceneID="pzf-35-kps">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iA2-Pj-Yt0" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" navigationBarHidden="YES" id="iA2-Pj-Yt0" customClass="MenuNavigationController" customModule="Tuner" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="0TC-d5-ycv"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="w1w-Ap-YBK">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Fpq-zr-eE5">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Zo8-gc-fCc"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="v4n-HS-8uK"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f8z-O3-q02" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-968" y="94"/>
+            <point key="canvasLocation" x="-928" y="94"/>
+        </scene>
+        <!--Slide Menu View Controller-->
+        <scene sceneID="BTR-Bl-7sZ">
+            <objects>
+                <viewController storyboardIdentifier="SlideMenuViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vcV-vt-jpQ" customClass="SlideMenuViewController" customModule="Tuner" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="658-7Q-ecQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ewi-z4-ptB">
+                                <rect key="frame" x="144.5" y="135" width="125" height="192"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nij-nS-c38">
+                                        <rect key="frame" x="0.0" y="0.0" width="125" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RfB-fs-oXV">
+                                        <rect key="frame" x="0.0" y="48" width="125" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="FreqTable">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnFreqTable:" destination="vcV-vt-jpQ" eventType="touchUpInside" id="Kwg-yo-IvI"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yaB-DL-jv3">
+                                        <rect key="frame" x="0.0" y="96" width="125" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P79-7T-RLz">
+                                        <rect key="frame" x="0.0" y="144" width="125" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="F2g-ip-fPw"/>
+                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <constraints>
+                            <constraint firstItem="Ewi-z4-ptB" firstAttribute="top" secondItem="F2g-ip-fPw" secondAttribute="top" constant="91" id="OKE-1r-fRH"/>
+                            <constraint firstItem="Ewi-z4-ptB" firstAttribute="centerX" secondItem="F2g-ip-fPw" secondAttribute="centerX" id="vRh-pU-r7K"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="bcL-Js-mL6"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mOb-tO-wL1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-201" y="94"/>
         </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -20,6 +20,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.sideMenuController()?.sideMenu?.delegate = self
+        
         // Do any additional setup after loading the view.
         AVAudioSession.sharedInstance().requestRecordPermission({ (granted) in
             // Handle granted
@@ -44,7 +47,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func btnTempFreqTable(_ sender: Any) {
-        performSegue(withIdentifier: "freqTable", sender: nil)
+        
+    }
+    
+    @IBAction func btnShowMenu(_ sender: Any) {
+        self.toggleSideMenuView()
     }
     
     func initRecord() {
@@ -113,6 +120,28 @@ class ViewController: UIViewController {
         
 
     }
-    
 }
 
+extension ViewController: ENSideMenuDelegate {
+    // MARK: - ENSideMenu Delegate
+    func sideMenuWillOpen() {
+        print("sideMenuWillOpen")
+    }
+    
+    func sideMenuWillClose() {
+        print("sideMenuWillClose")
+    }
+    
+    func sideMenuShouldOpenSideMenu() -> Bool {
+        print("sideMenuShouldOpenSideMenu")
+        return true
+    }
+    
+    func sideMenuDidClose() {
+        print("sideMenuDidClose")
+    }
+    
+    func sideMenuDidOpen() {
+        print("sideMenuDidOpen")
+    }
+}

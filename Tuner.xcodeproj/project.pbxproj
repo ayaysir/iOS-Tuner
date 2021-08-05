@@ -18,6 +18,10 @@
 		4426640526BA5C6E00B5A5D9 /* NumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */; };
 		4426640826BA622800B5A5D9 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4426640726BA622800B5A5D9 /* AudioKit */; };
 		4426640A26BBE6B800B5A5D9 /* AlertUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426640926BBE6B800B5A5D9 /* AlertUtil.swift */; };
+		4426640F26BC0D5600B5A5D9 /* SlideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426640E26BC0D5600B5A5D9 /* SlideMenuViewController.swift */; };
+		4426641226BC2E3C00B5A5D9 /* ENSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426641126BC2E3C00B5A5D9 /* ENSideMenu.swift */; };
+		4426641426BC2E6E00B5A5D9 /* ENSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426641326BC2E6E00B5A5D9 /* ENSideMenuNavigationController.swift */; };
+		4426641626BC2E9A00B5A5D9 /* MenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4426641526BC2E9A00B5A5D9 /* MenuNavigationController.swift */; };
 		442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F0FDA26B44309004D2100 /* PitchDetector.swift */; };
 		444EEE4126B4370000454428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EEE4026B4370000454428 /* AppDelegate.swift */; };
 		444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EEE4226B4370000454428 /* SceneDelegate.swift */; };
@@ -41,6 +45,10 @@
 		4426640226BA5A7B00B5A5D9 /* FrequencyUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyUtil.swift; sourceTree = "<group>"; };
 		4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberExtension.swift; sourceTree = "<group>"; };
 		4426640926BBE6B800B5A5D9 /* AlertUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtil.swift; sourceTree = "<group>"; };
+		4426640E26BC0D5600B5A5D9 /* SlideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuViewController.swift; sourceTree = "<group>"; };
+		4426641126BC2E3C00B5A5D9 /* ENSideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSideMenu.swift; sourceTree = "<group>"; };
+		4426641326BC2E6E00B5A5D9 /* ENSideMenuNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSideMenuNavigationController.swift; sourceTree = "<group>"; };
+		4426641526BC2E9A00B5A5D9 /* MenuNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuNavigationController.swift; sourceTree = "<group>"; };
 		442F0FDA26B44309004D2100 /* PitchDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchDetector.swift; sourceTree = "<group>"; };
 		444EEE3D26B4370000454428 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444EEE4026B4370000454428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,9 +124,30 @@
 			path = frequency;
 			sourceTree = "<group>";
 		};
+		4426640B26BC0C5C00B5A5D9 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				444EEE4426B4370000454428 /* ViewController.swift */,
+				440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */,
+				4426640E26BC0D5600B5A5D9 /* SlideMenuViewController.swift */,
+				4426641526BC2E9A00B5A5D9 /* MenuNavigationController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		4426641026BC2E1700B5A5D9 /* ENSwiftSideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				4426641126BC2E3C00B5A5D9 /* ENSideMenu.swift */,
+				4426641326BC2E6E00B5A5D9 /* ENSideMenuNavigationController.swift */,
+			);
+			path = ENSwiftSideMenu;
+			sourceTree = "<group>";
+		};
 		444EEE3426B4370000454428 = {
 			isa = PBXGroup;
 			children = (
+				4426641026BC2E1700B5A5D9 /* ENSwiftSideMenu */,
 				444EEE3F26B4370000454428 /* Tuner */,
 				444EEE3E26B4370000454428 /* Products */,
 				06CB17F29091154E72595DFB /* Pods */,
@@ -137,6 +166,7 @@
 		444EEE3F26B4370000454428 /* Tuner */ = {
 			isa = PBXGroup;
 			children = (
+				4426640B26BC0C5C00B5A5D9 /* controller */,
 				4426640126BA5A6500B5A5D9 /* frequency */,
 				4426640026B9629900B5A5D9 /* Tuner.entitlements */,
 				442663F926B6E0FC00B5A5D9 /* audiokit */,
@@ -144,13 +174,11 @@
 				440DF81F26B6D67100FDA3AA /* vo */,
 				444EEE4026B4370000454428 /* AppDelegate.swift */,
 				444EEE4226B4370000454428 /* SceneDelegate.swift */,
-				444EEE4426B4370000454428 /* ViewController.swift */,
 				444EEE4626B4370000454428 /* Main.storyboard */,
 				444EEE4C26B4370200454428 /* Assets.xcassets */,
 				444EEE4E26B4370200454428 /* LaunchScreen.storyboard */,
 				444EEE5126B4370200454428 /* Info.plist */,
 				444EEE4926B4370000454428 /* Tuner.xcdatamodeld */,
-				440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */,
 			);
 			path = Tuner;
 			sourceTree = "<group>";
@@ -289,15 +317,19 @@
 				444EEE4B26B4370000454428 /* Tuner.xcdatamodeld in Sources */,
 				444EEE4526B4370000454428 /* ViewController.swift in Sources */,
 				442663FD26B8223B00B5A5D9 /* UIExtension.swift in Sources */,
+				4426641626BC2E9A00B5A5D9 /* MenuNavigationController.swift in Sources */,
 				4426640526BA5C6E00B5A5D9 /* NumberExtension.swift in Sources */,
 				444EEE4126B4370000454428 /* AppDelegate.swift in Sources */,
 				440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */,
+				4426641426BC2E6E00B5A5D9 /* ENSideMenuNavigationController.swift in Sources */,
 				4426640326BA5A7B00B5A5D9 /* FrequencyUtil.swift in Sources */,
+				4426641226BC2E3C00B5A5D9 /* ENSideMenu.swift in Sources */,
 				442663F826B6DE4200B5A5D9 /* TextUtil.swift in Sources */,
 				442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */,
 				4426640A26BBE6B800B5A5D9 /* AlertUtil.swift in Sources */,
 				444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */,
 				442663FF26B8347400B5A5D9 /* StringExtension.swift in Sources */,
+				4426640F26BC0D5600B5A5D9 /* SlideMenuViewController.swift in Sources */,
 				440DF82126B6D6B400FDA3AA /* FrequencyInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
