@@ -193,10 +193,49 @@ private func makeFreqArrayJustIntonation(baseFreq: Float = 440.0, scale: Scale, 
     return freqArray
 }
 
-func getBothFreqET(freq: Float) -> [Float] {
-    let prevFreq = freq * pow(EXP, -1)
-    let nextFreq = freq * pow(EXP, +1)
+func getBothFreqInfo_ET(info: FrequencyInfo, baseFreq: Float = 440) -> Dictionary<String, FrequencyInfo> {
+    let prevFreq = baseFreq * pow(EXP, -1)
+    let nextFreq = baseFreq * pow(EXP, +1)
     
-    return [prevFreq, freq, nextFreq]
+    var prevInfo: FrequencyInfo {
+        if info.note == Scale.C {
+            return FrequencyInfo(note: Scale.B, octave: info.octave - 1, eachFreq: prevFreq, speedOfSound: 0)
+        }
+        return FrequencyInfo(note: Scale(rawValue: info.note.rawValue - 1)!, octave: info.octave, eachFreq: prevFreq, speedOfSound: 0)
+    }
+    
+    var nextInfo: FrequencyInfo {
+        if info.note == Scale.B {
+            return FrequencyInfo(note: Scale.C, octave: info.octave + 1, eachFreq: nextFreq, speedOfSound: 0)
+        }
+        return FrequencyInfo(note: Scale(rawValue: info.note.rawValue + 1)!, octave: info.octave, eachFreq: nextFreq, speedOfSound: 0)
+    }
+    
+    return ["prev": prevInfo, "next": nextInfo]
+    
 }
 
+func getRangeOfNote_ET(note: Scale, octave: Int, baseFreq: Float = 440, baseNote: Scale = Scale.A) -> [Float] {
+    var correctA4Freq: Float {
+        if baseNote.rawValue <= Scale.A.rawValue {
+            return baseFreq * pow(EXP, Float(Scale.A.rawValue - baseNote.rawValue))
+        } else {
+            return baseFreq * pow(EXP, Float(baseNote.rawValue - Scale.A.rawValue))
+        }
+     }
+    
+    let octaveDist = (4 - octave) * -1
+    var noteDist: Int {
+        if note.rawValue <= Scale.A.rawValue {
+            return (Scale.A.rawValue - note.rawValue) * -1
+        } else {
+            return (note.rawValue - Scale.A.rawValue) * -1
+        }
+     }
+    let totalDist: Float = Float(noteDist + octaveDist * 12)
+    let correctNoteFreq = correctA4Freq * pow(EXP, totalDist)
+    let prevNoteFreq = correctA4Freq * pow(EXP, totalDist - 1)
+    let nextNoteFreq = correctA4Freq * pow(EXP, totalDist + 1)
+    
+    return [prevNoteFreq, correctNoteFreq, nextNoteFreq]
+}

@@ -7,8 +7,9 @@
 
 import UIKit
 
-protocol SlideMenuDelegate {
-    func selectedMenu(_ controller: SlideMenuViewController, identifier: String)
+class MenuState {
+    static let shared = MenuState()
+    var currentMenu = "TunerViewController"
 }
 
 class SlideMenuViewController: UIViewController {
@@ -20,14 +21,27 @@ class SlideMenuViewController: UIViewController {
     }
     
     @IBAction func btnFreqTable(_ sender: UIButton) {
+        let menu = "FreqTableViewController"
+        if MenuState.shared.currentMenu == menu {
+            sideMenuController()?.sideMenu?.toggleMenu()
+            return
+        }
         
-        let targetVC = self.storyboard?.instantiateViewController(identifier: "FreqTableViewController")
+        MenuState.shared.currentMenu = menu
+        let targetVC = self.storyboard?.instantiateViewController(identifier: menu)
         self.sideMenuController()?.setContentViewController(targetVC!)
     }
     
     
     @IBAction func btnTuner(_ sender: Any) {
-        let targetVC = self.storyboard?.instantiateViewController(identifier: "TunerViewController")
+        let menu = "TunerViewController"
+        if MenuState.shared.currentMenu == menu {
+            sideMenuController()?.sideMenu?.toggleMenu()
+            return
+        }
+        
+        MenuState.shared.currentMenu = menu
+        let targetVC = self.storyboard?.instantiateViewController(identifier: menu)
         self.sideMenuController()?.setContentViewController(targetVC!)
     }
 }

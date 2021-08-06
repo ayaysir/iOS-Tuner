@@ -17,6 +17,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="440" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ef3-Oo-NtB">
+                                <rect key="frame" x="80" y="249" width="254" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cIc-wz-QBM">
                                 <rect key="frame" x="16" y="44" width="93" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -32,12 +39,16 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="doneAccesory" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMM-hi-qhK">
                                 <rect key="frame" x="347" y="71" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="-"/>
                                 <connections>
+                                    <action selector="btnMinusAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="c8t-0I-X0R"/>
                                     <action selector="btnMinusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="kLC-4l-OWA"/>
                                 </connections>
                             </button>
@@ -46,6 +57,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="+"/>
                                 <connections>
+                                    <action selector="btnPlusAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MBZ-UB-wd4"/>
                                     <action selector="btnPlusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="qBS-IO-yJh"/>
                                 </connections>
                             </button>
@@ -55,6 +67,7 @@
                                 <state key="normal" title="Scale Select"/>
                                 <connections>
                                     <action selector="btnTuningSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="28B-6j-1jG"/>
+                                    <action selector="btnTuningSelectAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qlC-pf-IdN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DHO-Et-RDN">
@@ -62,6 +75,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Key"/>
                                 <connections>
+                                    <action selector="btnScaleSelectAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8px-UU-ReA"/>
                                     <action selector="btnScaleSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="Ibu-gl-7EH"/>
                                 </connections>
                             </button>
@@ -71,6 +85,7 @@
                                 <state key="normal" title="A₄"/>
                                 <connections>
                                     <action selector="btnBaseNoteSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="HhZ-he-SyZ"/>
+                                    <action selector="btnBaseNoteSelectAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PXa-Yr-t2i"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ge-Dd-mtn">
@@ -78,8 +93,29 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Target"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ef3-Oo-NtB">
-                                <rect key="frame" x="80" y="249" width="254" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbg-uZ-2D6">
+                                <rect key="frame" x="29" y="278" width="296" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ZZ-jo-J1c">
+                                <rect key="frame" x="43" y="317" width="123" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="otF-Nw-0gO">
+                                <rect key="frame" x="262" y="316" width="132" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnY-gf-BSS">
+                                <rect key="frame" x="133" y="352" width="84" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -97,7 +133,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnBaseNoteSelect" destination="AQw-MD-Slr" id="UsK-2r-x7W"/>
+                        <outlet property="btnScaleSelect" destination="DHO-Et-RDN" id="V9b-0g-PD9"/>
+                        <outlet property="btnTuningSelect" destination="Ebc-J5-jHf" id="PRx-k7-IfX"/>
+                        <outlet property="lblCentDist" destination="gnY-gf-BSS" id="8Qj-op-LsJ"/>
                         <outlet property="lblFreq" destination="Ef3-Oo-NtB" id="Neg-Ax-w3m"/>
+                        <outlet property="lblNext" destination="otF-Nw-0gO" id="Cdw-Mr-Wx6"/>
+                        <outlet property="lblOctave" destination="vbg-uZ-2D6" id="1Su-Cs-foh"/>
+                        <outlet property="lblPrev" destination="7ZZ-jo-J1c" id="7tb-D5-d7L"/>
+                        <outlet property="textFreqOutlet" destination="84k-3e-qpu" id="jio-ck-ziX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
