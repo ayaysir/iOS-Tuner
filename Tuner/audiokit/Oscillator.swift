@@ -35,7 +35,7 @@ class DynamicOscillatorConductor: ObservableObject {
     }
 
     func start() {
-        osc.amplitude = 0.5
+        osc.amplitude = 1
         osc.setWaveform(Table(.triangle))
         do {
             try engine.start()

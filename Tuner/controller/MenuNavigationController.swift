@@ -23,6 +23,8 @@ class MenuNavigationController: ENSideMenuNavigationController {
         self.sideMenu?.menuWidth = 180.0
         self.sideMenu?.bouncingEnabled = false
         
+        self.sideMenuAnimationType = .none
+        
         // Show navigation bar above side menu
         self.view.bringSubviewToFront(navigationBar)
     }

@@ -48,7 +48,7 @@ open class ENSideMenuNavigationController: UINavigationController, ENSideMenuPro
             break
         default:
             contentViewController.navigationItem.hidesBackButton = true
-            self.setViewControllers([contentViewController], animated: false) // 애니메이션
+            self.setViewControllers([contentViewController], animated: true) // 애니메이션
             break
         }
 

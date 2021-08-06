@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TuningSystem: Int, CaseIterable {
+enum TuningSystem: Int, CaseIterable, Codable {
     case equalTemperament, justIntonationMajor
     
     var textValue: String {
@@ -18,7 +18,7 @@ enum TuningSystem: Int, CaseIterable {
     }
 }
 
-enum Scale: Int, CaseIterable {
+enum Scale: Int, CaseIterable, Codable {
     case C, C_sharp, D, D_sharp, E, F, F_sharp, G, G_sharp, A, A_sharp, B
     
     var textValueForSharp: String {
@@ -111,16 +111,16 @@ let NOTE_END = Scale.B.rawValue
 
 let JUST_RATIO: [Float] = [1, 25/24, 9/8, 6/5, 5/4, 4/3, 45/32, 3/2, 8/5, 5/3, 9/5, 15/8]
 
-func makeFreqArray(tuningSystem: TuningSystem, baseFreq: Float = 440.0, scale: Scale?, baseNote: Scale) -> [FrequencyInfo] {
+func makeFreqArray(tuningSystem: TuningSystem, baseFreq: Float = 440.0, scale: Scale, baseNote: Scale) -> [FrequencyInfo] {
     switch tuningSystem {
     case .equalTemperament:
         return makeFreqArrayEqualTemperament(baseFreq: baseFreq, baseNote: baseNote)
     case .justIntonationMajor:
-        return makeFreqArrayJustIntonation(baseFreq: baseFreq, scale: scale!, baseNote: baseNote)
+        return makeFreqArrayJustIntonation(baseFreq: baseFreq, scale: scale, baseNote: baseNote)
     }
 }
 
-func makeFreqArrayEqualTemperament(baseFreq: Float = 440.0, baseNote: Scale) -> [FrequencyInfo] {
+private func makeFreqArrayEqualTemperament(baseFreq: Float = 440.0, baseNote: Scale) -> [FrequencyInfo] {
     var freqArray: [FrequencyInfo] = []
     let indexOfBaseNote = baseNote.rawValue
     let distanceFromBaseToLowest = NOTE_NAMES.count * (BASE_OCTAVE - OCTAVE_START) + indexOfBaseNote
@@ -148,7 +148,7 @@ func makeFreqArrayEqualTemperament(baseFreq: Float = 440.0, baseNote: Scale) -> 
     return freqArray
 }
 
-func makeFreqArrayJustIntonation(baseFreq: Float = 440.0, scale: Scale, baseNote: Scale) -> [FrequencyInfo] {
+private func makeFreqArrayJustIntonation(baseFreq: Float = 440.0, scale: Scale, baseNote: Scale) -> [FrequencyInfo] {
     var freqArray: [FrequencyInfo] = []
     var indexOfBaseNote: Int {
         if scale.rawValue <= baseNote.rawValue {
@@ -192,3 +192,11 @@ func makeFreqArrayJustIntonation(baseFreq: Float = 440.0, scale: Scale, baseNote
     
     return freqArray
 }
+
+func getBothFreqET(freq: Float) -> [Float] {
+    let prevFreq = freq * pow(EXP, -1)
+    let nextFreq = freq * pow(EXP, +1)
+    
+    return [prevFreq, freq, nextFreq]
+}
+

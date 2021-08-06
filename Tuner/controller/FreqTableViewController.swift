@@ -11,16 +11,6 @@ import DropDown
 class GlobalOsc {
     static let shared = GlobalOsc()
     let conductor = DynamicOscillatorConductor()
-    var isShoudReplay: Bool = false
-    var replayRow: Int = -1
-    var baseFreq: Float = 440
-    var baseAmplitude: Double = 0.5
-    var currentTuningSystem: TuningSystem = .equalTemperament
-    var baseNote: Scale = Scale.A
-    var currentJIScale: Scale = Scale.C
-    
-    // tableview 최근 선택 행
-    var lastSelectedRow: Int?
 }
 
 class FreqTableViewController: UIViewController {
@@ -39,17 +29,39 @@ class FreqTableViewController: UIViewController {
     @IBOutlet weak var btnScaleSelect: UIButton!
     @IBOutlet weak var btnBaseNoteSelect: UIButton!
     
+    var state: TunerViewState!
+    
+    func loadStateFromUserDefaults() {
+        do {
+            let loadedState = try UserDefaults.standard.getObject(forKey: "state-freqTable", castTo: TunerViewState.self)
+            self.state = loadedState
+        } catch {
+            print(error.localizedDescription)
+            self.state = TunerViewState()
+        }
+    }
+    
+    func saveStateToUserDefaults() {
+        do {
+            try UserDefaults.standard.setObject(state, forKey: "state-freqTable")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(#function)
+        loadStateFromUserDefaults()
         
         setTuningDropDown()
         setScaleDropDown()
         setBaseNoteDropDown()
         
         print(EXP)
-        freqArray = makeFreqArray(tuningSystem: GlobalOsc.shared.currentTuningSystem, baseFreq: GlobalOsc.shared.baseFreq, scale: nil, baseNote: GlobalOsc.shared.baseNote)
-        textA4FreqOutlet.text = String(GlobalOsc.shared.baseFreq)
+        reloadTable(freq: state.baseFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
+        textA4FreqOutlet.text = String(state.baseFreq)
         
         textA4FreqOutlet.addDoneButtonOnKeyboard()
         textA4FreqOutlet.delegate = self
@@ -73,7 +85,7 @@ class FreqTableViewController: UIViewController {
     @objc func conductorAppear() {
         print(">> active")
         let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
-        let isShoudReplay = GlobalOsc.shared.isShoudReplay
+        let isShoudReplay = state.isShouldReplay
         if !isOn && isShoudReplay {
             GlobalOsc.shared.conductor.start()
             let lastFreq = GlobalOsc.shared.conductor.data.frequency
@@ -84,38 +96,39 @@ class FreqTableViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         print(#function)
         conductorAppear()
-        let replayRow = GlobalOsc.shared.replayRow
+        let replayRow = state.replayRow
         if replayRow != -1 {
             tblFreqList.selectRow(at: IndexPath(row: replayRow, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.top)
-            GlobalOsc.shared.lastSelectedRow = replayRow
+            state.lastSelectedRow = replayRow
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         print(#function)
+        saveStateToUserDefaults()
         conductorDisappear()
     }
     
     func reloadTable(freq: Float, tuningSystem: TuningSystem, scale: Scale, baseNote: Scale) {
-        let oldBaseFreq = GlobalOsc.shared.baseFreq
+        let oldBaseFreq = state.baseFreq
         freqArray = makeFreqArray(tuningSystem: tuningSystem, baseFreq: freq, scale: scale, baseNote: baseNote)
         tblFreqList.reloadData()
-        if GlobalOsc.shared.conductor.osc.amplitude != 0.0 {
+        if GlobalOsc.shared.conductor.osc.amplitude != 0.0 && state.lastSelectedRow != nil {
             let lastFreq = GlobalOsc.shared.conductor.data.frequency
             GlobalOsc.shared.conductor.noteOn(frequency:  lastFreq + freq - oldBaseFreq)
-            GlobalOsc.shared.isShoudReplay = true
+            state.isShouldReplay = true
         }
-        GlobalOsc.shared.baseFreq = freq
-        GlobalOsc.shared.currentTuningSystem = tuningSystem
+        state.baseFreq = freq
+        state.currentTuningSystem = tuningSystem
     }
     
     @IBAction func btnPlusAct(_ sender: Any) {
         guard let text = textA4FreqOutlet.text else { return }
         guard let num = Float(text) else { return }
         textA4FreqOutlet.text = String(num + 1)
-        reloadTable(freq: num + 1, tuningSystem: GlobalOsc.shared.currentTuningSystem, scale: GlobalOsc.shared.currentJIScale, baseNote: GlobalOsc.shared.baseNote)
-        if GlobalOsc.shared.lastSelectedRow != nil {
-            tblFreqList.selectRow(at: IndexPath(row: GlobalOsc.shared.lastSelectedRow!, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
+        reloadTable(freq: num + 1, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
+        if state.lastSelectedRow != nil {
+            tblFreqList.selectRow(at: IndexPath(row: state.lastSelectedRow!, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
         }
     }
     
@@ -123,9 +136,9 @@ class FreqTableViewController: UIViewController {
         guard let text = textA4FreqOutlet.text else { return }
         guard let num = Float(text) else { return }
         textA4FreqOutlet.text = String(num - 1)
-        reloadTable(freq: num - 1, tuningSystem: GlobalOsc.shared.currentTuningSystem, scale: GlobalOsc.shared.currentJIScale, baseNote: GlobalOsc.shared.baseNote)
-        if GlobalOsc.shared.lastSelectedRow != nil {
-            tblFreqList.selectRow(at: IndexPath(row: GlobalOsc.shared.lastSelectedRow!, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
+        reloadTable(freq: num - 1, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
+        if state.lastSelectedRow != nil {
+            tblFreqList.selectRow(at: IndexPath(row: state.lastSelectedRow!, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
         }
     }
     
@@ -164,19 +177,19 @@ extension FreqTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if GlobalOsc.shared.lastSelectedRow != nil && GlobalOsc.shared.lastSelectedRow! == indexPath.row {
+        if state.lastSelectedRow != nil && state.lastSelectedRow! == indexPath.row {
             tableView.deselectRow(at: indexPath, animated: true)
             GlobalOsc.shared.conductor.noteOff()
-            GlobalOsc.shared.isShoudReplay = false
-            GlobalOsc.shared.replayRow = -1
-            GlobalOsc.shared.lastSelectedRow = nil
+            state.isShouldReplay = false
+            state.replayRow = -1
+            state.lastSelectedRow = nil
         } else {
             GlobalOsc.shared.conductor.data.isPlaying = true
             GlobalOsc.shared.conductor.start()
             GlobalOsc.shared.conductor.noteOn(frequency: freqArray[indexPath.row].eachFreq)
-            GlobalOsc.shared.isShoudReplay = true
-            GlobalOsc.shared.replayRow = indexPath.row
-            GlobalOsc.shared.lastSelectedRow = indexPath.row
+            state.isShouldReplay = true
+            state.replayRow = indexPath.row
+            state.lastSelectedRow = indexPath.row
         }
     }
     
@@ -209,21 +222,21 @@ extension FreqTableViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        let oldFreq = GlobalOsc.shared.baseFreq
+        let oldFreq = state.baseFreq
         guard let text = textField.text else { return }
         guard let freq = Float(text) else {
-            reloadTable(freq: 440, tuningSystem: GlobalOsc.shared.currentTuningSystem, scale: GlobalOsc.shared.currentJIScale, baseNote: GlobalOsc.shared.baseNote)
+            reloadTable(freq: 440, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
             return
         }
         
         if freq < 200 || freq > 600 {
             simpleAlert(self, message: "주파수의 범위는 200 ~ 600만 입력할 수 있습니다.", title: "범위 초과", handler: nil)
             textField.text = String(oldFreq)
-            reloadTable(freq: oldFreq, tuningSystem: GlobalOsc.shared.currentTuningSystem, scale: GlobalOsc.shared.currentJIScale, baseNote: GlobalOsc.shared.baseNote)
+            reloadTable(freq: oldFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
             return
         }
         
-        reloadTable(freq: freq, tuningSystem: GlobalOsc.shared.currentTuningSystem, scale: GlobalOsc.shared.currentJIScale, baseNote: GlobalOsc.shared.baseNote)
+        reloadTable(freq: freq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
     }
 }
 
@@ -232,9 +245,9 @@ extension FreqTableViewController {
         tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue }
         tuningDropDown.anchorView = btnTuningSelect
         tuningDropDown.cornerRadius = 15
-        btnTuningSelect.setTitle(GlobalOsc.shared.currentTuningSystem.textValue, for: .normal)
-        btnScaleSelect.isHidden = true
-        tuningDropDown.selectRow(GlobalOsc.shared.currentTuningSystem.rawValue)
+        btnTuningSelect.setTitle(state.currentTuningSystem.textValue, for: .normal)
+        btnScaleSelect.isHidden = (state.currentTuningSystem == .equalTemperament)
+        tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
         
         tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("선택한 아이템 : \(item)")
@@ -247,11 +260,11 @@ extension FreqTableViewController {
             }
             
             let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
-            reloadTable(freq: GlobalOsc.shared.baseFreq, tuningSystem: tuningSystem, scale: GlobalOsc.shared.currentJIScale, baseNote: GlobalOsc.shared.baseNote)
+            reloadTable(freq: state.baseFreq, tuningSystem: tuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
             btnTuningSelect.setTitle(tuningSystem.textValue, for: .normal)
             GlobalOsc.shared.conductor.stop()
-            GlobalOsc.shared.currentTuningSystem = tuningSystem
-            GlobalOsc.shared.lastSelectedRow = nil
+            state.currentTuningSystem = tuningSystem
+            state.lastSelectedRow = nil
         }
     }
     
@@ -259,15 +272,16 @@ extension FreqTableViewController {
         scaleDropDown.dataSource = Scale.allCases.map { $0.textValueMixed }
         scaleDropDown.anchorView = btnScaleSelect
         scaleDropDown.cornerRadius = 15
-        scaleDropDown.selectRow(GlobalOsc.shared.currentJIScale.rawValue)
+        scaleDropDown.selectRow(state.currentJIScale.rawValue)
+        btnScaleSelect.setTitle(state.currentJIScale.textValueMixed, for: .normal)
         
         scaleDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             let scale: Scale = Scale(rawValue: index) ?? Scale.C
-            reloadTable(freq: GlobalOsc.shared.baseFreq, tuningSystem: GlobalOsc.shared.currentTuningSystem, scale: scale, baseNote: GlobalOsc.shared.baseNote)
+            reloadTable(freq: state.baseFreq, tuningSystem: state.currentTuningSystem, scale: scale, baseNote: state.baseNote)
             btnScaleSelect.setTitle(item, for: .normal)
             GlobalOsc.shared.conductor.stop()
-            GlobalOsc.shared.currentJIScale = scale
-            GlobalOsc.shared.lastSelectedRow = nil
+            state.currentJIScale = scale
+            state.lastSelectedRow = nil
         }
     }
     
@@ -281,7 +295,8 @@ extension FreqTableViewController {
         }
         baseNoteDropDown.anchorView = btnBaseNoteSelect
         baseNoteDropDown.cornerRadius = 15
-        baseNoteDropDown.selectRow(GlobalOsc.shared.baseNote.rawValue)
+        baseNoteDropDown.selectRow(state.baseNote.rawValue)
+        btnBaseNoteSelect.setTitle(baseNoteDropDown.dataSource[state.baseNote.rawValue], for: .normal)
         
         baseNoteDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             let baseNote = Scale(rawValue: index) ?? Scale.A
@@ -290,13 +305,13 @@ extension FreqTableViewController {
                 return
             }
             
-            reloadTable(freq: freqObj.eachFreq, tuningSystem: GlobalOsc.shared.currentTuningSystem, scale: GlobalOsc.shared.currentJIScale, baseNote: baseNote)
+            reloadTable(freq: freqObj.eachFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: baseNote)
             btnBaseNoteSelect.setTitle(item, for: .normal)
             GlobalOsc.shared.conductor.stop()
-            GlobalOsc.shared.baseNote = baseNote
-            GlobalOsc.shared.baseFreq = freqObj.eachFreq
+            state.baseNote = baseNote
+            state.baseFreq = freqObj.eachFreq
             textA4FreqOutlet.text = String(freqObj.eachFreq.cleanFixTwo)
-            GlobalOsc.shared.lastSelectedRow = nil
+            state.lastSelectedRow = nil
         }
     }
 }

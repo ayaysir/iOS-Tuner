@@ -20,17 +20,16 @@ class SlideMenuViewController: UIViewController {
     }
     
     @IBAction func btnFreqTable(_ sender: UIButton) {
-        print("\(sender.currentTitle!) 클릭됨.")
-        
-        // 사이드메뉴 닫기
-//        let targetVC = self.storyboard?.instantiateViewController(identifier: "FreqTableViewController")
-//        self.present(targetVC!, animated: false, completion: nil)
         
         let targetVC = self.storyboard?.instantiateViewController(identifier: "FreqTableViewController")
         self.sideMenuController()?.setContentViewController(targetVC!)
     }
     
     
+    @IBAction func btnTuner(_ sender: Any) {
+        let targetVC = self.storyboard?.instantiateViewController(identifier: "TunerViewController")
+        self.sideMenuController()?.setContentViewController(targetVC!)
+    }
 }
 
 
