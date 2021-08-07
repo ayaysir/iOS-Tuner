@@ -33,6 +33,7 @@
 		445F328F26BD2C1100412F7B /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F328E26BD2C1100412F7B /* ViewState.swift */; };
 		445F329126BD32BD00412F7B /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */; };
 		445F329426BE5B4E00412F7B /* FreqTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329326BE5B4E00412F7B /* FreqTextFieldDelegate.swift */; };
+		445F329726BE962A00412F7B /* TunerIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329626BE962A00412F7B /* TunerIndicator.swift */; };
 		B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087577D37AE85CA890BA062C /* Pods_Tuner.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		445F328E26BD2C1100412F7B /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		445F329326BE5B4E00412F7B /* FreqTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqTextFieldDelegate.swift; sourceTree = "<group>"; };
+		445F329626BE962A00412F7B /* TunerIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerIndicator.swift; sourceTree = "<group>"; };
 		B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.release.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.release.xcconfig"; sourceTree = "<group>"; };
 		E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.debug.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,6 +176,7 @@
 		444EEE3F26B4370000454428 /* Tuner */ = {
 			isa = PBXGroup;
 			children = (
+				445F329526BE95FC00412F7B /* graphics */,
 				445F329226BE5B3800412F7B /* delegate */,
 				4426640B26BC0C5C00B5A5D9 /* controller */,
 				4426640126BA5A6500B5A5D9 /* frequency */,
@@ -198,6 +201,14 @@
 				445F329326BE5B4E00412F7B /* FreqTextFieldDelegate.swift */,
 			);
 			path = delegate;
+			sourceTree = "<group>";
+		};
+		445F329526BE95FC00412F7B /* graphics */ = {
+			isa = PBXGroup;
+			children = (
+				445F329626BE962A00412F7B /* TunerIndicator.swift */,
+			);
+			path = graphics;
 			sourceTree = "<group>";
 		};
 		94DB0DF3BA5174020EFC934C /* Frameworks */ = {
@@ -330,6 +341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				445F329726BE962A00412F7B /* TunerIndicator.swift in Sources */,
 				442663FB26B6E17600B5A5D9 /* Oscillator.swift in Sources */,
 				444EEE4B26B4370000454428 /* Tuner.xcdatamodeld in Sources */,
 				444EEE4526B4370000454428 /* TunerViewController.swift in Sources */,

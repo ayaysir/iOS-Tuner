@@ -28,6 +28,9 @@ class TunerViewController: UIViewController {
     @IBOutlet weak var lblNext: UILabel!
     @IBOutlet weak var lblCentDist: UILabel!
     
+    @IBOutlet weak var viewIndicator: TunerIndicator!
+    
+    
     var conductor = TunerConductor()
     
     var freqArray: [FrequencyInfo]!
@@ -97,7 +100,8 @@ class TunerViewController: UIViewController {
         lblFreq.text = "\(conductor.data.pitch)"
         lblOctave.text = "\(conductor.data.noteNameWithSharps)"
         lblCentDist.text = String(conductor.data.centDist)
-        
+        viewIndicator.setNeedsDisplay()
+
     }
     
     @IBAction func btnTempFreqTable(_ sender: Any) {
@@ -269,3 +273,4 @@ extension TunerViewController: ENSideMenuDelegate {
         print("sideMenuDidOpen")
     }
 }
+
