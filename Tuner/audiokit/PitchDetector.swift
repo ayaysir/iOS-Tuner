@@ -13,6 +13,7 @@ struct TunerData {
     var octave: Int = 0
     var standardFreq: Float = 0.0
     var centDist: Float = 0.0
+    var a4Frequency: Float = 440
 }
 
 class TunerConductor: ObservableObject {
@@ -30,8 +31,7 @@ class TunerConductor: ObservableObject {
     let noteFrequencies = [16.3516, 17.32391, 18.35404, 19.44544, 20.60172, 21.82676, 23.12465, 24.49971, 25.95654, 27.5, 29.13524, 30.86771]
     let noteNamesWithSharps = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
     let noteNamesWithFlats = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
-    let semitone = 69
-    
+
     var data = TunerData()
     
     init() {
@@ -56,57 +56,17 @@ class TunerConductor: ObservableObject {
         }
     }
     
-    func getNote(frequency: Float) -> Float {
-        let note = 12 * (log(frequency / 440) / log(2))
-        return roundf(note) + Float(semitone)
-    }
-    
-    func getStandardFrequency(noteNum: Float) -> Float {
-        let exponent = (noteNum - Float(semitone)) / 12
-        return 440 * Float(truncating: pow(2, exponent) as NSNumber)
-    }
-
-    func getCents(frequency: Float, noteNum: Float) -> Float {
-        return floor((1200 * log(frequency / getStandardFrequency(noteNum: noteNum))) / log(2.0))
-    }
-    
     func update(_ pitch: AUValue, _ amp: AUValue) {
         data.pitch = pitch
         data.amplitude = amp
 
-//        var frequency = pitch
-//        while frequency > Float(noteFrequencies[noteFrequencies.count - 1]) {
-//            frequency /= 2.0
-//        }
-//        while frequency < Float(noteFrequencies[0]) {
-//            frequency *= 2.0
-//        }
-//
-//        var minDistance: Float = 10_000.0
-//        var index = 0
-//
-//        for possibleIndex in 0 ..< noteFrequencies.count {
-//            let distance = fabsf(Float(noteFrequencies[possibleIndex]) - frequency)
-//            if distance < minDistance {
-//                index = possibleIndex
-//                minDistance = distance
-//            }
-//        }
-//        let octave = Int(log2f(pitch / frequency))
-//
-//        data.octave = octave
-//        data.noteNum = getNote(frequency: pitch)
-//        data.note = Scale(rawValue: index)!
-//        data.noteNameWithSharps = "\(noteNamesWithSharps[index])\(octave)"
-//        data.noteNameWithFlats = "\(noteNamesWithFlats[index])\(octave)"
-        
-        let noteNum = getNote(frequency: pitch)
+        let noteNum = getNote(frequency: pitch, a4Frequency: data.a4Frequency)
         data.octave = Int(noteNum / 12) - 1
         data.note = Scale(rawValue: Int(noteNum) % 12)!
         data.noteNum = noteNum
         data.noteNameWithSharps = "\(noteNamesWithSharps[data.note.rawValue])\(data.octave)"
         data.noteNameWithSharps = "\(noteNamesWithFlats[data.note.rawValue])\(data.octave)"
-        data.standardFreq = getStandardFrequency(noteNum: noteNum)
+        data.standardFreq = getStandardFrequency(noteNum: noteNum, a4Frequency: data.a4Frequency)
         data.centDist = getCents(frequency: pitch, noteNum: noteNum)
         
 //        print(noteNum, getStandardFrequency(noteNum: noteNum), getCents(frequency: pitch, noteNum: noteNum))

@@ -42,6 +42,9 @@
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="doneAccesory" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="textFreqAct:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="1QL-7M-kSt"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMM-hi-qhK">
                                 <rect key="frame" x="347" y="71" width="30" height="30"/>

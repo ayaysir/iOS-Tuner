@@ -209,16 +209,7 @@ class FreqCell: UITableViewCell {
 
 extension FreqTableViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // 백스페이스
-        if string.isEmpty {
-            return true
-        }
-        
-        let charSetExceptNumber = CharacterSet(charactersIn: "0123456789.").inverted
-        let strComponents = string.components(separatedBy: charSetExceptNumber)
-        let numberFiltered = strComponents.joined(separator: "")
-
-        return string == numberFiltered
+        return freq_shouldChangeCharactersIn(textField, shouldChangeCharactersIn: range, replacementString: string)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {

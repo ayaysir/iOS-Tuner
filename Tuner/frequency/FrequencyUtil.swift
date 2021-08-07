@@ -160,8 +160,7 @@ private func makeFreqArrayJustIntonation(baseFreq: Float = 440.0, scale: Scale, 
     
     // A4로부터 A1 계산하기
     // 4     3  2  1
-    // 440  /2 /2 /2 = 55
-    // A4를 비율을 나누기로 하면 C1이 나옴?
+    // 440  /2 /2 /2
     let powered = pow(2, BASE_OCTAVE - OCTAVE_START)
     let c4FreqJI = baseFreq / JUST_RATIO[indexOfBaseNote]
     let cLowestOctaveFreq: Float = c4FreqJI / Float(truncating: powered as NSNumber)
@@ -193,49 +192,30 @@ private func makeFreqArrayJustIntonation(baseFreq: Float = 440.0, scale: Scale, 
     return freqArray
 }
 
-func getBothFreqInfo_ET(info: FrequencyInfo, baseFreq: Float = 440) -> Dictionary<String, FrequencyInfo> {
-    let prevFreq = baseFreq * pow(EXP, -1)
-    let nextFreq = baseFreq * pow(EXP, +1)
-    
-    var prevInfo: FrequencyInfo {
-        if info.note == Scale.C {
-            return FrequencyInfo(note: Scale.B, octave: info.octave - 1, eachFreq: prevFreq, speedOfSound: 0)
-        }
-        return FrequencyInfo(note: Scale(rawValue: info.note.rawValue - 1)!, octave: info.octave, eachFreq: prevFreq, speedOfSound: 0)
-    }
-    
-    var nextInfo: FrequencyInfo {
-        if info.note == Scale.B {
-            return FrequencyInfo(note: Scale.C, octave: info.octave + 1, eachFreq: nextFreq, speedOfSound: 0)
-        }
-        return FrequencyInfo(note: Scale(rawValue: info.note.rawValue + 1)!, octave: info.octave, eachFreq: nextFreq, speedOfSound: 0)
-    }
-    
-    return ["prev": prevInfo, "next": nextInfo]
-    
+func getOctave4Frequency_ET(targetNote4: Scale, prevNote4: Scale, prev4frequency: Float) -> Float {
+    let dist = (prevNote4.rawValue - targetNote4.rawValue) * -1
+    return prev4frequency * pow(EXP, Float(dist))
 }
 
-func getRangeOfNote_ET(note: Scale, octave: Int, baseFreq: Float = 440, baseNote: Scale = Scale.A) -> [Float] {
-    var correctA4Freq: Float {
-        if baseNote.rawValue <= Scale.A.rawValue {
-            return baseFreq * pow(EXP, Float(Scale.A.rawValue - baseNote.rawValue))
-        } else {
-            return baseFreq * pow(EXP, Float(baseNote.rawValue - Scale.A.rawValue))
-        }
-     }
-    
-    let octaveDist = (4 - octave) * -1
-    var noteDist: Int {
-        if note.rawValue <= Scale.A.rawValue {
-            return (Scale.A.rawValue - note.rawValue) * -1
-        } else {
-            return (note.rawValue - Scale.A.rawValue) * -1
-        }
-     }
-    let totalDist: Float = Float(noteDist + octaveDist * 12)
-    let correctNoteFreq = correctA4Freq * pow(EXP, totalDist)
-    let prevNoteFreq = correctA4Freq * pow(EXP, totalDist - 1)
-    let nextNoteFreq = correctA4Freq * pow(EXP, totalDist + 1)
-    
-    return [prevNoteFreq, correctNoteFreq, nextNoteFreq]
+func getA4Frequency_ET(baseNote4: Scale, frequency: Float) -> Float {
+    var distFromA4: Int {
+        return baseNote4.rawValue <= Scale.A.rawValue
+            ? Scale.A.rawValue - baseNote4.rawValue
+            : (baseNote4.rawValue - Scale.A.rawValue) * -1
+    }
+    return frequency * pow(EXP, Float(distFromA4))
+}
+
+func getNote(frequency: Float, semitone: Int = 69, a4Frequency: Float = 440) -> Float {
+    let note = 12 * (log(frequency / a4Frequency) / log(2))
+    return roundf(note) + Float(semitone)
+}
+
+func getStandardFrequency(noteNum: Float, semitone: Int = 69, a4Frequency: Float = 440) -> Float {
+    let exponent = (noteNum - Float(semitone)) / 12
+    return a4Frequency * Float(truncating: pow(2, exponent) as NSNumber)
+}
+
+func getCents(frequency: Float, noteNum: Float) -> Float {
+    return floor((1200 * log(frequency / getStandardFrequency(noteNum: noteNum))) / log(2.0))
 }

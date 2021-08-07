@@ -65,6 +65,8 @@ class TunerViewController: UIViewController {
         setScaleDropDown()
         setBaseNoteDropDown()
         
+        initField()
+        
         self.sideMenuController()?.sideMenu?.delegate = self
         
         // Do any additional setup after loading the view.
@@ -75,7 +77,11 @@ class TunerViewController: UIViewController {
             // 타이머는 main thread 에서 실행됨
             self.levelTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.levelTimerCallback), userInfo: nil, repeats: true)
         }
-        
+    }
+    
+    func initField() {
+        textFreqOutlet.text = String(state.baseFreq.cleanFixTwo)
+        textFreqOutlet.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,16 +90,12 @@ class TunerViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         conductor.stop()
+        saveStateToUserDefaults()
     }
     
     @objc func levelTimerCallback() {
         lblFreq.text = "\(conductor.data.pitch)"
         lblOctave.text = "\(conductor.data.noteNameWithSharps)"
-        
-        let currentInfo = FrequencyInfo(note: conductor.data.note, octave: conductor.data.octave, eachFreq: 0, speedOfSound: 0)
-        let both = getBothFreqInfo_ET(info: currentInfo)
-        lblPrev.text = String(describing: both["prev"]!.note.textValueMixed)
-        lblNext.text = String(describing: both["next"]!.note.textValueMixed)
         lblCentDist.text = String(conductor.data.centDist)
         
     }
@@ -105,6 +107,11 @@ class TunerViewController: UIViewController {
     @IBAction func btnShowMenu(_ sender: Any) {
         self.toggleSideMenuView()
     }
+    
+    @IBAction func textFreqAct(_ sender: UITextField) {
+        
+    }
+    
     
     @IBAction func btnPlusAct(_ sender: Any) {
         guard let text = textFreqOutlet.text else { return }
@@ -201,24 +208,43 @@ extension TunerViewController {
         
         baseNoteDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             let baseNote = Scale(rawValue: index) ?? Scale.A
-            // baseFreq 변경
-            guard let freqObj = freqArray.first(where: { $0.octave == 4 && $0.note == baseNote }) else {
-                return
-            }
+            print(state.baseNote, state.baseFreq)
+            let baseFreq = getOctave4Frequency_ET(targetNote4: baseNote, prevNote4: state.baseNote, prev4frequency: state.baseFreq)
+            let a4Freq = getA4Frequency_ET(baseNote4: baseNote, frequency: baseFreq)
             
-            reloadTable(freq: freqObj.eachFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: baseNote)
             btnBaseNoteSelect.setTitle(item, for: .normal)
             state.baseNote = baseNote
-            state.baseFreq = freqObj.eachFreq
-            textFreqOutlet.text = String(freqObj.eachFreq.cleanFixTwo)
-            state.lastSelectedRow = nil
+            state.baseFreq = baseFreq
+            textFreqOutlet.text = String(baseFreq.cleanFixTwo)
+            conductor.data.a4Frequency = a4Freq
+            
         }
     }
 }
 
+extension TunerViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return freq_shouldChangeCharactersIn(textField, shouldChangeCharactersIn: range, replacementString: string)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let oldFreq = state.baseFreq
+        guard let text = textField.text else { return }
+        guard let freq = Float(text) else {
+            reloadTable(freq: 440, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
+            return
+        }
 
+        if freq < 200 || freq > 600 {
+            simpleAlert(self, message: "주파수의 범위는 200 ~ 600만 입력할 수 있습니다.", title: "범위 초과", handler: nil)
+            textField.text = String(oldFreq)
+            reloadTable(freq: oldFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
+            return
+        }
 
-
+        reloadTable(freq: freq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
+    }
+}
 
 extension TunerViewController: ENSideMenuDelegate {
     // MARK: - ENSideMenu Delegate
