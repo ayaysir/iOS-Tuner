@@ -96,11 +96,14 @@ class TunerViewController: UIViewController {
         saveStateToUserDefaults()
     }
     
+    /**
+     타이머 갱신
+     */
     @objc func levelTimerCallback() {
-        lblFreq.text = "\(conductor.data.pitch)"
+        lblFreq.text = "\(Int(round(conductor.data.pitch)))"
         lblOctave.text = "\(conductor.data.noteNameWithSharps)"
-        lblCentDist.text = String(conductor.data.centDist)
-        viewIndicator.setNeedsDisplay()
+        lblCentDist.text = String(Int(conductor.data.centDist))
+        viewIndicator.state = conductor.data
 
     }
     

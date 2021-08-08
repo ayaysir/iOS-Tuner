@@ -8,7 +8,7 @@
 import Foundation
 
 struct TunerViewState: Codable {
-    var isShouldReplay: Bool = false
+    var isShouldReplay: Bool = false // 뷰 밖에 나갔다가 돌아왔을 때 플레이가 되어야 하는지
     var replayRow: Int = -1
     var baseFreq: Float = 440
     var baseAmplitude: Double = 1
