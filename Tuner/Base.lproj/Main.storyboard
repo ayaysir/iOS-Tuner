@@ -134,6 +134,13 @@
                                     <action selector="btnBaseNoteSelectAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PXa-Yr-t2i"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQt-3G-VPh">
+                                <rect key="frame" x="93" y="682" width="192" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -155,6 +162,7 @@
                         <outlet property="btnTuningSelect" destination="Ebc-J5-jHf" id="PRx-k7-IfX"/>
                         <outlet property="lblCentDist" destination="gnY-gf-BSS" id="8Qj-op-LsJ"/>
                         <outlet property="lblFreq" destination="Ef3-Oo-NtB" id="Neg-Ax-w3m"/>
+                        <outlet property="lblJustFrequency" destination="RQt-3G-VPh" id="r6a-NY-Pdc"/>
                         <outlet property="lblOctave" destination="vbg-uZ-2D6" id="1Su-Cs-foh"/>
                         <outlet property="textFreqOutlet" destination="84k-3e-qpu" id="jio-ck-ziX"/>
                         <outlet property="viewIndicator" destination="ZwB-T0-Bti" id="dhc-Gd-5Z0"/>

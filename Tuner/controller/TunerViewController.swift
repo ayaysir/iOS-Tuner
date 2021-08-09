@@ -24,16 +24,12 @@ class TunerViewController: UIViewController {
     @IBOutlet weak var btnBaseNoteSelect: UIButton!
     @IBOutlet weak var lblOctave: UILabel!
     
-    @IBOutlet weak var lblPrev: UILabel!
-    @IBOutlet weak var lblNext: UILabel!
     @IBOutlet weak var lblCentDist: UILabel!
+    @IBOutlet weak var lblJustFrequency: UILabel!
     
     @IBOutlet weak var viewIndicator: TunerIndicator!
     
-    
     var conductor = TunerConductor()
-    
-    var freqArray: [FrequencyInfo]!
     
     let tuningDropDown = DropDown()
     let scaleDropDown = DropDown()
@@ -97,18 +93,15 @@ class TunerViewController: UIViewController {
     }
     
     /**
-     타이머 갱신
+     === 타이머 갱신 ===
      */
     @objc func levelTimerCallback() {
         lblFreq.text = "\(Int(round(conductor.data.pitch)))"
         lblOctave.text = "\(conductor.data.noteNameWithSharps)"
         lblCentDist.text = String(Int(conductor.data.centDist))
         viewIndicator.state = conductor.data
-
-    }
-    
-    @IBAction func btnTempFreqTable(_ sender: Any) {
         
+        lblJustFrequency.text = String(getStandardFrequency_JI(noteNum: conductor.data.noteNum, c4Frequency: conductor.data.c4Frequency, scale: state.currentJIScale))
     }
     
     @IBAction func btnShowMenu(_ sender: Any) {
@@ -124,15 +117,12 @@ class TunerViewController: UIViewController {
         guard let text = textFreqOutlet.text else { return }
         guard let num = Float(text) else { return }
         textFreqOutlet.text = String(num + 1)
-        reloadTable(freq: num + 1, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
-
     }
     
     @IBAction func btnMinusAct(_ sender: Any) {
         guard let text = textFreqOutlet.text else { return }
         guard let num = Float(text) else { return }
         textFreqOutlet.text = String(num - 1)
-        reloadTable(freq: num - 1, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
     }
     
     @IBAction func btnTuningSelectAct(_ sender: Any) {
@@ -146,14 +136,6 @@ class TunerViewController: UIViewController {
     @IBAction func btnBaseNoteSelectAct(_ sender: Any) {
         baseNoteDropDown.show()
     }
-    
-    
-    func reloadTable(freq: Float, tuningSystem: TuningSystem, scale: Scale, baseNote: Scale) {
-        freqArray = makeFreqArray(tuningSystem: tuningSystem, baseFreq: freq, scale: scale, baseNote: baseNote)
-        state.baseFreq = freq
-        state.currentTuningSystem = tuningSystem
-    }
-    
  
 }
 
@@ -166,6 +148,9 @@ extension TunerViewController {
         btnScaleSelect.isHidden = (state.currentTuningSystem == .equalTemperament)
         tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
         
+        conductor.data.tuningSystem = state.currentTuningSystem
+        conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: state.currentJIScale)
+        
         tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("선택한 아이템 : \(item)")
             print("인덱스 : \(index)")
@@ -177,10 +162,15 @@ extension TunerViewController {
             }
             
             let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
-            reloadTable(freq: state.baseFreq, tuningSystem: tuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
             btnTuningSelect.setTitle(tuningSystem.textValue, for: .normal)
             state.currentTuningSystem = tuningSystem
             state.lastSelectedRow = nil
+            
+            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+            conductor.data.tuningSystem = tuningSystem
+            print(">> tuningsystem", tuningSystem)
+            conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: state.currentJIScale)
+            conductor.data.jiScale = state.currentJIScale
         }
     }
     
@@ -191,12 +181,19 @@ extension TunerViewController {
         scaleDropDown.selectRow(state.currentJIScale.rawValue)
         btnScaleSelect.setTitle(state.currentJIScale.textValueMixed, for: .normal)
         
+        conductor.data.jiScale = state.currentJIScale
+        
         scaleDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             let scale: Scale = Scale(rawValue: index) ?? Scale.C
-            reloadTable(freq: state.baseFreq, tuningSystem: state.currentTuningSystem, scale: scale, baseNote: state.baseNote)
             btnScaleSelect.setTitle(item, for: .normal)
             state.currentJIScale = scale
             state.lastSelectedRow = nil
+            
+            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+            conductor.data.tuningSystem = state.currentTuningSystem
+            conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: scale)
+            print(">> i4frequency", conductor.data.c4Frequency)
+            conductor.data.jiScale = scale
         }
     }
     
@@ -225,6 +222,11 @@ extension TunerViewController {
             textFreqOutlet.text = String(baseFreq.cleanFixTwo)
             conductor.data.a4Frequency = a4Freq
             
+            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+            conductor.data.tuningSystem = state.currentTuningSystem
+            conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: baseNote, prev4frequency: baseFreq, scale: state.currentJIScale)
+            conductor.data.jiScale = state.currentJIScale
+            
         }
     }
 }
@@ -238,18 +240,17 @@ extension TunerViewController: UITextFieldDelegate {
         let oldFreq = state.baseFreq
         guard let text = textField.text else { return }
         guard let freq = Float(text) else {
-            reloadTable(freq: 440, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
             return
         }
 
         if freq < 200 || freq > 600 {
             simpleAlert(self, message: "주파수의 범위는 200 ~ 600만 입력할 수 있습니다.", title: "범위 초과", handler: nil)
             textField.text = String(oldFreq)
-            reloadTable(freq: oldFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
             return
         }
-
-        reloadTable(freq: freq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
+        
+        state.baseFreq = freq
+        
     }
 }
 

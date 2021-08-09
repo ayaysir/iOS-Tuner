@@ -178,8 +178,6 @@ private func makeFreqArrayJustIntonation(baseFreq: Float = 440.0, scale: Scale, 
             
             let eachFreq = rootFreq * intonationRatioArray[noteIndex]
             let speedOfSound = Float(SPEED_OF_SOUND) / eachFreq
-//            let altNote: String = ALT_NOTE_NAMES[note] ?? ""
-//            let appendedNote: String = altNote != "" ? "\(note) / \(altNote)" : note
             freqArray.append(FrequencyInfo(note: Scale(rawValue: noteIndex)!, octave: octave, eachFreq: eachFreq, speedOfSound: speedOfSound))
             // 2배가 되었을 때
             if noteIndex >= NOTE_END {
@@ -206,9 +204,21 @@ func getA4Frequency_ET(baseNote4: Scale, frequency: Float) -> Float {
     return frequency * pow(EXP, Float(distFromA4))
 }
 
+// 공통 사용 가능
 func getNote(frequency: Float, semitone: Int = 69, a4Frequency: Float = 440) -> Float {
     let note = 12 * (log(frequency / a4Frequency) / log(2))
     return roundf(note) + Float(semitone)
+}
+
+/**
+ https://www.kylegann.com/tuning.html
+ 
+ log(a/b)    x cents
+ --------  = -------
+ log(2)      1200 cents
+ */
+func getCents(frequency: Float, noteNum: Float, standardFrequency: Float) -> Float {
+    return floor((1200 * log(frequency / standardFrequency)) / log(2.0))
 }
 
 func getStandardFrequency(noteNum: Float, semitone: Int = 69, a4Frequency: Float = 440) -> Float {
@@ -216,6 +226,19 @@ func getStandardFrequency(noteNum: Float, semitone: Int = 69, a4Frequency: Float
     return a4Frequency * Float(truncating: pow(2, exponent) as NSNumber)
 }
 
-func getCents(frequency: Float, noteNum: Float) -> Float {
-    return floor((1200 * log(frequency / getStandardFrequency(noteNum: noteNum))) / log(2.0))
+// 순정율 튜닝 (장조)
+func getStandardFrequency_JI(noteNum: Float, c4Frequency: Float = 261.63, scale: Scale) -> Float {
+    // 옥타브 구하기 0 ~ (버림)
+    let octaveDist = (5 - Int(noteNum / 12)) * -1
+    
+    // x4 -> i4 거리
+    let dist = Int(noteNum.truncatingRemainder(dividingBy: 12))
+    
+    // 옥타브 반영
+    let x4Frequency = c4Frequency * scale.justIntonationRatio[dist]
+    return x4Frequency * pow(2, Float(octaveDist))
+}
+
+func getC4Frequency_JI(prevNote4: Scale, prev4frequency: Float, scale: Scale) -> Float {
+    return prev4frequency / scale.justIntonationRatio[prevNote4.rawValue]
 }

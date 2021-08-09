@@ -63,22 +63,26 @@ class TunerIndicator: UIView {
         outerLinePath.stroke()
         
         // 막대기
-//        let index = Int.random(in: Int(Constants.startDegree)...Int(Constants.endDegree - Constants.addDegree))
-        let percentOfCurrentFreq: Double = (Double(state.centDist) + 50) / 100
-        let index = percentOfCurrentFreq * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
-        
         let innerCircleCenter = CGPoint(x: bounds.width / 2, y: outerLinePath.bounds.maxY + 5)
-        
-        makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
         
         // 튜닝이 맞는 경우 강조표시
         if state.centDist >= -1 && state.centDist <= 1 {
-//            print(0.5 * (Constants.endDegree - Constants.addDegree - Constants.startDegree) + Constants.startDegree)
-//            print(innerCirclePath.bounds)
-            let leftIndex = index - Constants.eachStep
-            let rightIndex = index + Constants.eachStep
+            let middleIndex = 0.5 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+            let leftIndex = middleIndex - Constants.eachStep
+            let rightIndex = middleIndex + Constants.eachStep
             makeIndicatorNeedle(index: leftIndex, color: UIColor.gray, center: innerCircleCenter)
+            makeIndicatorNeedle(index: middleIndex, color: UIColor.orange, center: innerCircleCenter)
             makeIndicatorNeedle(index: rightIndex, color: UIColor.gray, center: innerCircleCenter)
+        } else if state.centDist > -50 && state.centDist <= 50 {
+            let percentOfCurrentFreq: Double = (Double(state.centDist) + 50) / 100
+            let index = percentOfCurrentFreq * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+            makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
+        } else if state.centDist <= -50 {
+            let index = 0 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+            makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
+        } else {
+            let index = (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+            makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
         }
         
         

@@ -14,6 +14,11 @@ struct TunerData {
     var standardFreq: Float = 0.0
     var centDist: Float = 0.0
     var a4Frequency: Float = 440
+    var tuningSystem: TuningSystem = .equalTemperament
+    
+    // only just intonation
+    var c4Frequency: Float = 261.63
+    var jiScale = Scale.C
 }
 
 class TunerConductor: ObservableObject {
@@ -66,10 +71,10 @@ class TunerConductor: ObservableObject {
         data.noteNum = noteNum
         data.noteNameWithSharps = "\(noteNamesWithSharps[data.note.rawValue])\(data.octave)"
         data.noteNameWithSharps = "\(noteNamesWithFlats[data.note.rawValue])\(data.octave)"
-        data.standardFreq = getStandardFrequency(noteNum: noteNum, a4Frequency: data.a4Frequency)
-        data.centDist = getCents(frequency: pitch, noteNum: noteNum)
-        
-//        print(noteNum, getStandardFrequency(noteNum: noteNum), getCents(frequency: pitch, noteNum: noteNum))
+        data.standardFreq = data.tuningSystem == .equalTemperament
+            ? getStandardFrequency(noteNum: noteNum, a4Frequency: data.a4Frequency)
+            : getStandardFrequency_JI(noteNum: noteNum, c4Frequency: data.c4Frequency, scale: data.jiScale)
+        data.centDist = getCents(frequency: pitch, noteNum: noteNum, standardFrequency: data.standardFreq)
     }
     
     func start() {
