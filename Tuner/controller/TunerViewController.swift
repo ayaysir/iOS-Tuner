@@ -17,14 +17,12 @@ class TunerViewController: UIViewController {
     
     var freqTable: [FrequencyInfo]!
 
-    @IBOutlet weak var lblFreq: UILabel!
+
     @IBOutlet weak var textFreqOutlet: UITextField!
     @IBOutlet weak var btnTuningSelect: UIButton!
     @IBOutlet weak var btnScaleSelect: UIButton!
     @IBOutlet weak var btnBaseNoteSelect: UIButton!
-    @IBOutlet weak var lblOctave: UILabel!
-    
-    @IBOutlet weak var lblCentDist: UILabel!
+
     @IBOutlet weak var lblJustFrequency: UILabel!
     
     @IBOutlet weak var viewIndicator: TunerIndicator!
@@ -96,9 +94,6 @@ class TunerViewController: UIViewController {
      === 타이머 갱신 ===
      */
     @objc func levelTimerCallback() {
-        lblFreq.text = "\(Int(round(conductor.data.pitch)))"
-        lblOctave.text = "\(conductor.data.noteNameWithSharps)"
-        lblCentDist.text = String(Int(conductor.data.centDist))
         viewIndicator.state = conductor.data
         
         lblJustFrequency.text = String(getStandardFrequency_JI(noteNum: conductor.data.noteNum, c4Frequency: conductor.data.c4Frequency, scale: state.currentJIScale))

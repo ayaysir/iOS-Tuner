@@ -46,7 +46,7 @@ class TunerIndicator: UIView {
         let startAngle: CGFloat = CGFloat(204.degreesToRadians)
         let endAngle: CGFloat = CGFloat(336.degreesToRadians)
 
-        let position = CGPoint(x: bounds.width / 2, y: 220)
+        let position = CGPoint(x: bounds.width / 2, y: bounds.height * 0.85)
         
         let outerLinePath = UIBezierPath(arcCenter: position,
                                          radius: boundsMax / 2 - Constants.arcWidth / 2,
@@ -98,6 +98,26 @@ class TunerIndicator: UIView {
         
         coreColor.setFill()
         coreCirclePath.fill()
+        
+        
+        // 텍스트
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+
+        let noteNameAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 62)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+        let noteNameStr = "\(state.note.textValueForSharp)\(makeSubscriptOfNumber(state.octave))"
+        let noteNameY = boundsMax / 2 - Constants.arcWidth / 2 - Constants.arcWidth
+        noteNameStr.draw(with: CGRect(x: 0, y: noteNameY, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: noteNameAttrs, context: nil)
+        
+        let frequencyAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 56)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+        let frequencyStr = "\(Int(round(state.pitch)))"
+        
+        frequencyStr.draw(with: CGRect(x: 0, y: innerCircleCenter.y - boundsMax / 2 - 15, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: frequencyAttrs, context: nil)
+        
+        let centArr = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 17)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+        let centStr = "\(Int(state.centDist)) cent 만큼 차이가 납니다."
+        
+        centStr.draw(with: CGRect(x: 0, y: noteNameY + 80, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: centArr, context: nil)
 
     }
     
@@ -106,7 +126,7 @@ class TunerIndicator: UIView {
         
         let innerStartAngle: CGFloat = CGFloat(index.degreesToRadians)
         let innerEndAngle: CGFloat = CGFloat((index + Constants.addDegree).degreesToRadians)
-        let innerCirclePath = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y: 220), radius: boundsMax / 2 - Constants.arcWidth / 2 - Constants.arcWidth, startAngle: innerStartAngle, endAngle: innerEndAngle, clockwise: true)
+        let innerCirclePath = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y:  bounds.height * 0.85), radius: boundsMax / 2 - Constants.arcWidth / 2 - Constants.arcWidth, startAngle: innerStartAngle, endAngle: innerEndAngle, clockwise: true)
         
         innerCirclePath.addLine(to: center)
         innerCirclePath.lineWidth = Constants.arcWidth
@@ -115,3 +135,4 @@ class TunerIndicator: UIView {
         innerCirclePath.fill()
     }
 }
+

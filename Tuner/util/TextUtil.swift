@@ -14,6 +14,9 @@ func makeSuperscriptOfNumber(_ num: Int) -> String {
 }
 
 func makeSubscriptOfNumber(_ num: Int) -> String {
+    if num < 0 || num > 9 {
+        return "-"
+    }
     // ₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉
     let array = "₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉".split(separator: " ")
     return String(array[num])
