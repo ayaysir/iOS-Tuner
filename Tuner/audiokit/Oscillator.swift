@@ -12,7 +12,7 @@ import SoundpipeAudioKit
 struct DynamicOscillatorData {
     var isPlaying: Bool = false
     var frequency: AUValue = 440
-    var amplitude: AUValue = 0.1
+    var amplitude: AUValue = 5
     var rampDuration: AUValue = 1
 }
 
@@ -20,6 +20,8 @@ class DynamicOscillatorConductor: ObservableObject {
     let engine = AudioEngine()
     var data = DynamicOscillatorData()
     var osc = DynamicOscillator()
+    var mixer = Mixer()
+    
 
     func noteOn(note: MIDINoteNumber) {
         data.isPlaying = true
@@ -31,12 +33,15 @@ class DynamicOscillatorConductor: ObservableObject {
     }
 
     init() {
-        engine.output = osc
+        mixer.addInput(osc)
+        engine.output = mixer
     }
 
     func start() {
         osc.amplitude = 1
+        mixer.volume = 20
         osc.setWaveform(Table(.triangle))
+//        mixer.start()
         do {
             try engine.start()
         } catch let err {

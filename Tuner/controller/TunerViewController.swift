@@ -17,7 +17,6 @@ class TunerViewController: UIViewController {
     
     var freqTable: [FrequencyInfo]!
 
-
     @IBOutlet weak var textFreqOutlet: UITextField!
     @IBOutlet weak var btnTuningSelect: UIButton!
     @IBOutlet weak var btnScaleSelect: UIButton!
@@ -72,8 +71,25 @@ class TunerViewController: UIViewController {
         })
         DispatchQueue.main.async {
             // 타이머는 main thread 에서 실행됨
-            self.levelTimer = Timer.scheduledTimer(timeInterval: Double(1 / 60), target: self, selector: #selector(self.levelTimerCallback), userInfo: nil, repeats: true)
+            self.levelTimer = Timer.scheduledTimer(timeInterval: Double(1 / 15), target: self, selector: #selector(self.levelTimerCallback), userInfo: nil, repeats: true)
+            self.levelTimer.tolerance = 0.1
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
+    }
+    
+    @objc func conductorAppear() {
+        let oldData = conductor.data
+        conductor = TunerConductor()
+        conductor.data = oldData
+        conductor.start()
+    }
+    
+    @objc func conductorDisappear() {
+        conductor.stop()
+        
+        saveStateToUserDefaults()
     }
     
     func initField() {
@@ -82,12 +98,12 @@ class TunerViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        conductor.start()
+        conductorAppear()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        conductor.stop()
-        saveStateToUserDefaults()
+        print("Tuner: viewWillDisappear")
+        conductorDisappear()
     }
     
     /**
@@ -96,7 +112,8 @@ class TunerViewController: UIViewController {
     @objc func levelTimerCallback() {
         viewIndicator.state = conductor.data
         
-        lblJustFrequency.text = String(getStandardFrequency_JI(noteNum: conductor.data.noteNum, c4Frequency: conductor.data.c4Frequency, scale: state.currentJIScale))
+//        lblJustFrequency.text = String(getStandardFrequency_JI(noteNum: conductor.data.noteNum, c4Frequency: conductor.data.c4Frequency, scale: state.currentJIScale))
+        lblJustFrequency.text = String(conductor.data.amplitude)
     }
     
     @IBAction func btnShowMenu(_ sender: Any) {

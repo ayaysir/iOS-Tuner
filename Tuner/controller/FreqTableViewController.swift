@@ -179,7 +179,7 @@ extension FreqTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if state.lastSelectedRow != nil && state.lastSelectedRow! == indexPath.row {
             tableView.deselectRow(at: indexPath, animated: true)
-            GlobalOsc.shared.conductor.noteOff()
+            GlobalOsc.shared.conductor.stop()
             state.isShouldReplay = false
             state.replayRow = -1
             state.lastSelectedRow = nil

@@ -63,7 +63,7 @@ class TunerConductor: ObservableObject {
     
     func update(_ pitch: AUValue, _ amp: AUValue) {
         data.pitch = pitch
-        data.amplitude = amp
+        data.amplitude = amp.denormalized(to: 1...10000)
 
         let noteNum = getNote(frequency: pitch, a4Frequency: data.a4Frequency)
         data.octave = Int(noteNum / 12) - 1

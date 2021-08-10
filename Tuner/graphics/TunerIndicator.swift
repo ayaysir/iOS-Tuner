@@ -35,6 +35,9 @@ class TunerIndicator: UIView {
     @IBInspectable var coreColor: UIColor = UIColor.white
     @IBInspectable var leftDegree: CGFloat =  0
     
+    func findIrregularFreq() -> Bool {
+        return false
+    }
     
     
     override func draw(_ rect: CGRect) {
@@ -63,62 +66,81 @@ class TunerIndicator: UIView {
         outerLinePath.setLineDash(dashPattern, count: 2, phase: 0)
         outerLinePath.stroke()
         
-        // 막대기
         let innerCircleCenter = CGPoint(x: bounds.width / 2, y: outerLinePath.bounds.maxY + 5)
         
-        // 튜닝이 맞는 경우 강조표시
-        if state.centDist >= -1 && state.centDist <= 1 {
-            let middleIndex = 0.5 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
-            let leftIndex = middleIndex - Constants.eachStep
-            let rightIndex = middleIndex + Constants.eachStep
-            makeIndicatorNeedle(index: leftIndex, color: UIColor.gray, center: innerCircleCenter)
-            makeIndicatorNeedle(index: middleIndex, color: UIColor.orange, center: innerCircleCenter)
-            makeIndicatorNeedle(index: rightIndex, color: UIColor.gray, center: innerCircleCenter)
-        } else if state.centDist > -50 && state.centDist <= 50 {
-            let percentOfCurrentFreq: Double = (Double(state.centDist) + 50) / 100
-            let index = percentOfCurrentFreq * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
-            makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
-        } else if state.centDist <= -50 {
-            let index = 0 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
-            makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
-        } else {
-            let index = (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
-            makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
-        }
-        
-        
-        
-        // 중심부 (흰색)
-        let coreCircleRadius = 76
-        let coreCircleCenter = CGPoint(x: innerCircleCenter.x, y: innerCircleCenter.y + CGFloat(coreCircleRadius) / 2)
-        let coreCirclePath = UIBezierPath(arcCenter: coreCircleCenter,
-                                          radius: CGFloat(coreCircleRadius),
-                                     startAngle: startAngle,
-                                       endAngle: endAngle,
-                                      clockwise: true)
-        
-        coreColor.setFill()
-        coreCirclePath.fill()
-        
-        // 텍스트
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
+        
+        if state.octave > 0 {
+            // 막대기
+            
+            // 튜닝이 맞는 경우 강조표시
+            if state.centDist >= -1 && state.centDist <= 1 {
+                let middleIndex = 0.5 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+                let leftIndex = middleIndex - Constants.eachStep
+                let rightIndex = middleIndex + Constants.eachStep
+                makeIndicatorNeedle(index: leftIndex, color: UIColor.gray, center: innerCircleCenter)
+                makeIndicatorNeedle(index: middleIndex, color: UIColor.orange, center: innerCircleCenter)
+                makeIndicatorNeedle(index: rightIndex, color: UIColor.gray, center: innerCircleCenter)
+            } else if state.centDist > -50 && state.centDist <= 50 {
+                let percentOfCurrentFreq: Double = (Double(state.centDist) + 50) / 100
+                let index = percentOfCurrentFreq * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+                makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
+            } else if state.centDist <= -50 {
+                let index = 0 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+                makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
+            } else {
+                let index = (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+                makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
+            }
+            
+            // 중심부 (흰색)
+            let coreCircleRadius = 76
+            let coreCircleCenter = CGPoint(x: innerCircleCenter.x, y: innerCircleCenter.y + CGFloat(coreCircleRadius) / 2)
+            let coreCirclePath = UIBezierPath(arcCenter: coreCircleCenter,
+                                              radius: CGFloat(coreCircleRadius),
+                                         startAngle: startAngle,
+                                           endAngle: endAngle,
+                                          clockwise: true)
+            
+            coreColor.setFill()
+            coreCirclePath.fill()
+            
+            
+            // 텍스트
+            let noteNameAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 62)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            let noteNameStr = "\(state.note.textValueForSharp)\(makeSubscriptOfNumber(state.octave))"
+            let noteNameY = boundsMax / 2 - Constants.arcWidth / 2 - Constants.arcWidth
+            noteNameStr.draw(with: CGRect(x: 0, y: noteNameY, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: noteNameAttrs, context: nil)
+            
+            let frequencyAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 56)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            let frequencyStr = "\(Int(round(state.pitch)))"
+            
+            frequencyStr.draw(with: CGRect(x: 0, y: innerCircleCenter.y - boundsMax / 2 - 15, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: frequencyAttrs, context: nil)
+            
+            let centArr = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 17)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            let centStr = "\(Int(state.centDist)) cent 만큼 차이가 납니다."
+            
+            centStr.draw(with: CGRect(x: 0, y: noteNameY + 80, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: centArr, context: nil)
+        } else {
+            let index = 0 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+            makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
+            
+            // 중심부 (흰색)
+            let coreCircleRadius = 76
+            let coreCircleCenter = CGPoint(x: innerCircleCenter.x, y: innerCircleCenter.y + CGFloat(coreCircleRadius) / 2)
+            let coreCirclePath = UIBezierPath(arcCenter: coreCircleCenter,
+                                              radius: CGFloat(coreCircleRadius),
+                                         startAngle: startAngle,
+                                           endAngle: endAngle,
+                                          clockwise: true)
+            
+            coreColor.setFill()
+            coreCirclePath.fill()
+        }
+        
 
-        let noteNameAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 62)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
-        let noteNameStr = "\(state.note.textValueForSharp)\(makeSubscriptOfNumber(state.octave))"
-        let noteNameY = boundsMax / 2 - Constants.arcWidth / 2 - Constants.arcWidth
-        noteNameStr.draw(with: CGRect(x: 0, y: noteNameY, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: noteNameAttrs, context: nil)
         
-        let frequencyAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 56)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
-        let frequencyStr = "\(Int(round(state.pitch)))"
-        
-        frequencyStr.draw(with: CGRect(x: 0, y: innerCircleCenter.y - boundsMax / 2 - 15, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: frequencyAttrs, context: nil)
-        
-        let centArr = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 17)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
-        let centStr = "\(Int(state.centDist)) cent 만큼 차이가 납니다."
-        
-        centStr.draw(with: CGRect(x: 0, y: noteNameY + 80, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: centArr, context: nil)
-
         
         // 삼각형
         let trianglePath = UIBezierPath()
