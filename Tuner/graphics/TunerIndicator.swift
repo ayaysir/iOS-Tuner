@@ -33,6 +33,7 @@ class TunerIndicator: UIView {
     @IBInspectable var outlineColor: UIColor = UIColor.blue
     @IBInspectable var innerColor: UIColor = UIColor.orange
     @IBInspectable var coreColor: UIColor = UIColor.white
+    @IBInspectable var leftDegree: CGFloat =  0
     
     
     
@@ -99,7 +100,6 @@ class TunerIndicator: UIView {
         coreColor.setFill()
         coreCirclePath.fill()
         
-        
         // 텍스트
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
@@ -119,6 +119,51 @@ class TunerIndicator: UIView {
         
         centStr.draw(with: CGRect(x: 0, y: noteNameY + 80, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: centArr, context: nil)
 
+        
+        // 삼각형
+        let trianglePath = UIBezierPath()
+        trianglePath.move(to: CGPoint(x: bounds.width / 2 - 10, y: innerCircleCenter.y - boundsMax / 2 + 67.5))
+        trianglePath.addLine(to: CGPoint(x: bounds.width / 2, y: innerCircleCenter.y - boundsMax / 2 + 77.5))
+        trianglePath.addLine(to: CGPoint(x: bounds.width / 2 + 10, y: innerCircleCenter.y - boundsMax / 2 + 67.5))
+        trianglePath.close()
+        UIColor.black.setFill()
+        trianglePath.fill()
+        
+        if state.tuningSystem == .equalTemperament {
+            // 왼쪽
+            let leftJIIndicatorIndex = 0.3 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+            
+            let leftStartAngle: CGFloat = CGFloat(leftJIIndicatorIndex.degreesToRadians)
+            let leftEndAngle: CGFloat = CGFloat((leftJIIndicatorIndex + Constants.addDegree).degreesToRadians)
+            let leftPart = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y:  bounds.height * 0.85), radius: boundsMax / 2 - Constants.arcWidth / 2 - Constants.arcWidth, startAngle: leftStartAngle, endAngle: leftEndAngle, clockwise: true)
+            leftPart.addLine(to: innerCircleCenter)
+            leftPart.lineWidth = Constants.arcWidth
+            
+            let leftTri = UIBezierPath()
+            leftTri.move(to: CGPoint(x: leftPart.bounds.minX, y: leftPart.bounds.minY - 11))
+            leftTri.addLine(to: CGPoint(x: leftPart.bounds.minX + 10, y: leftPart.bounds.minY - 1))
+            leftTri.addLine(to: CGPoint(x: leftPart.bounds.minX + 20, y: leftPart.bounds.minY - 11))
+            leftTri.close()
+            leftTri.rotateAroundCenter(angle: 5.8)
+            leftTri.fill()
+            
+            // 오른쪽
+            let rightJIIndicatorIndex = 0.7 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+            
+            let rightStartAngle: CGFloat = CGFloat(rightJIIndicatorIndex.degreesToRadians)
+            let rightEndAngle: CGFloat = CGFloat((rightJIIndicatorIndex + Constants.addDegree).degreesToRadians)
+            let rightPart = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y:  bounds.height * 0.85), radius: boundsMax / 2 - Constants.arcWidth / 2 - Constants.arcWidth, startAngle: rightStartAngle, endAngle: rightEndAngle, clockwise: true)
+            rightPart.addLine(to: innerCircleCenter)
+            rightPart.lineWidth = Constants.arcWidth
+            
+            let rightTri = UIBezierPath()
+            rightTri.move(to: CGPoint(x: rightPart.bounds.maxX, y: rightPart.bounds.minY - 11))
+            rightTri.addLine(to: CGPoint(x: rightPart.bounds.maxX - 10, y: rightPart.bounds.minY - 1))
+            rightTri.addLine(to: CGPoint(x: rightPart.bounds.maxX - 20, y: rightPart.bounds.minY - 11))
+            rightTri.close()
+        rightTri.rotateAroundCenter(angle: -5.8)
+            rightTri.fill()
+        }
     }
     
     func makeIndicatorNeedle(index: Double, color: UIColor, center: CGPoint) {

@@ -39,3 +39,16 @@ extension UITextField {
     }
 }
 
+// https://stackoverflow.com/questions/50012606
+extension UIBezierPath
+{
+    func rotateAroundCenter(angle: CGFloat)
+    {
+        let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+        var transform = CGAffineTransform.identity
+        transform = transform.translatedBy(x: center.x, y: center.y)
+        transform = transform.rotated(by: angle)
+        transform = transform.translatedBy(x: -center.x, y: -center.y)
+        self.apply(transform)
+    }
+}

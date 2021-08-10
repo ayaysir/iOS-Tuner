@@ -72,7 +72,7 @@ class TunerViewController: UIViewController {
         })
         DispatchQueue.main.async {
             // 타이머는 main thread 에서 실행됨
-            self.levelTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.levelTimerCallback), userInfo: nil, repeats: true)
+            self.levelTimer = Timer.scheduledTimer(timeInterval: Double(1 / 60), target: self, selector: #selector(self.levelTimerCallback), userInfo: nil, repeats: true)
         }
     }
     
