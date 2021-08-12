@@ -33,18 +33,22 @@ class TunerViewController: UIViewController {
     let baseNoteDropDown = DropDown()
     
     var state: TunerViewState!
-    
+
+    var monitorCount: Int = 0
     var freqMonitor: [Float] = []
-    var freqCount: Int = 0
-    
     var dBMonitor: [Float] = []
-    var dBCount: Int = 0
-    
     var centMonitor: [Float] = []
-    var centCount: Int = 0
-    
     var octaveMonitor: [Float] = []
-    var octaveCount: Int = 0
+    var noteMonitor: [Scale] = []
+    
+    var freqRecord45: [Float] = []
+    var noteRecord45: [Scale] = []
+    var centRecord45: [Float] = []
+    var octaveRecord45: [Float] = []
+    
+    var monitorContinousCount: Int = 0
+    var isRecordingOn: Bool = false
+    var failedCount: Int = 0
     
     func loadStateFromUserDefaults() {
         do {
@@ -122,32 +126,82 @@ class TunerViewController: UIViewController {
      */
     @objc func levelTimerCallback() {
         
+        // TODO: - 분리
+        let R_BLOCK = 15
+        
         dBMonitor.append(conductor.data.dB)
         centMonitor.append(conductor.data.centDist)
         freqMonitor.append(conductor.data.pitch)
         octaveMonitor.append(Float(conductor.data.octave))
+        noteMonitor.append(conductor.data.note)
         
-        if freqMonitor.count == 15 {
-            
-            dBCount += 1
-            centCount += 1
-            octaveCount += 1
-            
+        if freqMonitor.count == R_BLOCK {
+            monitorCount += R_BLOCK
             lblJustFrequency.text = String(octaveMonitor.std())
             
-            if octaveMonitor.std() == 0 && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.3) {
+            // 4.5초 (270회) 기록
+            // 중간에 0.75초 이상 중지시 취소
+            // 4.5초동안 아래 조건이 true인 경우의 평균, 표준편차 기록
+            
+            let condition = octaveMonitor.std() == 0 && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.3)
+            
+            if condition {
                 conductor.data.isStdSmooth = true
+                monitorContinousCount += 15
+                freqRecord45.append(contentsOf: freqMonitor)
+                centRecord45.append(contentsOf: centMonitor)
+                octaveRecord45.append(contentsOf: octaveMonitor)
+                noteRecord45.append(contentsOf: noteMonitor)
+                
 //                print(String(format: "%d : %.2f : %.2f : %.2f", centCount, dBMonitor.std(), centMonitor.std(), freqMonitor.std()))
             } else {
                 conductor.data.isStdSmooth = false
+                monitorContinousCount = 0
+                if isRecordingOn {
+                    failedCount += 1
+                }
             }
-            
-            
             
             centMonitor = []
             dBMonitor = []
             freqMonitor = []
             octaveMonitor = []
+            
+            // 연속 기록이 0.75초 true 된 경우
+            if monitorContinousCount == R_BLOCK * 3 {
+                isRecordingOn = true
+            }
+            
+            if isRecordingOn && failedCount == 3 {
+                isRecordingOn = false
+                failedCount = 0
+                
+                freqRecord45 = []
+                centRecord45 = []
+                octaveRecord45 = []
+                noteRecord45 = []
+            } else if isRecordingOn && freqRecord45.count == 270 {
+                let octaveCounts = octaveRecord45.reduce(into: [:]) { $0[$1, default:0] += 1 }
+                if let (value, count) = octaveCounts.max(by: { $0.1 > $1.1 }) {
+                    print("octave:", value, count)
+                }
+                
+//                let noteCounts = noteRecord45.reduce(into: [:]) { $0[$1.rawValue, default:0] += 1 }
+//                if let (value, count) = octaveCounts.max(by: { $0.1 > $1.1 }) {
+//                    print("octave:", value, count)
+//                }
+                print("record:", freqRecord45.avg(), freqRecord45.std())
+                
+                // core data 기록
+//                let record = TunerRecord(id: UUID(), date: Date(), avgFreq: freqRecord45.avg(), stdFreq: freqRecord45.std(), rawData: freqRecord45, standardFreq: conductor.data., centDist: <#T##Float#>, noteIndex: <#T##Int#>)
+//                _ = saveCoreData(record: record)
+                
+                freqRecord45 = []
+                centRecord45 = []
+                octaveRecord45 = []
+                noteRecord45 = []
+                isRecordingOn = false
+            }
             
         }
         viewIndicator.state = conductor.data

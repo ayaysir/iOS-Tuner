@@ -34,6 +34,8 @@
 		445F329126BD32BD00412F7B /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */; };
 		445F329426BE5B4E00412F7B /* FreqTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329326BE5B4E00412F7B /* FreqTextFieldDelegate.swift */; };
 		445F329726BE962A00412F7B /* TunerIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329626BE962A00412F7B /* TunerIndicator.swift */; };
+		44A6FDAB26C5615000C94855 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDAA26C5615000C94855 /* CoreData.swift */; };
+		44A6FDAD26C561A500C94855 /* TunerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDAC26C561A500C94855 /* TunerRecord.swift */; };
 		B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087577D37AE85CA890BA062C /* Pods_Tuner.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +70,8 @@
 		445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		445F329326BE5B4E00412F7B /* FreqTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqTextFieldDelegate.swift; sourceTree = "<group>"; };
 		445F329626BE962A00412F7B /* TunerIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerIndicator.swift; sourceTree = "<group>"; };
+		44A6FDAA26C5615000C94855 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		44A6FDAC26C561A500C94855 /* TunerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerRecord.swift; sourceTree = "<group>"; };
 		B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.release.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.release.xcconfig"; sourceTree = "<group>"; };
 		E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.debug.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +104,7 @@
 			children = (
 				440DF82026B6D6B400FDA3AA /* FrequencyInfo.swift */,
 				445F328E26BD2C1100412F7B /* ViewState.swift */,
+				44A6FDAC26C561A500C94855 /* TunerRecord.swift */,
 			);
 			path = vo;
 			sourceTree = "<group>";
@@ -176,6 +181,7 @@
 		444EEE3F26B4370000454428 /* Tuner */ = {
 			isa = PBXGroup;
 			children = (
+				44A6FDA926C5614100C94855 /* coredata */,
 				445F329526BE95FC00412F7B /* graphics */,
 				445F329226BE5B3800412F7B /* delegate */,
 				4426640B26BC0C5C00B5A5D9 /* controller */,
@@ -209,6 +215,14 @@
 				445F329626BE962A00412F7B /* TunerIndicator.swift */,
 			);
 			path = graphics;
+			sourceTree = "<group>";
+		};
+		44A6FDA926C5614100C94855 /* coredata */ = {
+			isa = PBXGroup;
+			children = (
+				44A6FDAA26C5615000C94855 /* CoreData.swift */,
+			);
+			path = coredata;
 			sourceTree = "<group>";
 		};
 		94DB0DF3BA5174020EFC934C /* Frameworks */ = {
@@ -358,10 +372,12 @@
 				442663F826B6DE4200B5A5D9 /* TextUtil.swift in Sources */,
 				442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */,
 				4426640A26BBE6B800B5A5D9 /* AlertUtil.swift in Sources */,
+				44A6FDAD26C561A500C94855 /* TunerRecord.swift in Sources */,
 				444EEE4326B4370000454428 /* SceneDelegate.swift in Sources */,
 				445F329426BE5B4E00412F7B /* FreqTextFieldDelegate.swift in Sources */,
 				442663FF26B8347400B5A5D9 /* StringExtension.swift in Sources */,
 				4426640F26BC0D5600B5A5D9 /* SlideMenuViewController.swift in Sources */,
+				44A6FDAB26C5615000C94855 /* CoreData.swift in Sources */,
 				440DF82126B6D6B400FDA3AA /* FrequencyInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
