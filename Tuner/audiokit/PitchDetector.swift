@@ -15,6 +15,10 @@ struct TunerData {
     var centDist: Float = 0.0
     var a4Frequency: Float = 440
     var tuningSystem: TuningSystem = .equalTemperament
+    var dB: Float = 0
+    
+    // 표준편차가 평탄(1 미만)한가?
+    var isStdSmooth: Bool = false
     
     // only just intonation
     var c4Frequency: Float = 261.63
@@ -53,7 +57,6 @@ class TunerConductor: ObservableObject {
         tappableNodeC = Fader(tappableNodeB)
         silence = Fader(tappableNodeC, gain: 0)
         engine.output = silence
-        
         tracker = PitchTap(mic) { pitch, amp in
             DispatchQueue.main.async {
                 self.update(pitch[0], amp[0])
@@ -63,7 +66,8 @@ class TunerConductor: ObservableObject {
     
     func update(_ pitch: AUValue, _ amp: AUValue) {
         data.pitch = pitch
-        data.amplitude = amp.denormalized(to: 1...10000)
+        data.amplitude = amp
+        data.dB = 20 * log10(amp)
 
         let noteNum = getNote(frequency: pitch, a4Frequency: data.a4Frequency)
         data.octave = Int(noteNum / 12) - 1

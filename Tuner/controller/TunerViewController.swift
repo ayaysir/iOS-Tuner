@@ -34,6 +34,18 @@ class TunerViewController: UIViewController {
     
     var state: TunerViewState!
     
+    var freqMonitor: [Float] = []
+    var freqCount: Int = 0
+    
+    var dBMonitor: [Float] = []
+    var dBCount: Int = 0
+    
+    var centMonitor: [Float] = []
+    var centCount: Int = 0
+    
+    var octaveMonitor: [Float] = []
+    var octaveCount: Int = 0
+    
     func loadStateFromUserDefaults() {
         do {
             let loadedState = try UserDefaults.standard.getObject(forKey: "state-tuner", castTo: TunerViewState.self)
@@ -71,7 +83,7 @@ class TunerViewController: UIViewController {
         })
         DispatchQueue.main.async {
             // 타이머는 main thread 에서 실행됨
-            self.levelTimer = Timer.scheduledTimer(timeInterval: Double(1 / 15), target: self, selector: #selector(self.levelTimerCallback), userInfo: nil, repeats: true)
+            self.levelTimer = Timer.scheduledTimer(timeInterval: 0.0167, target: self, selector: #selector(self.levelTimerCallback), userInfo: nil, repeats: true)
             self.levelTimer.tolerance = 0.1
         }
         
@@ -88,7 +100,6 @@ class TunerViewController: UIViewController {
     
     @objc func conductorDisappear() {
         conductor.stop()
-        
         saveStateToUserDefaults()
     }
     
@@ -110,10 +121,36 @@ class TunerViewController: UIViewController {
      === 타이머 갱신 ===
      */
     @objc func levelTimerCallback() {
-        viewIndicator.state = conductor.data
         
-//        lblJustFrequency.text = String(getStandardFrequency_JI(noteNum: conductor.data.noteNum, c4Frequency: conductor.data.c4Frequency, scale: state.currentJIScale))
-        lblJustFrequency.text = String(conductor.data.amplitude)
+        dBMonitor.append(conductor.data.dB)
+        centMonitor.append(conductor.data.centDist)
+        freqMonitor.append(conductor.data.pitch)
+        octaveMonitor.append(Float(conductor.data.octave))
+        
+        if freqMonitor.count == 15 {
+            
+            dBCount += 1
+            centCount += 1
+            octaveCount += 1
+            
+            lblJustFrequency.text = String(octaveMonitor.std())
+            
+            if octaveMonitor.std() == 0 && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.3) {
+                conductor.data.isStdSmooth = true
+//                print(String(format: "%d : %.2f : %.2f : %.2f", centCount, dBMonitor.std(), centMonitor.std(), freqMonitor.std()))
+            } else {
+                conductor.data.isStdSmooth = false
+            }
+            
+            
+            
+            centMonitor = []
+            dBMonitor = []
+            freqMonitor = []
+            octaveMonitor = []
+            
+        }
+        viewIndicator.state = conductor.data
     }
     
     @IBAction func btnShowMenu(_ sender: Any) {

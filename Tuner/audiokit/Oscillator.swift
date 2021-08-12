@@ -39,7 +39,7 @@ class DynamicOscillatorConductor: ObservableObject {
 
     func start() {
         osc.amplitude = 1
-        mixer.volume = 20
+        mixer.volume = 25
         osc.setWaveform(Table(.triangle))
 //        mixer.start()
         do {

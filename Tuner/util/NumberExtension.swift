@@ -21,3 +21,23 @@ extension FloatingPoint {
     var degreesToRadians: Self { self * .pi / 180 }
     var radiansToDegrees: Self { self * 180 / .pi }
 }
+
+
+// https://stackoverflow.com/questions/38422150
+extension Array where Element: FloatingPoint {
+
+    func sum() -> Element {
+        return self.reduce(0, +)
+    }
+
+    func avg() -> Element {
+        return self.sum() / Element(self.count)
+    }
+
+    func std() -> Element {
+        let mean = self.avg()
+        let v = self.reduce(0, { $0 + ($1-mean)*($1-mean) })
+        return sqrt(v / (Element(self.count) - 1))
+    }
+
+}
