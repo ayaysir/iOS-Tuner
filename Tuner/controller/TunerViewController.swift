@@ -21,7 +21,8 @@ class TunerViewController: UIViewController {
     @IBOutlet weak var btnTuningSelect: UIButton!
     @IBOutlet weak var btnScaleSelect: UIButton!
     @IBOutlet weak var btnBaseNoteSelect: UIButton!
-
+    @IBOutlet weak var lblRecordStatus: UILabel!
+    
     @IBOutlet weak var lblJustFrequency: UILabel!
     
     @IBOutlet weak var viewIndicator: TunerIndicator!
@@ -34,17 +35,21 @@ class TunerViewController: UIViewController {
     
     var state: TunerViewState!
 
+//    var monitor: [TunerData] = []
     var monitorCount: Int = 0
+    var countdown: Int = 0
     var freqMonitor: [Float] = []
     var dBMonitor: [Float] = []
     var centMonitor: [Float] = []
     var octaveMonitor: [Float] = []
     var noteMonitor: [Scale] = []
+    var standardFreqMonitor: [Float] = []
     
     var freqRecord45: [Float] = []
     var noteRecord45: [Scale] = []
     var centRecord45: [Float] = []
     var octaveRecord45: [Float] = []
+    var standardFreq45: [Float] = []
     
     var monitorContinousCount: Int = 0
     var isRecordingOn: Bool = false
@@ -120,7 +125,7 @@ class TunerViewController: UIViewController {
         print("Tuner: viewWillDisappear")
         conductorDisappear()
     }
-    
+   
     /**
      === 타이머 갱신 ===
      */
@@ -129,11 +134,13 @@ class TunerViewController: UIViewController {
         // TODO: - 분리
         let R_BLOCK = 15
         
+//        monitor.append(conductor.data)
         dBMonitor.append(conductor.data.dB)
         centMonitor.append(conductor.data.centDist)
         freqMonitor.append(conductor.data.pitch)
         octaveMonitor.append(Float(conductor.data.octave))
         noteMonitor.append(conductor.data.note)
+        standardFreqMonitor.append(conductor.data.standardFreq)
         
         if freqMonitor.count == R_BLOCK {
             monitorCount += R_BLOCK
@@ -148,12 +155,12 @@ class TunerViewController: UIViewController {
             if condition {
                 conductor.data.isStdSmooth = true
                 monitorContinousCount += 15
+                
                 freqRecord45.append(contentsOf: freqMonitor)
                 centRecord45.append(contentsOf: centMonitor)
                 octaveRecord45.append(contentsOf: octaveMonitor)
                 noteRecord45.append(contentsOf: noteMonitor)
-                
-//                print(String(format: "%d : %.2f : %.2f : %.2f", centCount, dBMonitor.std(), centMonitor.std(), freqMonitor.std()))
+                standardFreq45.append(contentsOf: standardFreqMonitor)
             } else {
                 conductor.data.isStdSmooth = false
                 monitorContinousCount = 0
@@ -170,37 +177,77 @@ class TunerViewController: UIViewController {
             // 연속 기록이 0.75초 true 된 경우
             if monitorContinousCount == R_BLOCK * 3 {
                 isRecordingOn = true
+                countdown = 3
+            }
+            
+            if isRecordingOn && freqRecord45.count % 60 == 0 {
+                lblRecordStatus.text = countdown == 0 ? "기록중" : String(countdown)
+                countdown -= 1
             }
             
             if isRecordingOn && failedCount == 3 {
                 isRecordingOn = false
                 failedCount = 0
                 
+                // == reset == //
                 freqRecord45 = []
                 centRecord45 = []
                 octaveRecord45 = []
                 noteRecord45 = []
+                standardFreq45 = []
+                
+                countdown = 0
+                lblRecordStatus.text = ""
+                
             } else if isRecordingOn && freqRecord45.count == 270 {
-                let octaveCounts = octaveRecord45.reduce(into: [:]) { $0[$1, default:0] += 1 }
-                if let (value, count) = octaveCounts.max(by: { $0.1 > $1.1 }) {
-                    print("octave:", value, count)
+                var maxOctave: Int {
+                    let octaveCounts = octaveRecord45.reduce(into: [:]) { $0[$1, default:0] += 1 }
+                    if let (value, count) = octaveCounts.max(by: { $0.1 < $1.1 }) {
+                        print("octave:", value, count)
+                        return Int(value)
+                    }
+                    return 0
                 }
                 
-//                let noteCounts = noteRecord45.reduce(into: [:]) { $0[$1.rawValue, default:0] += 1 }
-//                if let (value, count) = octaveCounts.max(by: { $0.1 > $1.1 }) {
-//                    print("octave:", value, count)
-//                }
+                var maxNote: Scale {
+                    let noteCounts = noteRecord45.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+                    if let (value, count) = noteCounts.max(by: { $0.1 < $1.1 }) {
+                        print("notes:", value, count)
+                        return value
+                    }
+                    return Scale.C
+                }
+                
+                var maxStandardFreq: Float {
+                    let sfCounts = standardFreq45.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+                    if let (value, _) = sfCounts.max(by: { $0.1 < $1.1 }) {
+                        return value
+                    }
+                    return 0
+                }
+                
                 print("record:", freqRecord45.avg(), freqRecord45.std())
                 
                 // core data 기록
-//                let record = TunerRecord(id: UUID(), date: Date(), avgFreq: freqRecord45.avg(), stdFreq: freqRecord45.std(), rawData: freqRecord45, standardFreq: conductor.data., centDist: <#T##Float#>, noteIndex: <#T##Int#>)
-//                _ = saveCoreData(record: record)
+                let record = TunerRecord(id: UUID(), date: Date(), avgFreq: freqRecord45.std(), stdFreq: freqRecord45.std(), standardFreq: maxStandardFreq, centDist: centRecord45.avg(), noteIndex: maxNote.rawValue, octave: maxOctave)
                 
+                do {
+                    try saveCoreData(record: record)
+                    print(getDocumentsDirectory())
+                } catch {
+                    print("저장 에러 >>>", error.localizedDescription)
+                }
+                
+                // == reset == //
                 freqRecord45 = []
                 centRecord45 = []
                 octaveRecord45 = []
                 noteRecord45 = []
+                standardFreq45 = []
+                
                 isRecordingOn = false
+                countdown = 0
+                lblRecordStatus.text = "기록 완료"
             }
             
         }

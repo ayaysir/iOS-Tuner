@@ -9,9 +9,13 @@ import Foundation
 import UIKit
 import CoreData
 
-func saveCoreData(record: TunerRecord) -> Bool {
+enum CDError: Error {
+    case appDelegateNotExist
+}
+
+func saveCoreData(record: TunerRecord) throws {
     // App Delegate 호출
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { throw CDError.appDelegateNotExist  }
     
     // App Delegate 내부에 있는 viewContext 호출
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -27,19 +31,17 @@ func saveCoreData(record: TunerRecord) -> Bool {
     object.setValue(record.date, forKey: "date")
     object.setValue(record.avgFreq, forKey: "avgFreq")
     object.setValue(record.stdFreq, forKey: "stdFreq")
-    object.setValue(record.rawData, forKey: "rawData")
     object.setValue(record.standardFreq, forKey: "standardFreq")
     object.setValue(record.centDist, forKey: "centDist")
     object.setValue(record.noteIndex, forKey: "noteIndex")
+    object.setValue(record.octave, forKey: "octave")
     
     do {
         // managedContext 내부의 변경사항 저장
         try managedContext.save()
-        return true
-    } catch let error as NSError {
+    } catch {
         // 에러 발생시
-        print("Could not save. \(error), \(error.userInfo)")
-        return false
+        throw error
     }
     
 }
