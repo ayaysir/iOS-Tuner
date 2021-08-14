@@ -228,15 +228,22 @@ class TunerViewController: UIViewController {
                 
                 print("record:", freqRecord45.avg(), freqRecord45.std())
                 
-                // core data 기록
-                let record = TunerRecord(id: UUID(), date: Date(), avgFreq: freqRecord45.std(), stdFreq: freqRecord45.std(), standardFreq: maxStandardFreq, centDist: centRecord45.avg(), noteIndex: maxNote.rawValue, octave: maxOctave)
-                
-                do {
-                    try saveCoreData(record: record)
-                    print(getDocumentsDirectory())
-                } catch {
-                    print("저장 에러 >>>", error.localizedDescription)
+                if maxOctave >= 0 {
+                    // core data 기록
+                    let record = TunerRecord(id: UUID(), date: Date(), avgFreq: freqRecord45.avg(), stdFreq: freqRecord45.std(), standardFreq: maxStandardFreq, centDist: centRecord45.avg(), noteIndex: maxNote.rawValue, octave: maxOctave)
+                    
+                    do {
+                        try saveCoreData(record: record)
+                        print(getDocumentsDirectory())
+                        lblRecordStatus.text = "기록 완료"
+                    } catch {
+                        print("저장 에러 >>>", error.localizedDescription)
+                    }
+                } else {
+                    print("not saved: dirty data", maxOctave)
+                    lblRecordStatus.text = ""
                 }
+                
                 
                 // == reset == //
                 freqRecord45 = []
@@ -247,7 +254,6 @@ class TunerViewController: UIViewController {
                 
                 isRecordingOn = false
                 countdown = 0
-                lblRecordStatus.text = "기록 완료"
             }
             
         }

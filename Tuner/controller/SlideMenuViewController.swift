@@ -44,6 +44,19 @@ class SlideMenuViewController: UIViewController {
         let targetVC = self.storyboard?.instantiateViewController(identifier: menu)
         self.sideMenuController()?.setContentViewController(targetVC!)
     }
+    
+    @IBAction func btnStats(_ sender: Any) {
+        let menu = "StatsViewController"
+        if MenuState.shared.currentMenu == menu {
+            sideMenuController()?.sideMenu?.toggleMenu()
+            return
+        }
+        
+        MenuState.shared.currentMenu = menu
+        let targetVC = self.storyboard?.instantiateViewController(identifier: menu)
+        self.sideMenuController()?.setContentViewController(targetVC!)
+    }
+    
 }
 
 

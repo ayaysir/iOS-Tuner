@@ -37,6 +37,7 @@
 		44A6FDAB26C5615000C94855 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDAA26C5615000C94855 /* CoreData.swift */; };
 		44A6FDAD26C561A500C94855 /* TunerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDAC26C561A500C94855 /* TunerRecord.swift */; };
 		44A6FDB126C6AAFC00C94855 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDB026C6AAFC00C94855 /* FileUtil.swift */; };
+		44A6FDB326C7D4A500C94855 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDB226C7D4A500C94855 /* StatsViewController.swift */; };
 		B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087577D37AE85CA890BA062C /* Pods_Tuner.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		44A6FDAA26C5615000C94855 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		44A6FDAC26C561A500C94855 /* TunerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerRecord.swift; sourceTree = "<group>"; };
 		44A6FDB026C6AAFC00C94855 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
+		44A6FDB226C7D4A500C94855 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.release.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.release.xcconfig"; sourceTree = "<group>"; };
 		E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.debug.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,6 +151,7 @@
 				440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */,
 				4426640E26BC0D5600B5A5D9 /* SlideMenuViewController.swift */,
 				4426641526BC2E9A00B5A5D9 /* MenuNavigationController.swift */,
+				44A6FDB226C7D4A500C94855 /* StatsViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 				4426641626BC2E9A00B5A5D9 /* MenuNavigationController.swift in Sources */,
 				4426640526BA5C6E00B5A5D9 /* NumberExtension.swift in Sources */,
 				444EEE4126B4370000454428 /* AppDelegate.swift in Sources */,
+				44A6FDB326C7D4A500C94855 /* StatsViewController.swift in Sources */,
 				440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */,
 				445F328F26BD2C1100412F7B /* ViewState.swift in Sources */,
 				4426641426BC2E6E00B5A5D9 /* ENSideMenuNavigationController.swift in Sources */,

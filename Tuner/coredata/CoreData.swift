@@ -46,22 +46,32 @@ func saveCoreData(record: TunerRecord) throws {
     
 }
 
-func readCoreData() throws -> [NSManagedObject]? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+func readCoreData() throws -> [TunerRecord] {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { throw CDError.appDelegateNotExist }
     let managedContext = appDelegate.persistentContainer.viewContext
     
     // Entity의 fetchRequest 생성
     let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Record")
     
     // 정렬 또는 조건 설정
-    //    let sort = NSSortDescriptor(key: "createDate", ascending: false)
-    //    fetchRequest.sortDescriptors = [sort]
-    //    fetchRequest.predicate = NSPredicate(format: "isFinished = %@", NSNumber(value: isFinished))
+    let sort = NSSortDescriptor(key: "date", ascending: false)
+    fetchRequest.sortDescriptors = [sort]
+//    fetchRequest.predicate = NSPredicate(format: "isFinished = %@", NSNumber(value: isFinished))
     
     do {
         // fetchRequest를 통해 managedContext로부터 결과 배열을 가져오기
         let resultCDArray = try managedContext.fetch(fetchRequest)
-        return resultCDArray
+        return resultCDArray.map { obj in
+            let id: UUID = obj.value(forKey: "id") as! UUID
+            let date: Date = obj.value(forKey: "date") as! Date
+            let avgFreq: Float = obj.value(forKey: "avgFreq") as! Float
+            let stdFreq: Float = obj.value(forKey: "stdFreq") as! Float
+            let standardFreq: Float = obj.value(forKey: "standardFreq") as! Float
+            let centDist: Float = obj.value(forKey: "centDist") as! Float
+            let noteIndex: Int = obj.value(forKey: "noteIndex") as! Int
+            let octave: Int = obj.value(forKey: "octave") as! Int
+            return TunerRecord(id: id, date: date, avgFreq: avgFreq, stdFreq: stdFreq, standardFreq: standardFreq, centDist: centDist, noteIndex: noteIndex, octave: octave)
+        }
     } catch let error as NSError {
         print("Could not save. \(error), \(error.userInfo)")
         throw error
