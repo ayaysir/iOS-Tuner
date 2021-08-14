@@ -77,3 +77,21 @@ func readCoreData() throws -> [TunerRecord] {
         throw error
     }
 }
+
+func deleteCoreData(id: UUID) throws {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { throw CDError.appDelegateNotExist }
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Record")
+    
+    // 아이디를 삭제 기준으로 설정
+    fetchRequest.predicate = NSPredicate(format: "id = %@", id.uuidString)
+    
+    do {
+        let result = try managedContext.fetch(fetchRequest)
+        let objectToDelete = result[0] as! NSManagedObject
+        managedContext.delete(objectToDelete)
+        try managedContext.save()
+    } catch let error as NSError {
+        print("Could not update. \(error), \(error.userInfo)")
+    }
+}

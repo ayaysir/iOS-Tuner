@@ -110,6 +110,7 @@ class TunerViewController: UIViewController {
     @objc func conductorDisappear() {
         conductor.stop()
         saveStateToUserDefaults()
+        levelTimer.invalidate()
     }
     
     func initField() {
@@ -173,6 +174,8 @@ class TunerViewController: UIViewController {
             dBMonitor = []
             freqMonitor = []
             octaveMonitor = []
+            noteMonitor = []
+            standardFreqMonitor = []
             
             // 연속 기록이 0.75초 true 된 경우
             if monitorContinousCount == R_BLOCK * 3 {
@@ -185,7 +188,7 @@ class TunerViewController: UIViewController {
                 countdown -= 1
             }
             
-            if isRecordingOn && failedCount == 3 {
+            if isRecordingOn && failedCount >= 1 {
                 isRecordingOn = false
                 failedCount = 0
                 
@@ -197,7 +200,7 @@ class TunerViewController: UIViewController {
                 standardFreq45 = []
                 
                 countdown = 0
-                lblRecordStatus.text = ""
+                lblRecordStatus.text = "failed"
                 
             } else if isRecordingOn && freqRecord45.count == 270 {
                 var maxOctave: Int {

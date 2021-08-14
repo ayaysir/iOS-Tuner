@@ -29,12 +29,14 @@ class StatsViewController: UIViewController {
         } catch {
             print(error.localizedDescription)
         }
-
         
-        setChart(dataPoints: viewModel.forChartList.map { (Scale(rawValue: $0.noteIndex)?.textValueForSharp) ?? "" }, barValues: viewModel.forChartList.map { $0.avgFreq }, lineValues: viewModel.forChartList.map { $0.standardFreq } )
+        setChart()
     }
     
-    func setChart(dataPoints: [String], barValues: [Float], lineValues: [Float]) {
+    func setChart() {
+       let dataPoints = viewModel.forChartList.map { (Scale(rawValue: $0.noteIndex)?.textValueForSharp) ?? "" }
+        let barValues = viewModel.forChartList.map { $0.centDist + 50 }
+        let lineValues = viewModel.forChartList.map { _ in 50 }
         // bar, line 엔트리 생성
         var barDataEntries: [BarChartDataEntry] = []
         var lineDataEntries: [ChartDataEntry] = []
@@ -106,6 +108,25 @@ extension StatsViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            simpleDestructiveYesAndNo(self, message: "정말 삭제하시겠습니까?", title: "삭제") { [self] _ in
+                do {
+                    try deleteCoreData(id: viewModel.list[indexPath.row].id)
+                    viewModel.list.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .left)
+                    setChart()
+                } catch {
+                    print(error)
+                }
+            }
+            
+        }
+    }
     
 }
 
@@ -123,7 +144,7 @@ class StatsTableViewCell: UITableViewCell {
         lblMyPitchAndCents.text = "\(record.avgFreq.cleanFixTwo)HZ" + "(\(Int(record.centDist)) cents)"
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY-MM-D hh:mm:dd"
+        formatter.dateFormat = "YYYY-MM-dd hh:mm:ss"
         lblDate.text = "\(formatter.string(from: record.date))"
         lblTuningSystem.text = "Equal Temperament"
     }
