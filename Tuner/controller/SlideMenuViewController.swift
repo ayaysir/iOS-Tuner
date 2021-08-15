@@ -21,32 +21,22 @@ class SlideMenuViewController: UIViewController {
     }
     
     @IBAction func btnFreqTable(_ sender: UIButton) {
-        let menu = "FreqTableViewController"
-        if MenuState.shared.currentMenu == menu {
-            sideMenuController()?.sideMenu?.toggleMenu()
-            return
-        }
-        
-        MenuState.shared.currentMenu = menu
-        let targetVC = self.storyboard?.instantiateViewController(identifier: menu)
-        self.sideMenuController()?.setContentViewController(targetVC!)
+        openController(menu: "FreqTableViewController")
     }
     
-    
     @IBAction func btnTuner(_ sender: Any) {
-        let menu = "TunerViewController"
-        if MenuState.shared.currentMenu == menu {
-            sideMenuController()?.sideMenu?.toggleMenu()
-            return
-        }
-        
-        MenuState.shared.currentMenu = menu
-        let targetVC = self.storyboard?.instantiateViewController(identifier: menu)
-        self.sideMenuController()?.setContentViewController(targetVC!)
+        openController(menu: "TunerViewController")
     }
     
     @IBAction func btnStats(_ sender: Any) {
-        let menu = "StatsViewController"
+        openController(menu: "StatsViewController")
+    }
+    
+    @IBAction func btnSetting(_ sender: Any) {
+        openController(menu: "SettingViewController")
+    }
+    
+    func openController(menu: String) {
         if MenuState.shared.currentMenu == menu {
             sideMenuController()?.sideMenu?.toggleMenu()
             return
@@ -56,6 +46,7 @@ class SlideMenuViewController: UIViewController {
         let targetVC = self.storyboard?.instantiateViewController(identifier: menu)
         self.sideMenuController()?.setContentViewController(targetVC!)
     }
+    
     
 }
 

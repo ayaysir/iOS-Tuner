@@ -145,13 +145,13 @@ class TunerViewController: UIViewController {
         
         if freqMonitor.count == R_BLOCK {
             monitorCount += R_BLOCK
-            lblJustFrequency.text = String(octaveMonitor.std())
+            lblJustFrequency.text = String(dBMonitor.std())
             
             // 4.5초 (270회) 기록
             // 중간에 0.75초 이상 중지시 취소
             // 4.5초동안 아래 조건이 true인 경우의 평균, 표준편차 기록
             
-            let condition = octaveMonitor.std() == 0 && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.3)
+            let condition = octaveMonitor.std() == 0 && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.5)
             
             if condition {
                 conductor.data.isStdSmooth = true
@@ -231,7 +231,30 @@ class TunerViewController: UIViewController {
                 
                 print("record:", freqRecord45.avg(), freqRecord45.std())
                 
-                if maxOctave >= 0 {
+                var configLeftRangeNum: Int? {
+                    do {
+                        let noteNum = try UserDefaults.standard.getObject(forKey: "config-rangeLeft", castTo: NoteRangeConfig.self).noteNum
+                        return noteNum
+                    } catch {
+                        print(error.localizedDescription)
+                        return nil
+                    }
+                }
+                
+                var configRightRangeNum: Int? {
+                    do {
+                        let noteNum = try UserDefaults.standard.getObject(forKey: "config-rangeRight", castTo: NoteRangeConfig.self).noteNum
+                        return noteNum
+                    } catch {
+                        print(error.localizedDescription)
+                        return nil
+                    }
+                }
+                
+                let maxNoteNum = maxNote.rawValue + (12 * maxOctave)
+                let rangeCondition = (configLeftRangeNum != nil && configRightRangeNum != nil) ? (configLeftRangeNum! <= maxNoteNum && maxNoteNum <= configRightRangeNum!) : true
+                
+                if maxOctave >= 0 && rangeCondition{
                     // core data 기록
                     let record = TunerRecord(id: UUID(), date: Date(), avgFreq: freqRecord45.avg(), stdFreq: freqRecord45.std(), standardFreq: maxStandardFreq, centDist: centRecord45.avg(), noteIndex: maxNote.rawValue, octave: maxOctave)
                     

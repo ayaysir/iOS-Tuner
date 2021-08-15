@@ -27,6 +27,29 @@ class MenuNavigationController: ENSideMenuNavigationController {
         
         // Show navigation bar above side menu
         self.view.bringSubviewToFront(navigationBar)
+        
+        // 다크모드 결정
+        let mode = UserDefaults.standard.string(forKey: "config-appearance") ?? "unspecified"
+        print(mode)
+        switch mode {
+        case "unspecified":
+            UIApplication.shared.windows.forEach { window in
+                window.overrideUserInterfaceStyle = .unspecified
+            }
+            UserDefaults.standard.setValue("unspecified", forKey: "config-appearance")
+        case "light":
+            UIApplication.shared.windows.forEach { window in
+                window.overrideUserInterfaceStyle = .light
+            }
+            UserDefaults.standard.setValue("light", forKey: "config-appearance")
+        case "dark":
+            UIApplication.shared.windows.forEach { window in
+                window.overrideUserInterfaceStyle = .dark
+            }
+            UserDefaults.standard.setValue("dark", forKey: "config-appearance")
+        default:
+            break
+        }
     }
 }
 

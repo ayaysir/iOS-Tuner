@@ -107,7 +107,12 @@ class TunerIndicator: UIView {
             
             // 텍스트
             let noteNameAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 62)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
-            let noteNameStr = "\(state.note.textValueForSharp)\(makeSubscriptOfNumber(state.octave))"
+            
+            // config-notation 반영
+            let configNotation = UserDefaults.standard.string(forKey: "config-notation") ?? "sharp"
+            let notePart = configNotation == "sharp" ? state.note.textValueForSharp : state.note.textValueForFlat
+            
+            let noteNameStr = "\(notePart)\(makeSubscriptOfNumber(state.octave))"
             let noteNameY = boundsMax / 2 - Constants.arcWidth / 2 - Constants.arcWidth
             
             noteNameStr.draw(with: CGRect(x: 0, y: noteNameY, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: noteNameAttrs, context: nil)

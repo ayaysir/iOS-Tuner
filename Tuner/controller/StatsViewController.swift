@@ -12,6 +12,7 @@ class StatsViewController: UIViewController {
     
     @IBOutlet weak var tblTuningRecords: UITableView!
     @IBOutlet weak var combinedChartView: CombinedChartView!
+    @IBOutlet weak var segconGraphOutlet: UISegmentedControl!
     
     var viewModel = StatsViewModel()
     
@@ -30,13 +31,26 @@ class StatsViewController: UIViewController {
             print(error.localizedDescription)
         }
         
-        setChart()
+        setChart(mode: "frequency")
     }
     
-    func setChart() {
+    
+    func setChart(mode: String) {
        let dataPoints = viewModel.forChartList.map { (Scale(rawValue: $0.noteIndex)?.textValueForSharp) ?? "" }
-        let barValues = viewModel.forChartList.map { $0.centDist + 50 }
-        let lineValues = viewModel.forChartList.map { _ in 50 }
+        var barValues: [Float] {
+            if mode == "frequency" {
+                return viewModel.forChartList.map { $0.avgFreq }
+            } else {
+                return viewModel.forChartList.map { $0.centDist }
+            }
+        }
+        var lineValues: [Float] {
+            if mode == "frequency" {
+                return viewModel.forChartList.map { $0.standardFreq }
+            } else {
+                return viewModel.forChartList.map { _ in 0 }
+            }
+        }
         // bar, line 엔트리 생성
         var barDataEntries: [BarChartDataEntry] = []
         var lineDataEntries: [ChartDataEntry] = []
@@ -50,7 +64,7 @@ class StatsViewController: UIViewController {
                     }
 
         // 데이터셋 생성
-        let barChartDataSet = BarChartDataSet(entries: barDataEntries, label: "목표 처리량")
+        let barChartDataSet = BarChartDataSet(entries: barDataEntries, label: mode == "frequency" ? "주파수(Hz)" : "센트(cent)")
         let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "실시간 처리량")
         
         // 라인 원 색깔 변경
@@ -69,17 +83,30 @@ class StatsViewController: UIViewController {
         combinedChartView.data = data
         
         combinedChartView.leftAxis.enabled = false
-        combinedChartView.drawGridBackgroundEnabled = false
+        combinedChartView.leftAxis.drawGridLinesEnabled = false
+        
+        combinedChartView.xAxis.drawGridLinesEnabled = false
+        
         
         lineChartDataSet.circleRadius = 1
         lineChartDataSet.circleHoleRadius = 1
         lineChartDataSet.mode = .cubicBezier
-        combinedChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        combinedChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
         
         
         
     }
     
+    @IBAction func segConSelectGraph(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            setChart(mode: "frequency")
+        case 1:
+            setChart(mode: "cents")
+        default:
+            break
+        }
+    }
     
     
 
@@ -119,7 +146,7 @@ extension StatsViewController: UITableViewDelegate, UITableViewDataSource {
                     try deleteCoreData(id: viewModel.list[indexPath.row].id)
                     viewModel.list.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .left)
-                    setChart()
+                    setChart(mode: segconGraphOutlet.selectedSegmentIndex == 0 ? "frequency" : "cents")
                 } catch {
                     print(error)
                 }
@@ -141,10 +168,15 @@ class StatsTableViewCell: UITableViewCell {
         lblNoteName.text = Scale(rawValue: record.noteIndex)!.textValueForSharp + String(makeSubscriptOfNumber(record.octave
         ))
         lblStandardPitch.text = "\(record.standardFreq.cleanFixTwo)Hz"
-        lblMyPitchAndCents.text = "\(record.avgFreq.cleanFixTwo)HZ" + "(\(Int(record.centDist)) cents)"
+        lblMyPitchAndCents.text = "\(record.avgFreq.cleanFixTwo)Hz" + " " + "(\(Int(record.centDist)) cents)"
+        if abs(record.centDist) > 2 {
+            lblMyPitchAndCents.textColor = UIColor.red
+        } else {
+            lblMyPitchAndCents.textColor = UIColor.green
+        }
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY-MM-dd hh:mm:ss"
+        formatter.dateFormat = "YYYY-MM-dd E HH:mm:ss"
         lblDate.text = "\(formatter.string(from: record.date))"
         lblTuningSystem.text = "Equal Temperament"
     }
