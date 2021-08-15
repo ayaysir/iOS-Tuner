@@ -32,11 +32,12 @@ class TunerIndicator: UIView {
     
     @IBInspectable var outlineColor: UIColor = UIColor.blue
     @IBInspectable var innerColor: UIColor = UIColor.orange
-    @IBInspectable var coreColor: UIColor = UIColor.white
+    @IBInspectable var coreColor: UIColor? = UIColor(named: "indicator-background")
+    @IBInspectable var textColor: UIColor? = UIColor(named: "indicator-black")
     @IBInspectable var leftDegree: CGFloat =  0
     
     override func draw(_ rect: CGRect) {
-        UIColor.white.setFill()
+        UIColor(named: "indicator-background")?.setFill()
         UIGraphicsGetCurrentContext()?.fill(rect)
 
         let boundsMax: CGFloat = max(bounds.width, bounds.height)
@@ -57,8 +58,8 @@ class TunerIndicator: UIView {
         outerLinePath.lineCapStyle = .butt
         
         outlineColor.setStroke()
-        let dashPattern: [CGFloat] = [10, 5]
-        outerLinePath.setLineDash(dashPattern, count: 2, phase: 0)
+//        let dashPattern: [CGFloat] = [10, 5]
+//        outerLinePath.setLineDash(dashPattern, count: 2, phase: 0)
         outerLinePath.stroke()
         
         let innerCircleCenter = CGPoint(x: bounds.width / 2, y: outerLinePath.bounds.maxY + 5)
@@ -77,9 +78,12 @@ class TunerIndicator: UIView {
                 let middleIndex = 0.5 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
                 let leftIndex = middleIndex - Constants.eachStep
                 let rightIndex = middleIndex + Constants.eachStep
-                makeIndicatorNeedle(index: leftIndex, color: UIColor.gray, center: innerCircleCenter)
+                
+                let needleWingColor = #colorLiteral(red: 0.9960579276, green: 0.7117440104, blue: 0.4905742407, alpha: 1)
+                
+                makeIndicatorNeedle(index: leftIndex, color: needleWingColor, center: innerCircleCenter)
                 makeIndicatorNeedle(index: middleIndex, color: UIColor.orange, center: innerCircleCenter)
-                makeIndicatorNeedle(index: rightIndex, color: UIColor.gray, center: innerCircleCenter)
+                makeIndicatorNeedle(index: rightIndex, color: needleWingColor, center: innerCircleCenter)
             } else if state.centDist > -50 && state.centDist <= 50 {
                 let percentOfCurrentFreq: Double = (Double(state.centDist) + 50) / 100
                 let index = percentOfCurrentFreq * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
@@ -101,12 +105,13 @@ class TunerIndicator: UIView {
                                            endAngle: endAngle,
                                           clockwise: true)
             
-            coreColor.setFill()
+            coreColor?.setFill()
             coreCirclePath.fill()
             
             
             // 텍스트
-            let noteNameAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 62)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            var noteNameAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 62)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            noteNameAttrs[.foregroundColor] = textColor
             
             // config-notation 반영
             let configNotation = UserDefaults.standard.string(forKey: "config-notation") ?? "sharp"
@@ -117,15 +122,17 @@ class TunerIndicator: UIView {
             
             noteNameStr.draw(with: CGRect(x: 0, y: noteNameY, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: noteNameAttrs, context: nil)
             
-            let frequencyAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 56)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            var frequencyAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 56)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            frequencyAttrs[.foregroundColor] = textColor
             let frequencyStr = String(format: "%d", Int(round(state.pitch)))
             
             frequencyStr.draw(with: CGRect(x: 0, y: innerCircleCenter.y - boundsMax / 2 - 15, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: frequencyAttrs, context: nil)
             
-            let centArr = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 17)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            var centAtrr = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 17)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            centAtrr[.foregroundColor] = textColor
             let centStr = "\(Int(state.centDist)) cent 만큼 차이가 납니다."
             
-            centStr.draw(with: CGRect(x: 0, y: noteNameY + 80, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: centArr, context: nil)
+            centStr.draw(with: CGRect(x: 0, y: noteNameY + 80, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: centAtrr, context: nil)
         } else {
             let index = 0 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
             makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
@@ -139,7 +146,7 @@ class TunerIndicator: UIView {
                                            endAngle: endAngle,
                                           clockwise: true)
             
-            coreColor.setFill()
+            coreColor?.setFill()
             coreCirclePath.fill()
         }
         
@@ -152,7 +159,7 @@ class TunerIndicator: UIView {
         trianglePath.addLine(to: CGPoint(x: bounds.width / 2, y: innerCircleCenter.y - boundsMax / 2 + 77.5))
         trianglePath.addLine(to: CGPoint(x: bounds.width / 2 + 10, y: innerCircleCenter.y - boundsMax / 2 + 67.5))
         trianglePath.close()
-        UIColor.black.setFill()
+        UIColor(named: "indicator-black")?.setFill()
         trianglePath.fill()
         
 //        if state.tuningSystem == .equalTemperament {
