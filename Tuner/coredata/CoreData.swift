@@ -15,10 +15,10 @@ enum CDError: Error {
 
 func saveCoreData(record: TunerRecord) throws {
     // App Delegate 호출
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { throw CDError.appDelegateNotExist  }
+//    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { throw CDError.appDelegateNotExist  }
     
     // App Delegate 내부에 있는 viewContext 호출
-    let managedContext = appDelegate.persistentContainer.viewContext
+    let managedContext = AppDelegate.viewContext
     
     // managedContext 내부에 있는 entity 호출
     let entity = NSEntityDescription.entity(forEntityName: "Record", in: managedContext)!
@@ -47,8 +47,7 @@ func saveCoreData(record: TunerRecord) throws {
 }
 
 func readCoreData() throws -> [TunerRecord] {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { throw CDError.appDelegateNotExist }
-    let managedContext = appDelegate.persistentContainer.viewContext
+    let managedContext = AppDelegate.viewContext
     
     // Entity의 fetchRequest 생성
     let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Record")
@@ -79,8 +78,7 @@ func readCoreData() throws -> [TunerRecord] {
 }
 
 func deleteCoreData(id: UUID) throws {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { throw CDError.appDelegateNotExist }
-    let managedContext = appDelegate.persistentContainer.viewContext
+    let managedContext = AppDelegate.viewContext
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Record")
     
     // 아이디를 삭제 기준으로 설정

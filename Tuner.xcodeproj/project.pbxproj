@@ -40,6 +40,7 @@
 		44A6FDB326C7D4A500C94855 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDB226C7D4A500C94855 /* StatsViewController.swift */; };
 		44A6FDB526C90A7000C94855 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDB426C90A7000C94855 /* SettingViewController.swift */; };
 		44A6FDBC26C9454B00C94855 /* NoteRangeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDBB26C9454B00C94855 /* NoteRangeConfig.swift */; };
+		44B5B31F26CA7BFC007889C8 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B5B31E26CA7BFC007889C8 /* CloudKit.framework */; };
 		B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087577D37AE85CA890BA062C /* Pods_Tuner.framework */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,7 @@
 		44A6FDB226C7D4A500C94855 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		44A6FDB426C90A7000C94855 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		44A6FDBB26C9454B00C94855 /* NoteRangeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRangeConfig.swift; sourceTree = "<group>"; };
+		44B5B31E26CA7BFC007889C8 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.release.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.release.xcconfig"; sourceTree = "<group>"; };
 		E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.debug.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +92,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4426640826BA622800B5A5D9 /* AudioKit in Frameworks */,
+				44B5B31F26CA7BFC007889C8 /* CloudKit.framework in Frameworks */,
 				B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */,
 				440DF81A26B500E600FDA3AA /* SoundpipeAudioKit in Frameworks */,
 			);
@@ -240,6 +243,7 @@
 		94DB0DF3BA5174020EFC934C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				44B5B31E26CA7BFC007889C8 /* CloudKit.framework */,
 				087577D37AE85CA890BA062C /* Pods_Tuner.framework */,
 			);
 			name = Frameworks;
@@ -546,8 +550,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tuner/Tuner.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				INFOPLIST_FILE = Tuner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -557,7 +561,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bgsmm.Tuner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Tuner XR";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -570,8 +574,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tuner/Tuner.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				INFOPLIST_FILE = Tuner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -581,7 +585,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bgsmm.Tuner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Tuner XR";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

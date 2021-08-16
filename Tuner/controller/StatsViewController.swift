@@ -18,6 +18,8 @@ class StatsViewController: UIViewController {
     
     var months: [String]!
     var unitsSold: [Double]!
+    
+    var refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,15 +27,31 @@ class StatsViewController: UIViewController {
         tblTuningRecords.delegate = self
         tblTuningRecords.dataSource = self
         
+        initData()
+        
+        tblTuningRecords.refreshControl = refreshControl
+        refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        
+    }
+    
+    func initData() {
         do {
             try viewModel.setList(list: readCoreData())
+            if viewModel.listCount != 0 {
+                setChart(mode: "frequency")
+            }
         } catch {
             print(error.localizedDescription)
         }
-        
-        setChart(mode: "frequency")
     }
     
+    @objc func refresh(_ refreshControl: UIRefreshControl) {
+        initData()
+        // Do your job, when done:
+        refreshControl.endRefreshing()
+        tblTuningRecords.reloadData()
+    }
     
     func setChart(mode: String) {
        let dataPoints = viewModel.forChartList.map { (Scale(rawValue: $0.noteIndex)?.textValueForSharp) ?? "" }
@@ -65,7 +83,7 @@ class StatsViewController: UIViewController {
 
         // 데이터셋 생성
         let barChartDataSet = BarChartDataSet(entries: barDataEntries, label: mode == "frequency" ? "주파수(Hz)" : "센트(cent)")
-        let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "실시간 처리량")
+        let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "정확한 수치")
         
         // 라인 원 색깔 변경
         lineChartDataSet.colors = [.red ]
@@ -98,13 +116,15 @@ class StatsViewController: UIViewController {
     }
     
     @IBAction func segConSelectGraph(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            setChart(mode: "frequency")
-        case 1:
-            setChart(mode: "cents")
-        default:
-            break
+        if viewModel.listCount != 0 {
+            switch sender.selectedSegmentIndex {
+            case 0:
+                setChart(mode: "frequency")
+            case 1:
+                setChart(mode: "cents")
+            default:
+                break
+            }
         }
     }
     
@@ -196,12 +216,31 @@ class StatsViewModel {
         return list.count
     }
     
-    var forChartList: [TunerRecord] {
+    var forChartList:  [TunerRecord] {
         let REC_COUNT = 50
         
-        var reversedArr = list[...REC_COUNT]
-        reversedArr.sort { $0.date < $1.date }
+        if listCount >= 50 {
+            var reversedArr = list[...REC_COUNT]
+            reversedArr.sort { $0.date < $1.date }
+            return Array(reversedArr)
+        } else if listCount >= 0 {
+            var reversedArr = list[...(listCount - 1)]
+            reversedArr.sort { $0.date < $1.date }
+            
+            let toCount = (50 - listCount)
+            
+            var blankArrWithReversedArr = [TunerRecord]()
+            blankArrWithReversedArr.reserveCapacity(toCount)
+            
+            for _ in 0..<toCount {
+                blankArrWithReversedArr.append(TunerRecord(id: UUID(), date: Date(), avgFreq: 0, stdFreq: 0, standardFreq: 0, centDist: 0, noteIndex: 0, octave: 0))
+            }
+            
+            blankArrWithReversedArr.append(contentsOf: reversedArr)
+            return Array(blankArrWithReversedArr)
+        } else {
+            return Array<TunerRecord>()
+        }
         
-        return Array(reversedArr)
     }
 }
