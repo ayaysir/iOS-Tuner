@@ -165,8 +165,83 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbN-sn-5bL">
+                                <rect key="frame" x="0.0" y="44" width="414" height="101"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4AI-NW-mBk">
+                                        <rect key="frame" x="357" y="6" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="+"/>
+                                        <connections>
+                                            <action selector="btnPlusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="2XT-PN-NR1"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bDz-LC-Uf5">
+                                        <rect key="frame" x="260" y="4" width="71" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RBc-WK-Rpi">
+                                        <rect key="frame" x="333" y="6" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="-"/>
+                                        <connections>
+                                            <action selector="btnMinusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="3nD-qN-Cp3"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMW-Xm-NMS">
+                                        <rect key="frame" x="8" y="48" width="118" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                        <state key="normal" title="Scale Select"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="roundButton" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="btnTuningSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="ucG-Mi-58v"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-e7-2bO">
+                                        <rect key="frame" x="178" y="6" width="68" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="A₄"/>
+                                        <connections>
+                                            <action selector="btnBaseNoteSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="NDh-4n-Hdh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4M-IF-PkD">
+                                        <rect key="frame" x="0.0" y="86" width="414" height="19"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                        <gestureRecognizers/>
+                                        <state key="normal" image="arrowtriangle.up.fill" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="13"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnSlideSettingView:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="SSx-Cz-qd0"/>
+                                            <outletCollection property="gestureRecognizers" destination="IKb-Af-DVx" appends="YES" id="jn6-Vs-npC"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fVd-gI-FqZ">
+                                        <rect key="frame" x="280" y="48" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Key"/>
+                                        <connections>
+                                            <action selector="btnScaleSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="O8d-Qa-FJ5"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="101" id="drD-Xv-qha"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="40" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OCd-JB-dXJ">
-                                <rect key="frame" x="0.0" y="144" width="414" height="718"/>
+                                <rect key="frame" x="0.0" y="145" width="414" height="717"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="freqCell" rowHeight="40" id="jCO-j7-c0V" customClass="FreqCell" customModule="Tuner" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="24.5" width="414" height="40"/>
@@ -258,75 +333,36 @@
                                     <outlet property="delegate" destination="ZTy-n7-SYo" id="mt6-PF-7xe"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4AI-NW-mBk">
-                                <rect key="frame" x="364" y="46" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="+"/>
-                                <connections>
-                                    <action selector="btnPlusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="2XT-PN-NR1"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bDz-LC-Uf5">
-                                <rect key="frame" x="253" y="44" width="71" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RBc-WK-Rpi">
-                                <rect key="frame" x="338" y="46" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="-"/>
-                                <connections>
-                                    <action selector="btnMinusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="3nD-qN-Cp3"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMW-Xm-NMS">
-                                <rect key="frame" x="20" y="84" width="118" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                                <state key="normal" title="Scale Select"/>
-                                <connections>
-                                    <action selector="btnTuningSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="ucG-Mi-58v"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fVd-gI-FqZ">
-                                <rect key="frame" x="286" y="84" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Key"/>
-                                <connections>
-                                    <action selector="btnScaleSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="O8d-Qa-FJ5"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-e7-2bO">
-                                <rect key="frame" x="177" y="47" width="68" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="A₄"/>
-                                <connections>
-                                    <action selector="btnBaseNoteSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="NDh-4n-Hdh"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SNo-or-D5r"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="SNo-or-D5r" firstAttribute="trailing" secondItem="OCd-JB-dXJ" secondAttribute="trailing" id="K15-t5-qnc"/>
-                            <constraint firstItem="OCd-JB-dXJ" firstAttribute="top" secondItem="SNo-or-D5r" secondAttribute="top" constant="100" id="PQ5-Th-LiK"/>
+                            <constraint firstItem="bbN-sn-5bL" firstAttribute="trailing" secondItem="SNo-or-D5r" secondAttribute="trailing" id="WuP-no-TZs"/>
                             <constraint firstItem="OCd-JB-dXJ" firstAttribute="leading" secondItem="SNo-or-D5r" secondAttribute="leading" id="Zfg-sK-RCi"/>
+                            <constraint firstItem="bbN-sn-5bL" firstAttribute="top" secondItem="SNo-or-D5r" secondAttribute="top" id="fLe-F2-dwA"/>
+                            <constraint firstItem="OCd-JB-dXJ" firstAttribute="top" secondItem="bbN-sn-5bL" secondAttribute="bottom" id="g4C-RI-pN4"/>
+                            <constraint firstItem="bbN-sn-5bL" firstAttribute="leading" secondItem="SNo-or-D5r" secondAttribute="leading" id="oPL-Fl-3pu"/>
                             <constraint firstItem="SNo-or-D5r" firstAttribute="bottom" secondItem="OCd-JB-dXJ" secondAttribute="bottom" id="oeR-Hf-bKf"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3V0-PD-s4e"/>
                     <connections>
                         <outlet property="btnBaseNoteSelect" destination="mfP-e7-2bO" id="ZYe-pF-PVH"/>
+                        <outlet property="btnBottomSlide" destination="T4M-IF-PkD" id="Wgh-j0-x68"/>
                         <outlet property="btnScaleSelect" destination="fVd-gI-FqZ" id="kCe-c4-kyg"/>
                         <outlet property="btnTuningSelect" destination="eMW-Xm-NMS" id="bBj-wR-dAx"/>
+                        <outlet property="cnstSettingViewBottom" destination="g4C-RI-pN4" id="3tN-rX-nad"/>
+                        <outlet property="cnstSettngViewTop" destination="fLe-F2-dwA" id="7Jb-85-AHl"/>
                         <outlet property="menuScale" destination="Y47-ka-Vg3" id="eWP-As-OkE"/>
+                        <outlet property="settingView" destination="bbN-sn-5bL" id="NZ0-7b-3C5"/>
                         <outlet property="tblFreqList" destination="OCd-JB-dXJ" id="xv4-k6-bO9"/>
                         <outlet property="textA4FreqOutlet" destination="bDz-LC-Uf5" id="pgI-Py-Dv7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vn8-Vk-DJ2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <command title="DSS" id="Y47-ka-Vg3"/>
+                <swipeGestureRecognizer direction="right" id="IKb-Af-DVx"/>
             </objects>
             <point key="canvasLocation" x="-84.057971014492765" y="-719.19642857142856"/>
         </scene>
@@ -686,6 +722,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrowtriangle.up.fill" catalog="system" width="128" height="124"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <namedColor name="indicator-background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

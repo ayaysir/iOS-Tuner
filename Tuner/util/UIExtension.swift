@@ -92,3 +92,21 @@ extension CGSize {
         return image
     }
 }
+
+@IBDesignable extension UIButton {
+    @IBInspectable var roundButton: Bool {
+        set {
+            if newValue {
+                round()
+            }
+        } get {
+            return self.roundButton
+        }
+    }
+    
+    
+    func round() {
+        self.layer.cornerRadius = 20
+        self.clipsToBounds = true
+    }
+}

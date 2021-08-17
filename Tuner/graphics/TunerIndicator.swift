@@ -59,9 +59,10 @@ class TunerIndicator: UIView {
         
         // https://stackoverflow.com/questions/62891571
         
-        context.setStrokeColor(CGColor(red: 0, green: 0, blue: 255, alpha: 1))
+        let outerLineColor = CGColor(red: 0, green: 0, blue: 255, alpha: 1)
+        context.setStrokeColor(outerLineColor)
         context.setLineWidth(2)
-        context.setShadow(offset: .zero, blur: 20, color: UIColor.green.cgColor)
+        context.setShadow(offset: .zero, blur: 20, color: outerLineColor)
         context.setBlendMode(.sourceAtop)
         // .difference, .exclusion(stroke), .multiply(light), screen(dark), sourceAtop, In, (stroke)
 

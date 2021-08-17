@@ -29,6 +29,13 @@ class FreqTableViewController: UIViewController {
     @IBOutlet weak var btnScaleSelect: UIButton!
     @IBOutlet weak var btnBaseNoteSelect: UIButton!
     
+    @IBOutlet weak var btnBottomSlide: UIButton!
+    @IBOutlet weak var settingView: UIView!
+    
+    @IBOutlet weak var cnstSettingViewBottom: NSLayoutConstraint!
+    @IBOutlet weak var cnstSettngViewTop: NSLayoutConstraint!
+    
+    
     var state: TunerViewState!
     
     func loadStateFromUserDefaults() {
@@ -156,6 +163,31 @@ class FreqTableViewController: UIViewController {
     @IBAction func btnBaseNoteSelectAct(_ sender: Any) {
         baseNoteDropDown.show()
     }
+    
+    var isSettingViewUpside = false
+    var upsideY: CGFloat = 0
+    @IBAction func btnSlideSettingView(_ sender: UIButton) {
+        if isSettingViewUpside {
+            cnstSettngViewTop.constant += upsideY
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                self.btnBottomSlide.setImage(UIImage(systemName: "arrowtriangle.up.fill"), for: .normal)
+            }
+        } else {
+            self.upsideY = settingView.frame.height - 10
+            cnstSettngViewTop.constant -= upsideY
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                self.btnBottomSlide.setImage(UIImage(systemName: "arrowtriangle.down.fill"), for: .normal)
+            }
+        }
+        isSettingViewUpside = !isSettingViewUpside
+    }
+    
     
 }
 
