@@ -82,7 +82,6 @@ class TunerConductor: ObservableObject {
     }
     
     func start() {
-
         do {
             try engine.start()
             tracker.start()
@@ -93,6 +92,7 @@ class TunerConductor: ObservableObject {
 
     func stop() {
         engine.stop()
+        tracker.stop()
     }
 }
 

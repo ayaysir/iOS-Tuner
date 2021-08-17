@@ -52,3 +52,43 @@ extension UIBezierPath
         self.apply(transform)
     }
 }
+
+// https://stackoverflow.com/questions/59237515
+extension UIView {
+    enum GlowEffect: Float {
+        case small = 0.4, normal = 2, big = 30
+    }
+
+    func doGlowAnimation(withColor color: UIColor, withEffect effect: GlowEffect = .normal) {
+        layer.masksToBounds = false
+        layer.shadowColor = color.cgColor
+        layer.shadowRadius = 0
+        layer.shadowOpacity = 0.8
+        layer.shadowOffset = .zero
+
+        let glowAnimation = CABasicAnimation(keyPath: "shadowRadius")
+        glowAnimation.fromValue = 0
+        glowAnimation.toValue = effect.rawValue
+        glowAnimation.fillMode = .removed
+        glowAnimation.repeatCount = .infinity
+        glowAnimation.duration = 2
+        glowAnimation.autoreverses = true
+        layer.add(glowAnimation, forKey: "shadowGlowingAnimation")
+    }
+}
+
+// https://gist.github.com/mathewsanders/94ed8212587d72684291483905132790
+extension CGSize {
+    
+    typealias ContextClosure = (_ context: CGContext, _ frame: CGRect) -> ()
+    func image(withContext context: ContextClosure) -> UIImage? {
+        
+        UIGraphicsBeginImageContext(self)
+        let frame = CGRect(origin: .zero, size: self)
+        context(UIGraphicsGetCurrentContext()!, frame)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+}

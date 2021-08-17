@@ -16,13 +16,6 @@ class TunerIndicator: UIView {
     }
     
     private struct Constants {
-        static let lineWidth: CGFloat = 5.0
-        static let arcWidth: CGFloat = 5
-        
-        static var halfOfLineWidth: CGFloat {
-            return lineWidth / 2
-        }
-        
         static let startDegree: Double = 204
         static let endDegree: Double = 336
         static let divedBy = 21
@@ -36,11 +29,16 @@ class TunerIndicator: UIView {
     @IBInspectable var textColor: UIColor? = UIColor(named: "indicator-black")
     @IBInspectable var leftDegree: CGFloat =  0
     
+    
     override func draw(_ rect: CGRect) {
         UIColor(named: "indicator-background")?.setFill()
         UIGraphicsGetCurrentContext()?.fill(rect)
+        
+        // 상대
+        let arcWidth = 0.0127 * bounds.width // 5
 
         let boundsMax: CGFloat = max(bounds.width, bounds.height)
+        // xr: 394, 331
 
         // 외각 점선
         let startAngle: CGFloat = CGFloat(204.degreesToRadians)
@@ -48,30 +46,38 @@ class TunerIndicator: UIView {
 
         let position = CGPoint(x: bounds.width / 2, y: bounds.height * 0.85)
         
+        guard let context = UIGraphicsGetCurrentContext() else { fatalError("context를 찾을 수 없음.") }
+        
         let outerLinePath = UIBezierPath(arcCenter: position,
-                                         radius: boundsMax / 2 - Constants.arcWidth / 2,
+                                         radius: boundsMax / 2 - arcWidth / 2,
                                startAngle: startAngle,
                                  endAngle: endAngle,
                                 clockwise: true)
         
-        outerLinePath.lineWidth = Constants.arcWidth
+        outerLinePath.lineWidth = arcWidth
         outerLinePath.lineCapStyle = .butt
         
-        outlineColor.setStroke()
-//        let dashPattern: [CGFloat] = [10, 5]
-//        outerLinePath.setLineDash(dashPattern, count: 2, phase: 0)
-        outerLinePath.stroke()
+        // https://stackoverflow.com/questions/62891571
+        
+        context.setStrokeColor(CGColor(red: 0, green: 0, blue: 255, alpha: 1))
+        context.setLineWidth(2)
+        context.setShadow(offset: .zero, blur: 20, color: UIColor.green.cgColor)
+        context.setBlendMode(.sourceAtop)
+        // .difference, .exclusion(stroke), .multiply(light), screen(dark), sourceAtop, In, (stroke)
+
+        context.addPath(outerLinePath.cgPath)
+        context.strokePath()
         
         let innerCircleCenter = CGPoint(x: bounds.width / 2, y: outerLinePath.bounds.maxY + 5)
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         
+        context.setBlendMode(.sourceAtop)
+        context.setShadow(offset: .zero, blur: 20, color: CGColor(red: 255, green: 0, blue: 0, alpha: 1))
         
-       
-        
-        if state.isStdSmooth && state.octave >= 0 {
-            
+        let activeCondition = state.isStdSmooth && state.octave >= 0
+        if activeCondition {
             // 막대기
             // 튜닝이 맞는 경우 강조표시
             if state.centDist >= -1 && state.centDist <= 1 {
@@ -79,11 +85,11 @@ class TunerIndicator: UIView {
                 let leftIndex = middleIndex - Constants.eachStep
                 let rightIndex = middleIndex + Constants.eachStep
                 
-                let needleWingColor = #colorLiteral(red: 0.9960579276, green: 0.7117440104, blue: 0.4905742407, alpha: 1)
+                let needleWingColor = #colorLiteral(red: 0.9960579276, green: 0.7117440104, blue: 0.4905742407, alpha: 0.6352405159)
                 
-                makeIndicatorNeedle(index: leftIndex, color: needleWingColor, center: innerCircleCenter)
+                makeIndicatorSubNeedle(index: leftIndex, color: needleWingColor, center: innerCircleCenter, direction: "left")
                 makeIndicatorNeedle(index: middleIndex, color: UIColor.orange, center: innerCircleCenter)
-                makeIndicatorNeedle(index: rightIndex, color: needleWingColor, center: innerCircleCenter)
+                makeIndicatorSubNeedle(index: rightIndex, color: needleWingColor, center: innerCircleCenter, direction: "right")
             } else if state.centDist > -50 && state.centDist <= 50 {
                 let percentOfCurrentFreq: Double = (Double(state.centDist) + 50) / 100
                 let index = percentOfCurrentFreq * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
@@ -96,20 +102,52 @@ class TunerIndicator: UIView {
                 makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
             }
             
-            // 중심부 (흰색)
-            let coreCircleRadius = 76
-            let coreCircleCenter = CGPoint(x: innerCircleCenter.x, y: innerCircleCenter.y + CGFloat(coreCircleRadius) / 2)
-            let coreCirclePath = UIBezierPath(arcCenter: coreCircleCenter,
-                                              radius: CGFloat(coreCircleRadius),
-                                         startAngle: startAngle,
-                                           endAngle: endAngle,
-                                          clockwise: true)
-            
-            coreColor?.setFill()
-            coreCirclePath.fill()
-            
-            
-            // 텍스트
+        } else {
+            let index = 0 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
+            makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
+        }
+        
+        // 중심부 (흰색)
+        context.setBlendMode(.normal)
+        let circleShadowColor = UIColor(named: "indicator-circle-shadow") ?? UIColor.red
+        context.setShadow(offset: .zero, blur: 10, color: circleShadowColor.cgColor)
+//        let coreCircleRadius = 76
+        let coreCircleRadius = 0.1944 * bounds.width
+        let coreCircleCenter = CGPoint(x: innerCircleCenter.x, y: innerCircleCenter.y + CGFloat(coreCircleRadius) / 2)
+        let coreCirclePath = UIBezierPath(arcCenter: coreCircleCenter,
+                                          radius: CGFloat(coreCircleRadius),
+                                     startAngle: startAngle,
+                                       endAngle: endAngle,
+                                      clockwise: true)
+        
+        coreColor?.setFill()
+        coreCirclePath.fill()
+        
+        // 빈 칸 채우는 네모
+        context.setLineWidth(0)
+        let squareMargin: CGFloat = 0
+        let square = CGRect(x: coreCirclePath.bounds.minX + squareMargin, y: coreCirclePath.bounds.maxY - 1.5, width: coreCirclePath.bounds.width - (squareMargin * 2), height: 50)
+        let squarePath = UIBezierPath(rect: square)
+        context.setFillColor(UIColor(named: "indicator-background")!.cgColor)
+        context.addPath(squarePath.cgPath)
+        context.setShadow(offset: .zero, blur: 10, color: UIColor(named: "indicator-background")!.cgColor)
+        context.fillPath()
+        
+        // 삼각형
+        context.setShadow(offset: .zero, blur: 10, color: UIColor(named: "indicator-black")?.cgColor)
+        let trianglePath = UIBezierPath()
+        let tpXDiff = 0.0256 * bounds.width // 10
+        let tpYDiff = 0.1726 * bounds.width // 67.5
+        trianglePath.move(to: CGPoint(x: bounds.width / 2 - tpXDiff, y: innerCircleCenter.y - boundsMax / 2 + tpYDiff))
+        trianglePath.addLine(to: CGPoint(x: bounds.width / 2, y: innerCircleCenter.y - boundsMax / 2 + tpYDiff + tpXDiff))
+        trianglePath.addLine(to: CGPoint(x: bounds.width / 2 + tpXDiff, y: innerCircleCenter.y - boundsMax / 2 + tpYDiff))
+        trianglePath.close()
+        UIColor(named: "indicator-black")?.setFill()
+        trianglePath.fill()
+        
+        // 텍스트
+        if activeCondition {
+            context.setShadow(offset: .zero, blur: 0)
             var noteNameAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 62)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
             noteNameAttrs[.foregroundColor] = textColor
             
@@ -118,7 +156,7 @@ class TunerIndicator: UIView {
             let notePart = configNotation == "sharp" ? state.note.textValueForSharp : state.note.textValueForFlat
             
             let noteNameStr = "\(notePart)\(makeSubscriptOfNumber(state.octave))"
-            let noteNameY = boundsMax / 2 - Constants.arcWidth / 2 - Constants.arcWidth
+            let noteNameY = boundsMax / 2 - arcWidth / 2 - arcWidth
             
             noteNameStr.draw(with: CGRect(x: 0, y: noteNameY, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: noteNameAttrs, context: nil)
             
@@ -126,41 +164,16 @@ class TunerIndicator: UIView {
             frequencyAttrs[.foregroundColor] = textColor
             let frequencyStr = String(format: "%d", Int(round(state.pitch)))
             
-            frequencyStr.draw(with: CGRect(x: 0, y: innerCircleCenter.y - boundsMax / 2 - 15, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: frequencyAttrs, context: nil)
+            let triangleMinY = trianglePath.bounds.minY
+            frequencyStr.draw(with: CGRect(x: 0, y: triangleMinY - 72, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: frequencyAttrs, context: nil)
             
             var centAtrr = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 17)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
             centAtrr[.foregroundColor] = textColor
-            let centStr = "\(Int(state.centDist)) cent 만큼 차이가 납니다."
+            let centStr = "\(Int(state.centDist)) cents"
             
             centStr.draw(with: CGRect(x: 0, y: noteNameY + 80, width: bounds.width, height: bounds.height), options: .usesLineFragmentOrigin, attributes: centAtrr, context: nil)
-        } else {
-            let index = 0 * (Constants.endDegree - Constants.eachStep - Constants.startDegree) + Constants.startDegree
-            makeIndicatorNeedle(index: index, color: innerColor, center: innerCircleCenter)
-            
-            // 중심부 (흰색)
-            let coreCircleRadius = 76
-            let coreCircleCenter = CGPoint(x: innerCircleCenter.x, y: innerCircleCenter.y + CGFloat(coreCircleRadius) / 2)
-            let coreCirclePath = UIBezierPath(arcCenter: coreCircleCenter,
-                                              radius: CGFloat(coreCircleRadius),
-                                         startAngle: startAngle,
-                                           endAngle: endAngle,
-                                          clockwise: true)
-            
-            coreColor?.setFill()
-            coreCirclePath.fill()
         }
         
-
-        
-        
-        // 삼각형
-        let trianglePath = UIBezierPath()
-        trianglePath.move(to: CGPoint(x: bounds.width / 2 - 10, y: innerCircleCenter.y - boundsMax / 2 + 67.5))
-        trianglePath.addLine(to: CGPoint(x: bounds.width / 2, y: innerCircleCenter.y - boundsMax / 2 + 77.5))
-        trianglePath.addLine(to: CGPoint(x: bounds.width / 2 + 10, y: innerCircleCenter.y - boundsMax / 2 + 67.5))
-        trianglePath.close()
-        UIColor(named: "indicator-black")?.setFill()
-        trianglePath.fill()
         
 //        if state.tuningSystem == .equalTemperament {
 //            // 왼쪽
@@ -201,13 +214,37 @@ class TunerIndicator: UIView {
     
     func makeIndicatorNeedle(index: Double, color: UIColor, center: CGPoint) {
         let boundsMax: CGFloat = max(bounds.width, bounds.height)
+        let arcWidth = 0.01269 * bounds.width
         
         let innerStartAngle: CGFloat = CGFloat(index.degreesToRadians)
         let innerEndAngle: CGFloat = CGFloat((index + Constants.addDegree).degreesToRadians)
-        let innerCirclePath = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y:  bounds.height * 0.85), radius: boundsMax / 2 - Constants.arcWidth / 2 - Constants.arcWidth, startAngle: innerStartAngle, endAngle: innerEndAngle, clockwise: true)
+        let innerCirclePath = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y:  bounds.height * 0.85), radius: boundsMax / 2 - arcWidth / 2 - arcWidth, startAngle: innerStartAngle, endAngle: innerEndAngle, clockwise: true)
         
         innerCirclePath.addLine(to: center)
-        innerCirclePath.lineWidth = Constants.arcWidth
+        innerCirclePath.lineWidth = arcWidth
+        
+        color.setFill()
+        innerCirclePath.fill()
+    }
+    
+    func makeIndicatorSubNeedle(index: Double, color: UIColor, center: CGPoint, direction: String) {
+        let arcWidth = 0.01269 * bounds.width
+        let boundsMax: CGFloat = max(bounds.width, bounds.height)
+        var innerStartAngle: CGFloat
+        var innerEndAngle: CGFloat
+        
+        if direction == "left" {
+            innerStartAngle = CGFloat((index + Constants.addDegree / 2).degreesToRadians)
+            innerEndAngle = CGFloat((index + Constants.addDegree).degreesToRadians)
+        } else {
+            innerStartAngle = CGFloat(index.degreesToRadians)
+            innerEndAngle = CGFloat((index + (Constants.addDegree / 2)).degreesToRadians)
+        }
+        
+        let innerCirclePath = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y:  bounds.height * 0.85), radius: boundsMax / 2 - arcWidth / 2 - arcWidth, startAngle: innerStartAngle, endAngle: innerEndAngle, clockwise: true)
+        
+        innerCirclePath.addLine(to: center)
+        innerCirclePath.lineWidth = arcWidth
         
         color.setFill()
         innerCirclePath.fill()

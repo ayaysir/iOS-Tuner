@@ -86,6 +86,8 @@ class TunerViewController: UIViewController {
         
         self.sideMenuController()?.sideMenu?.delegate = self
         
+        lblRecordStatus.doGlowAnimation(withColor: UIColor.green)
+        
         // Do any additional setup after loading the view.
         AVAudioSession.sharedInstance().requestRecordPermission({ (granted) in
             // Handle granted
@@ -98,6 +100,8 @@ class TunerViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     @objc func conductorAppear() {
@@ -111,6 +115,8 @@ class TunerViewController: UIViewController {
         conductor.stop()
         saveStateToUserDefaults()
         levelTimer.invalidate()
+        
+        print("tuning conductor stopped")
     }
     
     func initField() {
@@ -185,6 +191,7 @@ class TunerViewController: UIViewController {
             
             if isRecordingOn && freqRecord45.count % 60 == 0 {
                 lblRecordStatus.text = countdown == 0 ? "기록중" : String(countdown)
+                lblRecordStatus.textColor = UIColor.lightGray
                 countdown -= 1
             }
             
@@ -262,12 +269,13 @@ class TunerViewController: UIViewController {
                         try saveCoreData(record: record)
                         print(getDocumentsDirectory())
                         lblRecordStatus.text = "기록 완료"
+                        lblRecordStatus.textColor = UIColor.green
                     } catch {
                         print("저장 에러 >>>", error.localizedDescription)
                     }
                 } else {
                     print("not saved: dirty data", maxOctave)
-                    lblRecordStatus.text = ""
+                    lblRecordStatus.text = "기록 대상이 아닙니다."
                 }
                 
                 

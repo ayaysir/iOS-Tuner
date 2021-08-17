@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -57,9 +58,8 @@
                                     <action selector="btnPlusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="qBS-IO-yJh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ebc-J5-jHf">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ebc-J5-jHf">
                                 <rect key="frame" x="29" y="109" width="85" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Scale Select"/>
                                 <connections>
                                     <action selector="btnTuningSelectAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="28B-6j-1jG"/>
@@ -84,9 +84,12 @@
                                     <action selector="btnBaseNoteSelectAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PXa-Yr-t2i"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZwB-T0-Bti" customClass="TunerIndicator" customModule="Tuner" customModuleProvider="target">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZwB-T0-Bti" customClass="TunerIndicator" customModule="Tuner" customModuleProvider="target">
                                 <rect key="frame" x="10" y="247" width="394" height="331"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ZwB-T0-Bti" secondAttribute="height" multiplier="394:331" id="b8A-bb-kcP"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="outlineColor">
                                         <color key="value" systemColor="linkColor"/>
@@ -108,13 +111,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vw8-8E-boG">
-                                <rect key="frame" x="227" y="726" width="167" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="systemPinkColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQt-3G-VPh">
                                 <rect key="frame" x="10" y="623" width="365" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -122,9 +118,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vw8-8E-boG">
+                                <rect key="frame" x="236" y="841" width="167" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemPinkColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="indicator-background"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZwB-T0-Bti" secondAttribute="trailing" constant="10" id="691-MN-al4"/>
+                            <constraint firstItem="ZwB-T0-Bti" firstAttribute="top" secondItem="Ebc-J5-jHf" secondAttribute="bottom" constant="108" id="FsM-Rj-aKM"/>
+                            <constraint firstItem="ZwB-T0-Bti" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="sjO-GZ-lD8"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1gP-F9-JQd">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="3fx-0W-S1U">
@@ -209,13 +217,6 @@
                                     <outlet property="delegate" destination="ZTy-n7-SYo" id="mt6-PF-7xe"/>
                                 </connections>
                             </tableView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" title="Allow background play" translatesAutoresizingMaskIntoConstraints="NO" id="Uq0-Fp-LSK">
-                                <rect key="frame" x="10" y="47" width="49" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="selectBackgroundPlayAct:" destination="ZTy-n7-SYo" eventType="valueChanged" id="yu2-4T-T4l"/>
-                                </connections>
-                            </switch>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4AI-NW-mBk">
                                 <rect key="frame" x="364" y="46" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -224,13 +225,6 @@
                                     <action selector="btnPlusAct:" destination="ZTy-n7-SYo" eventType="touchUpInside" id="2XT-PN-NR1"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="백그라운드 재생" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffe-Sq-WHJ">
-                                <rect key="frame" x="65" y="51" width="108" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bDz-LC-Uf5">
                                 <rect key="frame" x="253" y="44" width="71" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -285,7 +279,6 @@
                         <outlet property="btnScaleSelect" destination="fVd-gI-FqZ" id="kCe-c4-kyg"/>
                         <outlet property="btnTuningSelect" destination="eMW-Xm-NMS" id="bBj-wR-dAx"/>
                         <outlet property="menuScale" destination="Y47-ka-Vg3" id="eWP-As-OkE"/>
-                        <outlet property="selectBackgroundPlay" destination="Uq0-Fp-LSK" id="f1E-af-Uww"/>
                         <outlet property="tblFreqList" destination="OCd-JB-dXJ" id="xv4-k6-bO9"/>
                         <outlet property="textA4FreqOutlet" destination="bDz-LC-Uf5" id="pgI-Py-Dv7"/>
                     </connections>
@@ -625,6 +618,9 @@
     </scenes>
     <resources>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
+        <namedColor name="indicator-background">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

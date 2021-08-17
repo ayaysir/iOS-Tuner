@@ -29,6 +29,20 @@ class SettingViewController: UIViewController {
         super.viewDidLoad()
         setRange()
         loadRangeFromUserDefaults()
+        loadAppearanceInfo()
+    }
+    
+    func loadAppearanceInfo() {
+        let key = "config-appearance"
+        let mode = UserDefaults.standard.string(forKey: key) ?? "unspecified"
+        switch mode {
+        case "light":
+            segconMode.selectedSegmentIndex = 1
+        case "dark":
+            segconMode.selectedSegmentIndex = 2
+        default:
+            segconMode.selectedSegmentIndex = 0
+        }
     }
     
     func loadRangeFromUserDefaults() {

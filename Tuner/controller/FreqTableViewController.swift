@@ -23,7 +23,7 @@ class FreqTableViewController: UIViewController {
     
     @IBOutlet weak var textA4FreqOutlet: UITextField!
     @IBOutlet weak var tblFreqList: UITableView!
-    @IBOutlet weak var selectBackgroundPlay: UISwitch!
+//    @IBOutlet weak var selectBackgroundPlay: UISwitch!
     @IBOutlet var menuScale: UICommand!
     @IBOutlet weak var btnTuningSelect: UIButton!
     @IBOutlet weak var btnScaleSelect: UIButton!
@@ -66,7 +66,7 @@ class FreqTableViewController: UIViewController {
         textA4FreqOutlet.addDoneButtonOnKeyboard()
         textA4FreqOutlet.delegate = self
         
-        selectBackgroundPlay.isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+//        selectBackgroundPlay.isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
         
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
@@ -75,7 +75,8 @@ class FreqTableViewController: UIViewController {
     }
     
     @objc func conductorDisappear() {
-        let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+//        let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+        let isOn = true
         print(">> disappear")
         if !isOn {
             GlobalOsc.shared.conductor.stop()
@@ -84,7 +85,8 @@ class FreqTableViewController: UIViewController {
     
     @objc func conductorAppear() {
         print(">> active")
-        let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+//        let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+        let isOn = true
         let isShoudReplay = state.isShouldReplay
         if !isOn && isShoudReplay {
             GlobalOsc.shared.conductor.start()
@@ -94,7 +96,6 @@ class FreqTableViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print(#function)
         conductorAppear()
         let replayRow = state.replayRow
         if replayRow != -1 {
@@ -104,7 +105,6 @@ class FreqTableViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print(#function)
         saveStateToUserDefaults()
         conductorDisappear()
     }
@@ -142,10 +142,9 @@ class FreqTableViewController: UIViewController {
         }
     }
     
-    @IBAction func selectBackgroundPlayAct(_ sender: Any) {
-        print(selectBackgroundPlay.isOn)
-        UserDefaults.standard.setValue(selectBackgroundPlay.isOn, forKey: "freq-bg-play")
-    }
+//    @IBAction func selectBackgroundPlayAct(_ sender: Any) {
+//        UserDefaults.standard.setValue(selectBackgroundPlay.isOn, forKey: "freq-bg-play")
+//    }
     
     @IBAction func btnTuningSelectAct(_ sender: Any) {
         tuningDropDown.show()
@@ -158,8 +157,6 @@ class FreqTableViewController: UIViewController {
     @IBAction func btnBaseNoteSelectAct(_ sender: Any) {
         baseNoteDropDown.show()
     }
-    
-    
     
 }
 
