@@ -16,4 +16,5 @@ struct TunerRecord: Codable {
     let centDist: Float // 평균 거리
     let noteIndex: Int
     let octave: Int
+    let tuningSystem: TuningSystem
 }

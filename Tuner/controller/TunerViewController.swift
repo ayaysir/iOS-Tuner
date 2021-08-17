@@ -9,8 +9,11 @@ import UIKit
 import AVFoundation
 import CoreAudio
 import DropDown
+import GoogleMobileAds
 
-class TunerViewController: UIViewController {
+class TunerViewController: UIViewController, GADFullScreenContentDelegate {
+    
+    private var interstitial: GADInterstitialAd?
     
     var recorder: AVAudioRecorder!
     var levelTimer = Timer()
@@ -102,6 +105,7 @@ class TunerViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIApplication.willResignActiveNotification, object: nil)
+        
     }
     
     @objc func conductorAppear() {
@@ -263,7 +267,7 @@ class TunerViewController: UIViewController {
                 
                 if maxOctave >= 0 && rangeCondition{
                     // core data 기록
-                    let record = TunerRecord(id: UUID(), date: Date(), avgFreq: freqRecord45.avg(), stdFreq: freqRecord45.std(), standardFreq: maxStandardFreq, centDist: centRecord45.avg(), noteIndex: maxNote.rawValue, octave: maxOctave)
+                    let record = TunerRecord(id: UUID(), date: Date(), avgFreq: freqRecord45.avg(), stdFreq: freqRecord45.std(), standardFreq: maxStandardFreq, centDist: centRecord45.avg(), noteIndex: maxNote.rawValue, octave: maxOctave, tuningSystem: state.currentTuningSystem)
                     
                     do {
                         try saveCoreData(record: record)

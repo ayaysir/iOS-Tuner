@@ -35,6 +35,7 @@ func saveCoreData(record: TunerRecord) throws {
     object.setValue(record.centDist, forKey: "centDist")
     object.setValue(record.noteIndex, forKey: "noteIndex")
     object.setValue(record.octave, forKey: "octave")
+    object.setValue(record.tuningSystem.rawValue, forKey: "tuningSystem")
     
     do {
         // managedContext 내부의 변경사항 저장
@@ -69,7 +70,8 @@ func readCoreData() throws -> [TunerRecord] {
             let centDist: Float = obj.value(forKey: "centDist") as! Float
             let noteIndex: Int = obj.value(forKey: "noteIndex") as! Int
             let octave: Int = obj.value(forKey: "octave") as! Int
-            return TunerRecord(id: id, date: date, avgFreq: avgFreq, stdFreq: stdFreq, standardFreq: standardFreq, centDist: centDist, noteIndex: noteIndex, octave: octave)
+            let tuningSystemRV = obj.value(forKey: "tuningSystem") as! Int
+            return TunerRecord(id: id, date: date, avgFreq: avgFreq, stdFreq: stdFreq, standardFreq: standardFreq, centDist: centDist, noteIndex: noteIndex, octave: octave, tuningSystem: TuningSystem(rawValue: tuningSystemRV) ?? TuningSystem.equalTemperament)
         }
     } catch let error as NSError {
         print("Could not save. \(error), \(error.userInfo)")

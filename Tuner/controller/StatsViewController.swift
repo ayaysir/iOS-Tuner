@@ -198,7 +198,7 @@ class StatsTableViewCell: UITableViewCell {
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY-MM-dd E HH:mm:ss"
         lblDate.text = "\(formatter.string(from: record.date))"
-        lblTuningSystem.text = "Equal Temperament"
+        lblTuningSystem.text = record.tuningSystem.textValue
     }
     
     
@@ -233,7 +233,7 @@ class StatsViewModel {
             blankArrWithReversedArr.reserveCapacity(toCount)
             
             for _ in 0..<toCount {
-                blankArrWithReversedArr.append(TunerRecord(id: UUID(), date: Date(), avgFreq: 0, stdFreq: 0, standardFreq: 0, centDist: 0, noteIndex: 0, octave: 0))
+                blankArrWithReversedArr.append(TunerRecord(id: UUID(), date: Date(), avgFreq: 0, stdFreq: 0, standardFreq: 0, centDist: 0, noteIndex: 0, octave: 0, tuningSystem: TuningSystem.equalTemperament))
             }
             
             blankArrWithReversedArr.append(contentsOf: reversedArr)

@@ -75,12 +75,11 @@ class FreqTableViewController: UIViewController {
     }
     
     @objc func conductorDisappear() {
-//        let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
-        let isOn = true
         print(">> disappear")
-        if !isOn {
-            GlobalOsc.shared.conductor.stop()
-        }
+        //        let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+//        if !isOn {
+//            GlobalOsc.shared.conductor.stop()
+//        }
     }
     
     @objc func conductorAppear() {
@@ -189,6 +188,12 @@ extension FreqTableViewController: UITableViewDataSource, UITableViewDelegate {
             state.lastSelectedRow = indexPath.row
         }
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableCell(withIdentifier: "freqHeader")
+        return view
+    }
+    
     
 }
 
