@@ -7,12 +7,19 @@
 
 import UIKit
 import Charts
+import GoogleMobileAds
 
 class StatsViewController: UIViewController {
+    
+    private var bannerView: GADBannerView!
     
     @IBOutlet weak var tblTuningRecords: UITableView!
     @IBOutlet weak var combinedChartView: CombinedChartView!
     @IBOutlet weak var segconGraphOutlet: UISegmentedControl!
+    
+    @IBOutlet weak var cnstStackBottom: NSLayoutConstraint!
+    @IBOutlet weak var cnstMenuButtonBottom: NSLayoutConstraint!
+    
     
     var viewModel = StatsViewModel()
     
@@ -32,6 +39,10 @@ class StatsViewController: UIViewController {
         tblTuningRecords.refreshControl = refreshControl
         refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        
+        tblTuningRecords.allowsSelection = false
+        
+        setupBannerView()
         
     }
     
@@ -85,9 +96,12 @@ class StatsViewController: UIViewController {
         let barChartDataSet = BarChartDataSet(entries: barDataEntries, label: mode == "frequency" ? "주파수(Hz)" : "센트(cent)")
         let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "정확한 수치")
         
+        // bar 색깔
+        barChartDataSet.colors = [(UIColor(named: "graph-bar") ?? .red)]
+        
         // 라인 원 색깔 변경
-        lineChartDataSet.colors = [.red ]
-        lineChartDataSet.circleColors = [.red ]
+        lineChartDataSet.colors = [(UIColor(named: "graph-line") ?? .red)]
+        lineChartDataSet.circleColors = [(UIColor(named: "graph-line") ?? .red)]
 
         // 데이터 생성
         let data: CombinedChartData = CombinedChartData()
@@ -128,6 +142,9 @@ class StatsViewController: UIViewController {
         }
     }
     
+    @IBAction func btnToggleSideMenu(_ sender: Any) {
+        self.toggleSideMenuView()
+    }
     
 
     /*
@@ -242,5 +259,59 @@ class StatsViewModel {
             return Array<TunerRecord>()
         }
         
+    }
+}
+
+// ============ 애드몹 셋업 ============
+extension StatsViewController: GADBannerViewDelegate {
+    // 본 클래스에 다음 선언 추가
+    // // AdMob
+    // private var bannerView: GADBannerView!
+    
+    // viewDidLoad()에 다음 추가
+    // setupBannerView()
+    
+    private func setupBannerView() {
+        let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
+        self.bannerView = GADBannerView(adSize: adSize)
+        addBannerViewToView(bannerView)
+         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
+//        bannerView.adUnitID = Bundle.main.object(forInfoDictionaryKey: "GADHome") as? String
+        print("adUnitID: ", bannerView.adUnitID!)
+        bannerView.rootViewController = self
+        let request = GADRequest()
+        bannerView.load(request)
+        bannerView.delegate = self
+        
+        // 버튼 constraint 50
+        cnstStackBottom.constant += 50
+        cnstMenuButtonBottom.constant += 50
+        
+    }
+    private func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
+    }
+    
+    // GADBannerViewDelegate
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("GAD: \(#function)", error)
+    }
+    
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
     }
 }

@@ -30,6 +30,7 @@ class SettingViewController: UIViewController {
         setRange()
         loadRangeFromUserDefaults()
         loadAppearanceInfo()
+        loadNotationInfo()
     }
     
     func loadAppearanceInfo() {
@@ -42,6 +43,16 @@ class SettingViewController: UIViewController {
             segconMode.selectedSegmentIndex = 2
         default:
             segconMode.selectedSegmentIndex = 0
+        }
+    }
+    
+    func loadNotationInfo() {
+        let key = "config-notation"
+        let notation = UserDefaults.standard.string(forKey: key) ?? "sharp"
+        if notation == "sharp" {
+            segconNotation.selectedSegmentIndex = 0
+        } else {
+            segconNotation.selectedSegmentIndex = 1
         }
     }
     
@@ -100,6 +111,10 @@ class SettingViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    @IBAction func btnToggleSideMenu(_ sender: Any) {
+        self.toggleSideMenuView()
     }
     
     @IBAction func btnRangeNoteLeftAct(_ sender: Any) {

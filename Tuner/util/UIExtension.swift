@@ -75,6 +75,14 @@ extension UIView {
         glowAnimation.autoreverses = true
         layer.add(glowAnimation, forKey: "shadowGlowingAnimation")
     }
+    
+    func doGlow(withColor color: UIColor) {
+        layer.masksToBounds = false
+        layer.shadowColor = color.cgColor
+        layer.shadowRadius = 0
+        layer.shadowOpacity = 0.8
+        layer.shadowOffset = .zero
+    }
 }
 
 // https://gist.github.com/mathewsanders/94ed8212587d72684291483905132790
@@ -104,9 +112,24 @@ extension CGSize {
         }
     }
     
+    @IBInspectable var circleButton: Bool {
+        set {
+            if newValue {
+                circle()
+            }
+        } get {
+            return self.roundButton
+        }
+    }
+    
     
     func round() {
-        self.layer.cornerRadius = 20
+        self.layer.cornerRadius = 10
+        self.clipsToBounds = true
+    }
+    
+    func circle() {
+        self.layer.cornerRadius = 0.5 * self.bounds.size.width
         self.clipsToBounds = true
     }
 }

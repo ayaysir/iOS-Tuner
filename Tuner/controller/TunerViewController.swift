@@ -13,7 +13,7 @@ import GoogleMobileAds
 
 class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     
-    private var interstitial: GADInterstitialAd?
+    private var bannerView: GADBannerView!
     
     var recorder: AVAudioRecorder!
     var levelTimer = Timer()
@@ -25,10 +25,17 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     @IBOutlet weak var btnScaleSelect: UIButton!
     @IBOutlet weak var btnBaseNoteSelect: UIButton!
     @IBOutlet weak var lblRecordStatus: UILabel!
-    
+    @IBOutlet weak var btnBottomSlide: UIButton!
     @IBOutlet weak var lblJustFrequency: UILabel!
     
     @IBOutlet weak var viewIndicator: TunerIndicator!
+    @IBOutlet weak var constrMenuButton: NSLayoutConstraint!
+    
+    @IBOutlet weak var constraintPanelLeftLeading: NSLayoutConstraint!
+    @IBOutlet weak var constraintPanelRightTrailing: NSLayoutConstraint!
+    
+    @IBOutlet weak var settingView: UIView!
+    
     
     var conductor = TunerConductor()
     
@@ -78,7 +85,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         loadStateFromUserDefaults()
         
         setTuningDropDown()
@@ -88,8 +95,6 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         initField()
         
         self.sideMenuController()?.sideMenu?.delegate = self
-        
-        lblRecordStatus.doGlowAnimation(withColor: UIColor.green)
         
         // Do any additional setup after loading the view.
         AVAudioSession.sharedInstance().requestRecordPermission({ (granted) in
@@ -106,6 +111,9 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIApplication.willResignActiveNotification, object: nil)
         
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+
+        setupBannerView()
     }
     
     @objc func conductorAppear() {
@@ -196,6 +204,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
             if isRecordingOn && freqRecord45.count % 60 == 0 {
                 lblRecordStatus.text = countdown == 0 ? "기록중" : String(countdown)
                 lblRecordStatus.textColor = UIColor.lightGray
+                lblRecordStatus.doGlow(withColor: UIColor.lightGray)
                 countdown -= 1
             }
             
@@ -211,6 +220,8 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                 standardFreq45 = []
                 
                 countdown = 0
+                lblRecordStatus.textColor = UIColor.orange
+                lblRecordStatus.doGlow(withColor: UIColor.orange)
                 lblRecordStatus.text = "failed"
                 
             } else if isRecordingOn && freqRecord45.count == 270 {
@@ -273,12 +284,15 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                         try saveCoreData(record: record)
                         print(getDocumentsDirectory())
                         lblRecordStatus.text = "기록 완료"
-                        lblRecordStatus.textColor = UIColor.green
+                        lblRecordStatus.textColor = #colorLiteral(red: 0.2535300891, green: 0.7974340783, blue: 0.2312508963, alpha: 1)
+                        lblRecordStatus.doGlow(withColor: #colorLiteral(red: 0.2535300891, green: 0.7974340783, blue: 0.2312508963, alpha: 1))
                     } catch {
                         print("저장 에러 >>>", error.localizedDescription)
                     }
                 } else {
                     print("not saved: dirty data", maxOctave)
+                    lblRecordStatus.textColor = UIColor.orange
+                    lblRecordStatus.doGlow(withColor: UIColor.orange)
                     lblRecordStatus.text = "기록 대상이 아닙니다."
                 }
                 
@@ -331,6 +345,25 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         baseNoteDropDown.show()
     }
  
+    var isSettingViewCollapsed = false
+    var moveXtoRight: CGFloat = 0
+    @IBAction func btnSlideRight(_ sender: UIButton) {
+        if isSettingViewCollapsed {
+            constraintPanelLeftLeading.constant -= moveXtoRight
+            constraintPanelRightTrailing.constant += moveXtoRight
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            self.moveXtoRight = settingView.frame.width - 10
+            constraintPanelLeftLeading.constant += moveXtoRight
+            constraintPanelRightTrailing.constant -= moveXtoRight
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+            }
+        }
+        isSettingViewCollapsed = !isSettingViewCollapsed
+    }
 }
 
 extension TunerViewController {
@@ -339,7 +372,7 @@ extension TunerViewController {
         tuningDropDown.anchorView = btnTuningSelect
         tuningDropDown.cornerRadius = 15
         btnTuningSelect.setTitle(state.currentTuningSystem.textValue, for: .normal)
-        btnScaleSelect.isHidden = (state.currentTuningSystem == .equalTemperament)
+        btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
         tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
         
         conductor.data.tuningSystem = state.currentTuningSystem
@@ -350,9 +383,9 @@ extension TunerViewController {
             print("인덱스 : \(index)")
             
             if index == 0 {
-                btnScaleSelect.isHidden = true
+                btnScaleSelect.isEnabled = false
             } else {
-                btnScaleSelect.isHidden = false
+                btnScaleSelect.isEnabled = true
             }
             
             let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
@@ -472,3 +505,54 @@ extension TunerViewController: ENSideMenuDelegate {
     }
 }
 
+// ============ 애드몹 셋업 ============
+extension TunerViewController: GADBannerViewDelegate {
+    // 본 클래스에 다음 선언 추가
+    // // AdMob
+    // private var bannerView: GADBannerView!
+    
+    // viewDidLoad()에 다음 추가
+    // setupBannerView()
+    
+    private func setupBannerView() {
+        let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
+        self.bannerView = GADBannerView(adSize: adSize)
+        addBannerViewToView(bannerView)
+         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
+//        bannerView.adUnitID = Bundle.main.object(forInfoDictionaryKey: "GADHome") as? String
+        print("adUnitID: ", bannerView.adUnitID!)
+        bannerView.rootViewController = self
+        let request = GADRequest()
+        bannerView.load(request)
+        bannerView.delegate = self
+        
+        // 버튼 constraint 50
+        constrMenuButton.constant -= 50
+    }
+    private func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
+    }
+    
+    // GADBannerViewDelegate
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("GAD: \(#function)", error)
+    }
+    
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+}

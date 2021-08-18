@@ -7,6 +7,7 @@
 
 import UIKit
 import DropDown
+import GoogleMobileAds
 
 class GlobalOsc {
     static let shared = GlobalOsc()
@@ -14,6 +15,8 @@ class GlobalOsc {
 }
 
 class FreqTableViewController: UIViewController {
+    
+    private var bannerView: GADBannerView!
     
     var freqArray: [FrequencyInfo]!
     
@@ -34,6 +37,10 @@ class FreqTableViewController: UIViewController {
     
     @IBOutlet weak var cnstSettingViewBottom: NSLayoutConstraint!
     @IBOutlet weak var cnstSettngViewTop: NSLayoutConstraint!
+    
+    @IBOutlet weak var cnstMenuBtnBottom: NSLayoutConstraint!
+    @IBOutlet weak var cnstFreqTableBottom: NSLayoutConstraint!
+    
     
     
     var state: TunerViewState!
@@ -78,6 +85,8 @@ class FreqTableViewController: UIViewController {
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
+        
+        setupBannerView()
         
     }
     
@@ -151,6 +160,9 @@ class FreqTableViewController: UIViewController {
 //    @IBAction func selectBackgroundPlayAct(_ sender: Any) {
 //        UserDefaults.standard.setValue(selectBackgroundPlay.isOn, forKey: "freq-bg-play")
 //    }
+    @IBAction func btnToggleSideMenu(_ sender: Any) {
+        self.toggleSideMenuView()
+    }
     
     @IBAction func btnTuningSelectAct(_ sender: Any) {
         tuningDropDown.show()
@@ -271,7 +283,7 @@ extension FreqTableViewController {
         tuningDropDown.anchorView = btnTuningSelect
         tuningDropDown.cornerRadius = 15
         btnTuningSelect.setTitle(state.currentTuningSystem.textValue, for: .normal)
-        btnScaleSelect.isHidden = (state.currentTuningSystem == .equalTemperament)
+        btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
         tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
         
         tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
@@ -279,9 +291,9 @@ extension FreqTableViewController {
             print("인덱스 : \(index)")
             
             if index == 0 {
-                btnScaleSelect.isHidden = true
+                btnScaleSelect.isEnabled = false
             } else {
-                btnScaleSelect.isHidden = false
+                btnScaleSelect.isEnabled = true
             }
             
             let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
@@ -338,5 +350,58 @@ extension FreqTableViewController {
             textA4FreqOutlet.text = String(freqObj.eachFreq.cleanFixTwo)
             state.lastSelectedRow = nil
         }
+    }
+}
+
+// ============ 애드몹 셋업 ============
+extension FreqTableViewController: GADBannerViewDelegate {
+    // 본 클래스에 다음 선언 추가
+    // // AdMob
+    // private var bannerView: GADBannerView!
+    
+    // viewDidLoad()에 다음 추가
+    // setupBannerView()
+    
+    private func setupBannerView() {
+        let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
+        self.bannerView = GADBannerView(adSize: adSize)
+        addBannerViewToView(bannerView)
+         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
+//        bannerView.adUnitID = Bundle.main.object(forInfoDictionaryKey: "GADHome") as? String
+        print("adUnitID: ", bannerView.adUnitID!)
+        bannerView.rootViewController = self
+        let request = GADRequest()
+        bannerView.load(request)
+        bannerView.delegate = self
+        
+        // 버튼 constraint 50
+        cnstMenuBtnBottom.constant += 50
+        cnstFreqTableBottom.constant += 50
+    }
+    private func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
+    }
+    
+    // GADBannerViewDelegate
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("GAD: \(#function)", error)
+    }
+    
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
     }
 }

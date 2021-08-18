@@ -23,11 +23,11 @@ class TunerIndicator: UIView {
         static let addDegree = eachStep * 0.96
     }
     
-    @IBInspectable var outlineColor: UIColor = UIColor.blue
-    @IBInspectable var innerColor: UIColor = UIColor.orange
-    @IBInspectable var coreColor: UIColor? = UIColor(named: "indicator-background")
-    @IBInspectable var textColor: UIColor? = UIColor(named: "indicator-black")
-    @IBInspectable var leftDegree: CGFloat =  0
+    var outlineColor: UIColor = UIColor.blue
+    var innerColor: UIColor = UIColor.orange
+    var coreColor: UIColor? = UIColor(named: "indicator-background")
+    var textColor: UIColor? = UIColor(named: "indicator-black")
+    var leftDegree: CGFloat =  0
     
     
     override func draw(_ rect: CGRect) {
@@ -59,8 +59,10 @@ class TunerIndicator: UIView {
         
         // https://stackoverflow.com/questions/62891571
         
-        let outerLineColor = CGColor(red: 0, green: 0, blue: 255, alpha: 1)
-        context.setStrokeColor(outerLineColor)
+        let outerLineColor = state.tuningSystem == .equalTemperament
+            ? UIColor(named: "indicator-outline-et")?.cgColor
+            : UIColor(named: "indicator-outline-ji")?.cgColor
+        context.setStrokeColor(outerLineColor ?? UIColor.blue.cgColor)
         context.setLineWidth(2)
         context.setShadow(offset: .zero, blur: 20, color: outerLineColor)
         context.setBlendMode(.sourceAtop)
@@ -149,7 +151,14 @@ class TunerIndicator: UIView {
         // 텍스트
         if activeCondition {
             context.setShadow(offset: .zero, blur: 0)
-            var noteNameAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 62)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            var noteFontSize: CGFloat {
+                if 0.1574 * bounds.width >= 62 {
+                    return 62
+                } else {
+                    return 0.1574 * bounds.width
+                }
+            }
+            var noteNameAttrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: noteFontSize)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
             noteNameAttrs[.foregroundColor] = textColor
             
             // config-notation 반영
