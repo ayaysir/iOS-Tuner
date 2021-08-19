@@ -36,6 +36,9 @@ class SlideMenuViewController: UIViewController {
         openController(menu: "SettingViewController")
     }
     
+    @IBAction func btnHelp(_ sender: Any) {
+        openController(menu: "HelpViewController")
+    }
     func openController(menu: String) {
         if MenuState.shared.currentMenu == menu {
             sideMenuController()?.sideMenu?.toggleMenu()

@@ -41,6 +41,12 @@
 		44A6FDB526C90A7000C94855 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDB426C90A7000C94855 /* SettingViewController.swift */; };
 		44A6FDBC26C9454B00C94855 /* NoteRangeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDBB26C9454B00C94855 /* NoteRangeConfig.swift */; };
 		44B5B31F26CA7BFC007889C8 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B5B31E26CA7BFC007889C8 /* CloudKit.framework */; };
+		44B5B32826CD51A5007889C8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B5B32726CD51A4007889C8 /* StoreKit.framework */; };
+		44B5B32B26CD51EF007889C8 /* InAppProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B32A26CD51EF007889C8 /* InAppProducts.swift */; };
+		44B5B32D26CD5238007889C8 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B32C26CD5238007889C8 /* IAPHelper.swift */; };
+		44B5B32F26CE6083007889C8 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B32E26CE6083007889C8 /* HelpViewController.swift */; };
+		44B5B33126CE6532007889C8 /* DeviceUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B33026CE6532007889C8 /* DeviceUtil.swift */; };
+		44B5B33626CE6F77007889C8 /* webpage in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B33526CE6F76007889C8 /* webpage */; };
 		B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087577D37AE85CA890BA062C /* Pods_Tuner.framework */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +88,12 @@
 		44A6FDB426C90A7000C94855 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		44A6FDBB26C9454B00C94855 /* NoteRangeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRangeConfig.swift; sourceTree = "<group>"; };
 		44B5B31E26CA7BFC007889C8 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		44B5B32726CD51A4007889C8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		44B5B32A26CD51EF007889C8 /* InAppProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppProducts.swift; sourceTree = "<group>"; };
+		44B5B32C26CD5238007889C8 /* IAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		44B5B32E26CE6083007889C8 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		44B5B33026CE6532007889C8 /* DeviceUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtil.swift; sourceTree = "<group>"; };
+		44B5B33526CE6F76007889C8 /* webpage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = webpage; sourceTree = "<group>"; };
 		B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.release.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.release.xcconfig"; sourceTree = "<group>"; };
 		E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.debug.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +105,7 @@
 			files = (
 				4426640826BA622800B5A5D9 /* AudioKit in Frameworks */,
 				44B5B31F26CA7BFC007889C8 /* CloudKit.framework in Frameworks */,
+				44B5B32826CD51A5007889C8 /* StoreKit.framework in Frameworks */,
 				B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */,
 				440DF81A26B500E600FDA3AA /* SoundpipeAudioKit in Frameworks */,
 			);
@@ -131,6 +144,7 @@
 				4426640926BBE6B800B5A5D9 /* AlertUtil.swift */,
 				445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */,
 				44A6FDB026C6AAFC00C94855 /* FileUtil.swift */,
+				44B5B33026CE6532007889C8 /* DeviceUtil.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -161,6 +175,7 @@
 				4426641526BC2E9A00B5A5D9 /* MenuNavigationController.swift */,
 				44A6FDB226C7D4A500C94855 /* StatsViewController.swift */,
 				44A6FDB426C90A7000C94855 /* SettingViewController.swift */,
+				44B5B32E26CE6083007889C8 /* HelpViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -196,6 +211,8 @@
 		444EEE3F26B4370000454428 /* Tuner */ = {
 			isa = PBXGroup;
 			children = (
+				44B5B33526CE6F76007889C8 /* webpage */,
+				44B5B32926CD51D8007889C8 /* iap */,
 				44A6FDA926C5614100C94855 /* coredata */,
 				445F329526BE95FC00412F7B /* graphics */,
 				445F329226BE5B3800412F7B /* delegate */,
@@ -240,9 +257,19 @@
 			path = coredata;
 			sourceTree = "<group>";
 		};
+		44B5B32926CD51D8007889C8 /* iap */ = {
+			isa = PBXGroup;
+			children = (
+				44B5B32C26CD5238007889C8 /* IAPHelper.swift */,
+				44B5B32A26CD51EF007889C8 /* InAppProducts.swift */,
+			);
+			path = iap;
+			sourceTree = "<group>";
+		};
 		94DB0DF3BA5174020EFC934C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				44B5B32726CD51A4007889C8 /* StoreKit.framework */,
 				44B5B31E26CA7BFC007889C8 /* CloudKit.framework */,
 				087577D37AE85CA890BA062C /* Pods_Tuner.framework */,
 			);
@@ -318,6 +345,7 @@
 			files = (
 				444EEE5026B4370200454428 /* LaunchScreen.storyboard in Resources */,
 				444EEE4D26B4370200454428 /* Assets.xcassets in Resources */,
+				44B5B33626CE6F77007889C8 /* webpage in Resources */,
 				444EEE4826B4370000454428 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +403,7 @@
 				442663FB26B6E17600B5A5D9 /* Oscillator.swift in Sources */,
 				444EEE4B26B4370000454428 /* Tuner.xcdatamodeld in Sources */,
 				444EEE4526B4370000454428 /* TunerViewController.swift in Sources */,
+				44B5B32B26CD51EF007889C8 /* InAppProducts.swift in Sources */,
 				442663FD26B8223B00B5A5D9 /* UIExtension.swift in Sources */,
 				4426641626BC2E9A00B5A5D9 /* MenuNavigationController.swift in Sources */,
 				4426640526BA5C6E00B5A5D9 /* NumberExtension.swift in Sources */,
@@ -384,10 +413,12 @@
 				440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */,
 				445F328F26BD2C1100412F7B /* ViewState.swift in Sources */,
 				4426641426BC2E6E00B5A5D9 /* ENSideMenuNavigationController.swift in Sources */,
+				44B5B33126CE6532007889C8 /* DeviceUtil.swift in Sources */,
 				445F329126BD32BD00412F7B /* UserDefaultsExtension.swift in Sources */,
 				4426640326BA5A7B00B5A5D9 /* FrequencyUtil.swift in Sources */,
 				4426641226BC2E3C00B5A5D9 /* ENSideMenu.swift in Sources */,
 				442663F826B6DE4200B5A5D9 /* TextUtil.swift in Sources */,
+				44B5B32F26CE6083007889C8 /* HelpViewController.swift in Sources */,
 				442F0FDB26B44309004D2100 /* PitchDetector.swift in Sources */,
 				4426640A26BBE6B800B5A5D9 /* AlertUtil.swift in Sources */,
 				44A6FDAD26C561A500C94855 /* TunerRecord.swift in Sources */,
@@ -398,6 +429,7 @@
 				44A6FDB526C90A7000C94855 /* SettingViewController.swift in Sources */,
 				44A6FDAB26C5615000C94855 /* CoreData.swift in Sources */,
 				440DF82126B6D6B400FDA3AA /* FrequencyInfo.swift in Sources */,
+				44B5B32D26CD5238007889C8 /* IAPHelper.swift in Sources */,
 				44A6FDB126C6AAFC00C94855 /* FileUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

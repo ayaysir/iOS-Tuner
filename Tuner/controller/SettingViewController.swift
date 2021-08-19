@@ -7,6 +7,7 @@
 
 import UIKit
 import DropDown
+import StoreKit
 
 class SettingViewController: UIViewController {
     
@@ -25,12 +26,15 @@ class SettingViewController: UIViewController {
     var leftRange = NoteRangeConfig(note: Scale.C, octave: 1)
     var rightRange = NoteRangeConfig(note: Scale.B, octave: 7)
     
+    let products: [SKProduct]? = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setRange()
         loadRangeFromUserDefaults()
         loadAppearanceInfo()
         loadNotationInfo()
+        initIAP()
     }
     
     func loadAppearanceInfo() {
@@ -112,6 +116,11 @@ class SettingViewController: UIViewController {
             break
         }
     }
+    
+    @IBAction func btnRemoveAdsIAP(_ sender: Any) {
+ 
+    }
+    
     
     @IBAction func btnToggleSideMenu(_ sender: Any) {
         self.toggleSideMenuView()
@@ -240,6 +249,58 @@ extension SettingViewController {
                     btnOctave2.setTitle(String(oldItem), for: .normal)
                     rightRange.octave = oldItem
                 }
+            }
+        }
+    }
+}
+
+extension SettingViewController {
+
+    private func initIAP() {
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handleIAPPurchase(_:)), name: .IAPHelperPurchaseNotification, object: nil)
+
+        // IAP 불러오기
+        InAppProducts.store.requestProducts { [weak self] (success, products) in
+            guard let self = self, success else { return }
+            print(self)
+            // ...
+        }
+    }
+
+    // 인앱 결제 버튼 눌렀을 때
+    private func touchIAP() {
+        if let product = products?.first {
+            InAppProducts.store.buyProduct(product) // 구매하기
+        }
+    }
+
+    // 결제 후 Notification을 받아 처리
+    @objc func handleIAPPurchase(_ notification: Notification) {
+        guard let success = notification.object as? Bool else { return }
+
+        if success {
+            DispatchQueue.main.async {
+                let vc = UIAlertController(title: "알림", message: "구매 성공.", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "확인", style: .default) { _ in
+
+                    if let mainURL = URL(string: "homeurl") {
+                        let request = URLRequest(url: mainURL)
+//                        self.mainWebview.load(request)
+                        print(request)
+                    }
+                }
+                vc.addAction(ok)
+                self.present(vc, animated: true, completion: nil)
+            }
+
+        } else {
+
+            DispatchQueue.main.async {
+                let vc = UIAlertController(title: "알림", message: "구매에 실패했습니다.", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "확인", style: .default, handler: nil)
+                vc.addAction(ok)
+                self.present(vc, animated: true, completion: nil)
             }
         }
     }

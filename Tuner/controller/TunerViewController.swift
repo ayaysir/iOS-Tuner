@@ -33,6 +33,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     
     @IBOutlet weak var constraintPanelLeftLeading: NSLayoutConstraint!
     @IBOutlet weak var constraintPanelRightTrailing: NSLayoutConstraint!
+    @IBOutlet weak var cnstrRecordStatusBottom: NSLayoutConstraint!
     
     @IBOutlet weak var settingView: UIView!
     
@@ -114,6 +115,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
 
         setupBannerView()
+        lblRecordStatus.text = ""
     }
     
     @objc func conductorAppear() {
@@ -528,6 +530,9 @@ extension TunerViewController: GADBannerViewDelegate {
         
         // 버튼 constraint 50
         constrMenuButton.constant -= 50
+        cnstrRecordStatusBottom.constant += 50
+        
+        
     }
     private func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false

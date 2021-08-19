@@ -43,7 +43,6 @@ class StatsViewController: UIViewController {
         tblTuningRecords.allowsSelection = false
         
         setupBannerView()
-        
     }
     
     func initData() {
