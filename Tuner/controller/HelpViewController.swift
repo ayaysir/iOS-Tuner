@@ -12,11 +12,14 @@ import MessageUI
 class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     @IBOutlet weak var webView: WKWebView!
-
+    @IBOutlet weak var btnSendMail: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("OS Version:", UIDevice.current.systemVersion)
         loadHelpPage()
+        btnSendMail.titleLabel?.adjustsFontSizeToFitWidth = true
+        btnSendMail.layer.cornerRadius = 5
     }
     
     func loadHelpPage() {
@@ -24,7 +27,7 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         webView.uiDelegate = self
         webView.navigationDelegate = self
 
-        let pageName = "help-kor"
+        let pageName = "help-ko".localized
         guard let url = Bundle.main.url(forResource: pageName, withExtension: "html", subdirectory: "webpage") else {
             return
         }
@@ -39,7 +42,7 @@ extension HelpViewController: MFMailComposeViewControllerDelegate {
     @IBAction func launchEmail(sender: UIButton) {
         
         guard MFMailComposeViewController.canSendMail() else {
-            simpleAlert(self, message: "해당 디바이스에서 사용자의 메일 계정이 설정되어 있지 않습니다. yoonbumtae@gmail.com 으로 메일을 보내주시면 답변드리겠습니다.", title: "메일 전송 불가", handler: nil)
+            simpleAlert(self, message: "해당 디바이스에서 사용자의 메일 계정이 설정되어 있지 않습니다. yoonbumtae@gmail.com 으로 메일을 보내주시면 답변드리겠습니다.".localized, title: "메일 전송 불가".localized, handler: nil)
             return
         }
         
@@ -49,13 +52,7 @@ extension HelpViewController: MFMailComposeViewControllerDelegate {
         OS Version: \(UIDevice.current.systemVersion)
         Device: \(UIDevice.modelName)
         
-        """
-            
-        +
-            
-        """
-        'Tuner XR'에 대한 피드백이 있으신가요?
-        """
+        """ + "'Tuner XR'에 대한 피드백이 있으신가요?".localized
         
         let toRecipents = ["yoonbumtae@gmail.com"]
         let mc: MFMailComposeViewController = MFMailComposeViewController()

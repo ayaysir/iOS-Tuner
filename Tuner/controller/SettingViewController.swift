@@ -174,7 +174,7 @@ extension SettingViewController {
                 btnRange1.setTitle(item, for: .normal)
             } else {
                 print(oldItem)
-                simpleAlert(self, message: "범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다.", title: "범위 오류") { _ in
+                simpleAlert(self, message: "범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다.".localized, title: "범위 오류".localized) { _ in
                     noteDropDownLeft.selectRow(oldItem.rawValue)
                     btnRange1.setTitle(oldItem.textValueMixed, for: .normal)
                     leftRange.note = oldItem
@@ -198,7 +198,7 @@ extension SettingViewController {
                 btnOctave1.setTitle(item, for: .normal)
             } else {
                 print(oldItem)
-                simpleAlert(self, message: "범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다.", title: "범위 오류") { _ in
+                simpleAlert(self, message: "범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다.".localized, title: "범위 오류".localized) { _ in
                     octaveDropDownLeft.selectRow(oldItem)
                     btnOctave1.setTitle(String(oldItem), for: .normal)
                     leftRange.octave = oldItem
@@ -221,7 +221,7 @@ extension SettingViewController {
                 saveRangeToUserDefaults()
                 btnRange2.setTitle(item, for: .normal)
             } else {
-                simpleAlert(self, message: "범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다.", title: "범위 오류") { _ in
+                simpleAlert(self, message: "범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다.".localized, title: "범위 오류".localized) { _ in
                     noteDropDownRight.selectRow(oldItem.rawValue)
                     btnRange2.setTitle(oldItem.textValueMixed, for: .normal)
                     rightRange.note = oldItem
@@ -244,7 +244,7 @@ extension SettingViewController {
                 saveRangeToUserDefaults()
                 btnOctave2.setTitle(item, for: .normal)
             } else {
-                simpleAlert(self, message: "범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다.", title: "범위 오류") { _ in
+                simpleAlert(self, message: "범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다.".localized, title: "범위 오류".localized) { _ in
                     octaveDropDownRight.selectRow(oldItem)
                     btnOctave2.setTitle(String(oldItem), for: .normal)
                     rightRange.octave = oldItem
@@ -254,6 +254,9 @@ extension SettingViewController {
     }
 }
 
+/*
+ 추후 추가: 인앱 결제로 광고 제거
+ */
 extension SettingViewController {
 
     private func initIAP() {

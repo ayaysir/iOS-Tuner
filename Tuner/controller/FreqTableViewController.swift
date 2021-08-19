@@ -87,6 +87,7 @@ class FreqTableViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
         
         setupBannerView()
+        btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)
         
     }
     
@@ -267,7 +268,7 @@ extension FreqTableViewController: UITextFieldDelegate {
         }
         
         if freq < 200 || freq > 600 {
-            simpleAlert(self, message: "주파수의 범위는 200 ~ 600만 입력할 수 있습니다.", title: "범위 초과", handler: nil)
+            simpleAlert(self, message: "주파수의 범위는 200 ~ 600Hz만 입력할 수 있습니다.".localized, title: "범위 초과", handler: nil)
             textField.text = String(oldFreq)
             reloadTable(freq: oldFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
             return
@@ -279,10 +280,10 @@ extension FreqTableViewController: UITextFieldDelegate {
 
 extension FreqTableViewController {
     func setTuningDropDown() {
-        tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue }
+        tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue.localized }
         tuningDropDown.anchorView = btnTuningSelect
         tuningDropDown.cornerRadius = 15
-        btnTuningSelect.setTitle(state.currentTuningSystem.textValue, for: .normal)
+        btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
         btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
         tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
         
@@ -298,7 +299,7 @@ extension FreqTableViewController {
             
             let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
             reloadTable(freq: state.baseFreq, tuningSystem: tuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
-            btnTuningSelect.setTitle(tuningSystem.textValue, for: .normal)
+            btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
             GlobalOsc.shared.conductor.stop()
             state.currentTuningSystem = tuningSystem
             state.lastSelectedRow = nil

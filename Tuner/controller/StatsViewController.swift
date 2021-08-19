@@ -37,7 +37,7 @@ class StatsViewController: UIViewController {
         initData()
         
         tblTuningRecords.refreshControl = refreshControl
-        refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침".localized)
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
         tblTuningRecords.allowsSelection = false
@@ -92,8 +92,8 @@ class StatsViewController: UIViewController {
                     }
 
         // 데이터셋 생성
-        let barChartDataSet = BarChartDataSet(entries: barDataEntries, label: mode == "frequency" ? "주파수(Hz)" : "센트(cent)")
-        let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "정확한 수치")
+        let barChartDataSet = BarChartDataSet(entries: barDataEntries, label: mode == "frequency" ? "주파수(Hz)".localized : "센트(cent)".localized)
+        let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "정확한 수치".localized)
         
         // bar 색깔
         barChartDataSet.colors = [(UIColor(named: "graph-bar") ?? .red)]
@@ -177,7 +177,7 @@ extension StatsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            simpleDestructiveYesAndNo(self, message: "정말 삭제하시겠습니까?", title: "삭제") { [self] _ in
+            simpleDestructiveYesAndNo(self, message: "정말 삭제하시겠습니까?".localized, title: "삭제".localized) { [self] _ in
                 do {
                     try deleteCoreData(id: viewModel.list[indexPath.row].id)
                     viewModel.list.remove(at: indexPath.row)
@@ -201,20 +201,36 @@ class StatsTableViewCell: UITableViewCell {
     @IBOutlet weak var lblTuningSystem: UILabel!
     
     func update(record: TunerRecord) {
-        lblNoteName.text = Scale(rawValue: record.noteIndex)!.textValueForSharp + String(makeSubscriptOfNumber(record.octave
-        ))
+        let key = "config-notation"
+        let notation = UserDefaults.standard.string(forKey: key) ?? "sharp"
+        let note = Scale(rawValue: record.noteIndex)!
+        let noteName = notation == "sharp" ? note.textValueForSharp : note.textValueForFlat
+        lblNoteName.text = noteName + String(makeSubscriptOfNumber(record.octave))
         lblStandardPitch.text = "\(record.standardFreq.cleanFixTwo)Hz"
-        lblMyPitchAndCents.text = "\(record.avgFreq.cleanFixTwo)Hz" + " " + "(\(Int(record.centDist)) cents)"
-        if abs(record.centDist) > 2 {
+        
+        
+        let noteNum = note.rawValue + (record.octave * 12)
+        let cents = getCents(frequency: record.avgFreq, noteNum: Float(noteNum), standardFrequency: record.standardFreq)
+        
+        if abs(cents) > 2 {
             lblMyPitchAndCents.textColor = UIColor.red
         } else {
-            lblMyPitchAndCents.textColor = UIColor.green
+            lblMyPitchAndCents.textColor = #colorLiteral(red: 0, green: 0.8054361939, blue: 0.1784389913, alpha: 1)
+        }
+        
+        if abs(cents) <= 50 {
+            lblMyPitchAndCents.text = "\(record.avgFreq.cleanFixTwo)Hz" + " "
+                + "(\(Int(record.centDist)) cents)"
+        } else {
+            lblMyPitchAndCents.textColor = UIColor.lightGray
+            lblMyPitchAndCents.text = "\(record.avgFreq.cleanFixTwo)Hz" + " "
+                + "(±50 cents 초과)".localized
         }
         
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY-MM-dd E HH:mm:ss"
         lblDate.text = "\(formatter.string(from: record.date))"
-        lblTuningSystem.text = record.tuningSystem.textValue
+        lblTuningSystem.text = record.tuningSystem.textValue.localized
     }
     
     

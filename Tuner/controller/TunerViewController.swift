@@ -116,6 +116,8 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
 
         setupBannerView()
         lblRecordStatus.text = ""
+        
+        btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)
     }
     
     @objc func conductorAppear() {
@@ -204,7 +206,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
             }
             
             if isRecordingOn && freqRecord45.count % 60 == 0 {
-                lblRecordStatus.text = countdown == 0 ? "기록중" : String(countdown)
+                lblRecordStatus.text = countdown == 0 ? "기록중".localized : String(countdown)
                 lblRecordStatus.textColor = UIColor.lightGray
                 lblRecordStatus.doGlow(withColor: UIColor.lightGray)
                 countdown -= 1
@@ -224,7 +226,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                 countdown = 0
                 lblRecordStatus.textColor = UIColor.orange
                 lblRecordStatus.doGlow(withColor: UIColor.orange)
-                lblRecordStatus.text = "failed"
+                lblRecordStatus.text = "실패".localized
                 
             } else if isRecordingOn && freqRecord45.count == 270 {
                 var maxOctave: Int {
@@ -285,7 +287,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                     do {
                         try saveCoreData(record: record)
                         print(getDocumentsDirectory())
-                        lblRecordStatus.text = "기록 완료"
+                        lblRecordStatus.text = "기록 완료".localized
                         lblRecordStatus.textColor = #colorLiteral(red: 0.2535300891, green: 0.7974340783, blue: 0.2312508963, alpha: 1)
                         lblRecordStatus.doGlow(withColor: #colorLiteral(red: 0.2535300891, green: 0.7974340783, blue: 0.2312508963, alpha: 1))
                     } catch {
@@ -295,7 +297,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                     print("not saved: dirty data", maxOctave)
                     lblRecordStatus.textColor = UIColor.orange
                     lblRecordStatus.doGlow(withColor: UIColor.orange)
-                    lblRecordStatus.text = "기록 대상이 아닙니다."
+                    lblRecordStatus.text = "기록 대상이 아닙니다.".localized
                 }
                 
                 
@@ -370,10 +372,12 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
 
 extension TunerViewController {
     func setTuningDropDown() {
-        tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue }
+        // 튜닝 시스템 데이터소스
+        tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue.localized }
         tuningDropDown.anchorView = btnTuningSelect
         tuningDropDown.cornerRadius = 15
-        btnTuningSelect.setTitle(state.currentTuningSystem.textValue, for: .normal)
+        // 버튼 제목 설정
+        btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
         btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
         tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
         
@@ -391,7 +395,8 @@ extension TunerViewController {
             }
             
             let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
-            btnTuningSelect.setTitle(tuningSystem.textValue, for: .normal)
+            // 버튼 제목 설정
+            btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
             state.currentTuningSystem = tuningSystem
             state.lastSelectedRow = nil
             
@@ -473,7 +478,7 @@ extension TunerViewController: UITextFieldDelegate {
         }
 
         if freq < 200 || freq > 600 {
-            simpleAlert(self, message: "주파수의 범위는 200 ~ 600만 입력할 수 있습니다.", title: "범위 초과", handler: nil)
+            simpleAlert(self, message: "주파수의 범위는 200 ~ 600Hz만 입력할 수 있습니다.".localized, title: "범위 초과".localized, handler: nil)
             textField.text = String(oldFreq)
             return
         }
