@@ -16,10 +16,10 @@ class StatsViewController: UIViewController {
     @IBOutlet weak var tblTuningRecords: UITableView!
     @IBOutlet weak var combinedChartView: CombinedChartView!
     @IBOutlet weak var segconGraphOutlet: UISegmentedControl!
+    @IBOutlet weak var stackView: UIStackView!
     
     @IBOutlet weak var cnstStackBottom: NSLayoutConstraint!
     @IBOutlet weak var cnstMenuButtonBottom: NSLayoutConstraint!
-    
     
     var viewModel = StatsViewModel()
     
@@ -43,6 +43,30 @@ class StatsViewController: UIViewController {
         tblTuningRecords.allowsSelection = false
         
         setupBannerView()
+    
+        /**
+         css
+         background:linear-gradient(150deg, #191971 0%, #82B2EE 100%);
+         */
+        
+        let color1 = CGColor(red: 25/255, green: 25/255, blue: 113/255, alpha: 0.72)
+        let color2 = CGColor(red: 130/255, green: 178/255, blue: 238/255, alpha: 0.72)
+        let gradient = CAGradientLayer()
+        gradient.colors = [color1, color2]
+        gradient.startPoint = CGPoint(x: 0.25, y: 0.07)
+        gradient.endPoint = CGPoint(x: 0.75, y: 0.94)
+        
+        // TODO - 하드코딩 ㄴㄴ - 제약 constant 값으로
+        // 360:200 = width:height
+        let width: CGFloat = view.frame.width - 20
+        let height: CGFloat = width * 200 / 360
+        gradient.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        gradient.cornerRadius = 10
+        
+        print("bounds:", combinedChartView.frame, combinedChartView.bounds, stackView.frame, view.frame)
+
+        stackView.layer.insertSublayer(gradient, at: 0)
+//
     }
     
     func initData() {
@@ -96,7 +120,8 @@ class StatsViewController: UIViewController {
         let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "정확한 수치".localized)
         
         // bar 색깔
-        barChartDataSet.colors = [(UIColor(named: "graph-bar") ?? .red)]
+        barChartDataSet.colors = [UIColor(white: 0.96, alpha: 0.85)]
+        
         
         // 라인 원 색깔 변경
         lineChartDataSet.colors = [(UIColor(named: "graph-line") ?? .red)]
@@ -113,20 +138,27 @@ class StatsViewController: UIViewController {
         // 콤비 데이터 지정
         combinedChartView.data = data
         
+        // 표시 여부
         combinedChartView.leftAxis.enabled = false
-        combinedChartView.leftAxis.drawGridLinesEnabled = false
+        combinedChartView.leftAxis.drawLabelsEnabled = false
+        combinedChartView.xAxis.enabled = false
+        combinedChartView.rightAxis.drawGridLinesEnabled = false
         
-        combinedChartView.xAxis.drawGridLinesEnabled = false
+        combinedChartView.backgroundColor = UIColor.clear
+        combinedChartView.layer.masksToBounds = true
+        combinedChartView.layer.cornerRadius = 8
         
+        // 라벨 색
+        combinedChartView.rightAxis.labelTextColor = UIColor.white
+        combinedChartView.legend.textColor = UIColor.white
         
         lineChartDataSet.circleRadius = 1
         lineChartDataSet.circleHoleRadius = 1
         lineChartDataSet.mode = .cubicBezier
         combinedChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
         
-        
-        
     }
+    
     
     @IBAction func segConSelectGraph(_ sender: UISegmentedControl) {
         if viewModel.listCount != 0 {
@@ -329,4 +361,8 @@ extension StatsViewController: GADBannerViewDelegate {
     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
         print("GAD: \(#function)")
     }
+}
+
+extension BarChartRenderer {
+    // drawRect 함수에서 라운드 둥글게 처리했음
 }
