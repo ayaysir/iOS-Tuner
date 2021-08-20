@@ -534,8 +534,8 @@ extension TunerViewController: GADBannerViewDelegate {
         let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
         self.bannerView = GADBannerView(adSize: adSize)
         addBannerViewToView(bannerView)
-         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
-//        bannerView.adUnitID = Bundle.main.object(forInfoDictionaryKey: "GADHome") as? String
+//         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
+        bannerView.adUnitID = AdSupporter.shared.TUNER_AD_CODE
         print("adUnitID: ", bannerView.adUnitID!)
         bannerView.rootViewController = self
         let request = GADRequest()

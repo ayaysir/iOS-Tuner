@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  Tuner
+
+  Created by yoonbumtae on 2021/08/20.
+  
+*/
+"NSMicrophoneUsageDescription" = "楽器などの音の高さを測定するためには、マイクを許可する必要があります。";
+"NSUserTrackingUsageDescription" = "広告識別子の収集に同意すると、バナー広告のカスタマイズ可能広告が表示されます。";

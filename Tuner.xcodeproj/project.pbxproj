@@ -48,6 +48,8 @@
 		44B5B33626CE6F77007889C8 /* webpage in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B33526CE6F76007889C8 /* webpage */; };
 		44B5B33926CE7117007889C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B33B26CE7117007889C8 /* Localizable.strings */; };
 		44B5B34426CF8D6D007889C8 /* AdSupporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B34326CF8D6C007889C8 /* AdSupporter.swift */; };
+		44B5B34E26CFE922007889C8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B35026CFE922007889C8 /* InfoPlist.strings */; };
+		44B5B35426CFEAAA007889C8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B35326CFEAAA007889C8 /* .gitignore */; };
 		B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087577D37AE85CA890BA062C /* Pods_Tuner.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,7 +78,6 @@
 		444EEE4A26B4370000454428 /* Tuner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tuner.xcdatamodel; sourceTree = "<group>"; };
 		444EEE4C26B4370200454428 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		444EEE4F26B4370200454428 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		444EEE5126B4370200454428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		444EEE5C26B4388D00454428 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		445F328E26BD2C1100412F7B /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
@@ -102,6 +103,11 @@
 		44B5B34026CF75A6007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		44B5B34126CF75A7007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		44B5B34326CF8D6C007889C8 /* AdSupporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdSupporter.swift; sourceTree = "<group>"; };
+		44B5B34A26CFE6E0007889C8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44B5B34F26CFE922007889C8 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		44B5B35126CFE928007889C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		44B5B35226CFE928007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		44B5B35326CFEAAA007889C8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.release.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.release.xcconfig"; sourceTree = "<group>"; };
 		E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.debug.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,6 +205,7 @@
 		444EEE3426B4370000454428 = {
 			isa = PBXGroup;
 			children = (
+				44B5B35326CFEAAA007889C8 /* .gitignore */,
 				4426641026BC2E1700B5A5D9 /* ENSwiftSideMenu */,
 				444EEE3F26B4370000454428 /* Tuner */,
 				444EEE3E26B4370000454428 /* Products */,
@@ -232,10 +239,11 @@
 				440DF81F26B6D67100FDA3AA /* vo */,
 				444EEE4026B4370000454428 /* AppDelegate.swift */,
 				444EEE4226B4370000454428 /* SceneDelegate.swift */,
+				44B5B34A26CFE6E0007889C8 /* Info.plist */,
+				44B5B35026CFE922007889C8 /* InfoPlist.strings */,
 				444EEE4626B4370000454428 /* Main.storyboard */,
 				444EEE4C26B4370200454428 /* Assets.xcassets */,
 				444EEE4E26B4370200454428 /* LaunchScreen.storyboard */,
-				444EEE5126B4370200454428 /* Info.plist */,
 				444EEE4926B4370000454428 /* Tuner.xcdatamodeld */,
 				44B5B33B26CE7117007889C8 /* Localizable.strings */,
 			);
@@ -362,6 +370,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				44B5B33926CE7117007889C8 /* Localizable.strings in Resources */,
+				44B5B35426CFEAAA007889C8 /* .gitignore in Resources */,
+				44B5B34E26CFE922007889C8 /* InfoPlist.strings in Resources */,
 				444EEE5026B4370200454428 /* LaunchScreen.storyboard in Resources */,
 				444EEE4D26B4370200454428 /* Assets.xcassets in Resources */,
 				44B5B33626CE6F77007889C8 /* webpage in Resources */,
@@ -486,6 +496,16 @@
 				44B5B34126CF75A7007889C8 /* ja */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		44B5B35026CFE922007889C8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				44B5B34F26CFE922007889C8 /* ko */,
+				44B5B35126CFE928007889C8 /* en */,
+				44B5B35226CFE928007889C8 /* ja */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -618,6 +638,7 @@
 				CODE_SIGN_ENTITLEMENTS = Tuner/Tuner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				INFOPLIST_FILE = Tuner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -625,6 +646,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bgsmm.Tuner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -642,6 +664,7 @@
 				CODE_SIGN_ENTITLEMENTS = Tuner/Tuner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				INFOPLIST_FILE = Tuner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -649,6 +672,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bgsmm.Tuner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
