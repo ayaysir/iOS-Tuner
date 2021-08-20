@@ -1,1 +1,159 @@
 
+/* Class = "UILabel"; text = "파장(cm)"; ObjectID = "0BB-oJ-MPo"; */
+"0BB-oJ-MPo.text" = "波長(cm)";
+
+/* Class = "UILabel"; text = "튜너, 통계 메뉴에서 표기할 노트 표기 방법을 설정합니다."; ObjectID = "0KR-ze-gIV"; */
+"0KR-ze-gIV.text" = "チューナー、統計メニューから表記するノート表記方法を設定します。";
+
+/* Class = "UIButton"; normalTitle = "광고 제거 구매하기"; ObjectID = "1rq-3p-4Mv"; */
+"1rq-3p-4Mv.normalTitle" = "広告削除を購入する";
+
+/* Class = "UISegmentedControl"; 2Er-Z5-FPY.segmentTitles[0] = "주파수"; ObjectID = "2Er-Z5-FPY"; */
+"2Er-Z5-FPY.segmentTitles[0]" = "周波数";
+
+/* Class = "UISegmentedControl"; 2Er-Z5-FPY.segmentTitles[1] = "센트"; ObjectID = "2Er-Z5-FPY"; */
+"2Er-Z5-FPY.segmentTitles[1]" = "セント";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "3fx-0W-S1U"; */
+"3fx-0W-S1U.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "7C0-XW-Nsa"; */
+"7C0-XW-Nsa.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "="; ObjectID = "B4W-bW-Yds"; */
+"B4W-bW-Yds.text" = "=";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "CoL-rS-ae3"; */
+"CoL-rS-ae3.normalTitle" = "+";
+
+/* Class = "UILabel"; text = "995.74"; ObjectID = "DnR-Xr-Ryc"; */
+"DnR-Xr-Ryc.text" = "995.74";
+
+/* Class = "UIButton"; normalTitle = "Cb / Ab"; ObjectID = "DtU-aV-HCs"; */
+"DtU-aV-HCs.normalTitle" = "Cb / Ab";
+
+/* Class = "UILabel"; text = "C#"; ObjectID = "FtP-OY-cgB"; */
+"FtP-OY-cgB.text" = "C#";
+
+/* Class = "UIButton"; normalTitle = "Cb / Ab"; ObjectID = "GJI-M1-cbc"; */
+"GJI-M1-cbc.normalTitle" = "Cb / Ab";
+
+/* Class = "UILabel"; text = "34.65"; ObjectID = "Gl1-E7-mPM"; */
+"Gl1-E7-mPM.text" = "34.65";
+
+/* Class = "UIButton"; normalTitle = "4"; ObjectID = "H42-B0-OSK"; */
+"H42-B0-OSK.normalTitle" = "4";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "HdR-UF-HA5"; */
+"HdR-UF-HA5.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "음높이(Hz)"; ObjectID = "I6F-1F-mue"; */
+"I6F-1F-mue.text" = "ピッチ(Hz)";
+
+/* Class = "UIButton"; normalTitle = "4"; ObjectID = "LRl-b9-UKZ"; */
+"LRl-b9-UKZ.normalTitle" = "4";
+
+/* Class = "UIButton"; normalTitle = "튜너"; ObjectID = "Nij-nS-c38"; */
+"Nij-nS-c38.normalTitle" = "チューナー";
+
+/* Class = "UIButton"; normalTitle = "설정"; ObjectID = "P79-7T-RLz"; */
+"P79-7T-RLz.normalTitle" = "設定";
+
+/* Class = "UILabel"; text = "표기법"; ObjectID = "Pc9-HM-mU5"; */
+"Pc9-HM-mU5.text" = "表記";
+
+/* Class = "UIButton"; normalTitle = "Key"; ObjectID = "RBE-hP-YLn"; */
+"RBE-hP-YLn.normalTitle" = "Key";
+
+/* Class = "UILabel"; text = "30"; ObjectID = "RQt-3G-VPh"; */
+"RQt-3G-VPh.text" = "30";
+
+/* Class = "UIButton"; normalTitle = "주파수 테이블"; ObjectID = "RfB-fs-oXV"; */
+"RfB-fs-oXV.normalTitle" = "Freq Table";
+
+/* Class = "UILabel"; text = "440Hz"; ObjectID = "Sl5-IT-nf3"; */
+"Sl5-IT-nf3.text" = "440Hz";
+
+/* Class = "UILabel"; text = "기록 완료"; ObjectID = "Vw8-8E-boG"; */
+"Vw8-8E-boG.text" = "記録完了";
+
+/* Class = "UICommand"; title = "DSS"; ObjectID = "Y47-ka-Vg3"; */
+"Y47-ka-Vg3.title" = "DSS";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "YZG-ky-cLm"; */
+"YZG-ky-cLm.normalTitle" = "+";
+
+/* Class = "UIButton"; normalTitle = "A₄"; ObjectID = "aV6-17-VqD"; */
+"aV6-17-VqD.normalTitle" = "A₄";
+
+/* Class = "UILabel"; text = "440Hz (+0 cent)"; ObjectID = "bmJ-SJ-Mnp"; */
+"bmJ-SJ-Mnp.text" = "440Hz (+0 cent)";
+
+/* Class = "UILabel"; text = "2021-01-01 WED 12:12:12 13:06:24"; ObjectID = "cMc-SZ-uIE"; */
+"cMc-SZ-uIE.text" = "2021-01-01 WED 12:12:12 13:06:24";
+
+/* Class = "UIButton"; normalTitle = "도움말"; ObjectID = "dqe-qm-6Mh"; */
+"dqe-qm-6Mh.normalTitle" = "ヘルプ";
+
+/* Class = "UILabel"; text = "="; ObjectID = "e1Y-j0-SBc"; */
+"e1Y-j0-SBc.text" = "=";
+
+/* Class = "UIButton"; normalTitle = "Key"; ObjectID = "fAs-bC-hTk"; */
+"fAs-bC-hTk.normalTitle" = "Key";
+
+/* Class = "UILabel"; text = "통계 기록 음역대"; ObjectID = "g2j-6X-MMo"; */
+"g2j-6X-MMo.text" = "統計記録音域";
+
+/* Class = "UIButton"; normalTitle = "제작자에게 건의, 버그 메일 보내기"; ObjectID = "gIF-0N-VlJ"; */
+"gIF-0N-VlJ.normalTitle" = "開発者に提案やバグのメール送信";
+
+/* Class = "UISegmentedControl"; hJI-xG-FkT.segmentTitles[0] = "샤프 (♯)"; ObjectID = "hJI-xG-FkT"; */
+"hJI-xG-FkT.segmentTitles[0]" = "シャープ (♯)";
+
+/* Class = "UISegmentedControl"; hJI-xG-FkT.segmentTitles[1] = "플랫 (♭)"; ObjectID = "hJI-xG-FkT"; */
+"hJI-xG-FkT.segmentTitles[1]" = "フラット (♭)";
+
+/* Class = "UIButton"; normalTitle = "Scale Select"; ObjectID = "hY5-am-iKu"; */
+"hY5-am-iKu.normalTitle" = "スケールを選択";
+
+/* Class = "UILabel"; text = "~"; ObjectID = "onv-k6-rjN"; */
+"onv-k6-rjN.text" = "~";
+
+/* Class = "UIButton"; normalTitle = "A₄"; ObjectID = "oy6-VJ-JHg"; */
+"oy6-VJ-JHg.normalTitle" = "A₄";
+
+/* Class = "UIButton"; normalTitle = "Scale Select"; ObjectID = "pHc-3Q-ir7"; */
+"pHc-3Q-ir7.normalTitle" = "スケールを選択";
+
+/* Class = "UILabel"; text = "C₄"; ObjectID = "qk5-9a-7Nf"; */
+"qk5-9a-7Nf.text" = "C₄";
+
+/* Class = "UILabel"; text = "Equal Temperament"; ObjectID = "scW-al-CjN"; */
+"scW-al-CjN.text" = "平均律";
+
+/* Class = "UILabel"; text = "노트 이름"; ObjectID = "ugp-k1-ruS"; */
+"ugp-k1-ruS.text" = "音名";
+
+/* Class = "UIButton"; normalTitle = "구매 내역 복원"; ObjectID = "vuq-SY-IBx"; */
+"vuq-SY-IBx.normalTitle" = "購入履歴を復元";
+
+/* Class = "UILabel"; text = "인앱 결제 - 광고 제거"; ObjectID = "wF6-7i-eHW"; */
+"wF6-7i-eHW.text" = "アプリ内課金 - 広告の削除";
+
+/* Class = "UILabel"; text = "디스플레이 모드 선택"; ObjectID = "yL8-06-AZH"; */
+"yL8-06-AZH.text" = "表示モードの選択";
+
+/* Class = "UIButton"; normalTitle = "통계"; ObjectID = "yaB-DL-jv3"; */
+"yaB-DL-jv3.normalTitle" = "統計";
+
+/* Class = "UILabel"; text = "위의 음역대 사이의 기록만 통계에 추가합니다."; ObjectID = "zNa-dz-koH"; */
+"zNa-dz-koH.text" = "上記の音域との間の記録のみ統計に追加します。";
+
+/* Class = "UISegmentedControl"; zpm-XA-vg7.segmentTitles[0] = "시스템"; ObjectID = "zpm-XA-vg7"; */
+"zpm-XA-vg7.segmentTitles[0]" = "システム";
+
+/* Class = "UISegmentedControl"; zpm-XA-vg7.segmentTitles[1] = "☀️ 라이트"; ObjectID = "zpm-XA-vg7"; */
+"zpm-XA-vg7.segmentTitles[1]" = "☀️ ライト";
+
+/* Class = "UISegmentedControl"; zpm-XA-vg7.segmentTitles[2] = "🌑 다크"; ObjectID = "zpm-XA-vg7"; */
+"zpm-XA-vg7.segmentTitles[2]" = "🌑 ダーク";

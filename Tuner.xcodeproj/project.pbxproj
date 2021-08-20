@@ -99,6 +99,9 @@
 		44B5B33C26CE7152007889C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		44B5B33D26CE7152007889C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		44B5B33E26CE7176007889C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		44B5B33F26CF75A6007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		44B5B34026CF75A6007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		44B5B34126CF75A7007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.release.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.release.xcconfig"; sourceTree = "<group>"; };
 		E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.debug.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -330,6 +333,7 @@
 				Base,
 				ko,
 				en,
+				ja,
 			);
 			mainGroup = 444EEE3426B4370000454428;
 			packageReferences = (
@@ -451,6 +455,7 @@
 				444EEE4726B4370000454428 /* Base */,
 				444EEE5C26B4388D00454428 /* ko */,
 				44B5B33C26CE7152007889C8 /* en */,
+				44B5B33F26CF75A6007889C8 /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -460,6 +465,7 @@
 			children = (
 				444EEE4F26B4370200454428 /* Base */,
 				44B5B33D26CE7152007889C8 /* en */,
+				44B5B34026CF75A6007889C8 /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -469,6 +475,7 @@
 			children = (
 				44B5B33A26CE7117007889C8 /* ko */,
 				44B5B33E26CE7176007889C8 /* en */,
+				44B5B34126CF75A7007889C8 /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

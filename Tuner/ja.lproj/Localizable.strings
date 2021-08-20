@@ -1,0 +1,43 @@
+/*
+  Localizable.strings
+  Tuner
+
+  Created by yoonbumtae on 2021/07/30.
+  
+*/
+
+/* TunerViewController.swift */
+"기록중" = "記録中";
+"실패" = "失敗";
+"기록 완료" = "記録完了";
+"기록 대상이 아닙니다." = "記録対象がありません。";
+"주파수의 범위는 200 ~ 600Hz만 입력할 수 있습니다." = "周波数の範囲は、200〜600Hzのみを入力することができます。";
+"범위 초과" = "範囲を超え";
+"평균율" = "平均律";
+"순정율" = "純正率";
+
+/* FreqTableViewController.swift */
+
+/* SlideMenuViewController.swift */
+
+/* StatsViewController.swift */
+"당겨서 새로고침" = "引いてリフレッシュ";
+"주파수(Hz)" = "周波数(Hz)";
+"센트(cent)" = "セント(cent)";
+"정확한 수치" = "正確な数値";
+"정말 삭제하시겠습니까?" = "本当に削除しますか？";
+"削除" = "Delete";
+"범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다." = "範囲は、左ノートより右ノートのピッチが高くします。";
+"범위 오류" = "範囲エラー";
+"(±50 cents 초과)" = "（±50 cents超える）";
+
+
+/* HelpViewController.swift */
+"help-ko" = "help-ja";
+"해당 디바이스에서 사용자의 메일 계정이 설정되어 있지 않습니다. yoonbumtae@gmail.com 으로 메일을 보내주시면 답변드리겠습니다." = "このデバイスで、ユーザーのメールアカウントが設定されていません。yoonbumtae@gmail.comにメールを送っていただければ回答いたします。";
+"메일 전송 불가" = "メール送信不可";
+"Tuner XR 피드백" = "「Tuner XR」に関するフィードバック";
+"'Tuner XR'에 대한 피드백이 있으신가요?" = "「Tuner XR」のフィードバックがありますか？";
+
+/* TunerIndicator.swift */
+
