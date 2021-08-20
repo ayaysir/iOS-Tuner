@@ -10,6 +10,8 @@ import AVFoundation
 import CoreAudio
 import DropDown
 import GoogleMobileAds
+import AppTrackingTransparency
+import AdSupport
 
 class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     
@@ -114,7 +116,14 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
 
-        setupBannerView()
+        if AdSupporter.shared.showAd && !AdSupporter.shared.randomBox() {
+            if #available(iOS 14, *) {
+                ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                    // Tracking authorization completed. Start loading ads here
+                })
+            }
+            self.setupBannerView()
+        }
         lblRecordStatus.text = ""
         
         btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)

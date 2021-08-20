@@ -147,7 +147,7 @@
 "yaB-DL-jv3.normalTitle" = "Stats";
 
 /* Class = "UILabel"; text = "위의 음역대 사이의 기록만 통계에 추가합니다."; ObjectID = "zNa-dz-koH"; */
-"zNa-dz-koH.text" = "Only records between the above bands are added to the Stats.";
+"zNa-dz-koH.text" = "Only records between the above notes are added to the Stats.";
 
 /* Class = "UISegmentedControl"; zpm-XA-vg7.segmentTitles[0] = "시스템"; ObjectID = "zpm-XA-vg7"; */
 "zpm-XA-vg7.segmentTitles[0]" = "System";

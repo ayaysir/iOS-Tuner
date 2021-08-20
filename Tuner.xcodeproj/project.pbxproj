@@ -41,13 +41,13 @@
 		44A6FDB526C90A7000C94855 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDB426C90A7000C94855 /* SettingViewController.swift */; };
 		44A6FDBC26C9454B00C94855 /* NoteRangeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDBB26C9454B00C94855 /* NoteRangeConfig.swift */; };
 		44B5B31F26CA7BFC007889C8 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B5B31E26CA7BFC007889C8 /* CloudKit.framework */; };
-		44B5B32826CD51A5007889C8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B5B32726CD51A4007889C8 /* StoreKit.framework */; };
 		44B5B32B26CD51EF007889C8 /* InAppProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B32A26CD51EF007889C8 /* InAppProducts.swift */; };
 		44B5B32D26CD5238007889C8 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B32C26CD5238007889C8 /* IAPHelper.swift */; };
 		44B5B32F26CE6083007889C8 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B32E26CE6083007889C8 /* HelpViewController.swift */; };
 		44B5B33126CE6532007889C8 /* DeviceUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B33026CE6532007889C8 /* DeviceUtil.swift */; };
 		44B5B33626CE6F77007889C8 /* webpage in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B33526CE6F76007889C8 /* webpage */; };
 		44B5B33926CE7117007889C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B33B26CE7117007889C8 /* Localizable.strings */; };
+		44B5B34426CF8D6D007889C8 /* AdSupporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B34326CF8D6C007889C8 /* AdSupporter.swift */; };
 		B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087577D37AE85CA890BA062C /* Pods_Tuner.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,7 +89,6 @@
 		44A6FDB426C90A7000C94855 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		44A6FDBB26C9454B00C94855 /* NoteRangeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRangeConfig.swift; sourceTree = "<group>"; };
 		44B5B31E26CA7BFC007889C8 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		44B5B32726CD51A4007889C8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		44B5B32A26CD51EF007889C8 /* InAppProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppProducts.swift; sourceTree = "<group>"; };
 		44B5B32C26CD5238007889C8 /* IAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		44B5B32E26CE6083007889C8 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +101,7 @@
 		44B5B33F26CF75A6007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		44B5B34026CF75A6007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		44B5B34126CF75A7007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		44B5B34326CF8D6C007889C8 /* AdSupporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdSupporter.swift; sourceTree = "<group>"; };
 		B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.release.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.release.xcconfig"; sourceTree = "<group>"; };
 		E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.debug.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,7 +113,6 @@
 			files = (
 				4426640826BA622800B5A5D9 /* AudioKit in Frameworks */,
 				44B5B31F26CA7BFC007889C8 /* CloudKit.framework in Frameworks */,
-				44B5B32826CD51A5007889C8 /* StoreKit.framework in Frameworks */,
 				B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */,
 				440DF81A26B500E600FDA3AA /* SoundpipeAudioKit in Frameworks */,
 			);
@@ -219,6 +218,7 @@
 		444EEE3F26B4370000454428 /* Tuner */ = {
 			isa = PBXGroup;
 			children = (
+				44B5B34226CF8D4F007889C8 /* ad */,
 				44B5B33526CE6F76007889C8 /* webpage */,
 				44B5B32926CD51D8007889C8 /* iap */,
 				44A6FDA926C5614100C94855 /* coredata */,
@@ -275,10 +275,17 @@
 			path = iap;
 			sourceTree = "<group>";
 		};
+		44B5B34226CF8D4F007889C8 /* ad */ = {
+			isa = PBXGroup;
+			children = (
+				44B5B34326CF8D6C007889C8 /* AdSupporter.swift */,
+			);
+			path = ad;
+			sourceTree = "<group>";
+		};
 		94DB0DF3BA5174020EFC934C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				44B5B32726CD51A4007889C8 /* StoreKit.framework */,
 				44B5B31E26CA7BFC007889C8 /* CloudKit.framework */,
 				087577D37AE85CA890BA062C /* Pods_Tuner.framework */,
 			);
@@ -411,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44B5B34426CF8D6D007889C8 /* AdSupporter.swift in Sources */,
 				445F329726BE962A00412F7B /* TunerIndicator.swift in Sources */,
 				442663FB26B6E17600B5A5D9 /* Oscillator.swift in Sources */,
 				444EEE4B26B4370000454428 /* Tuner.xcdatamodeld in Sources */,

@@ -86,7 +86,9 @@ class FreqTableViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
         
-        setupBannerView()
+        if AdSupporter.shared.showAd && !AdSupporter.shared.randomBox() {
+            setupBannerView()
+        }
         btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)
         
     }

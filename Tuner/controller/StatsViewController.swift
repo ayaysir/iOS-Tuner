@@ -42,8 +42,10 @@ class StatsViewController: UIViewController {
         
         tblTuningRecords.allowsSelection = false
         
-        setupBannerView()
-    
+        if AdSupporter.shared.showAd && !AdSupporter.shared.randomBox() {
+            setupBannerView()
+        }
+        
         /**
          css
          background:linear-gradient(150deg, #191971 0%, #82B2EE 100%);
@@ -64,9 +66,9 @@ class StatsViewController: UIViewController {
         gradient.cornerRadius = 10
         
         print("bounds:", combinedChartView.frame, combinedChartView.bounds, stackView.frame, view.frame)
-
+        
         stackView.layer.insertSublayer(gradient, at: 0)
-//
+        //
     }
     
     func initData() {
