@@ -173,7 +173,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         noteMonitor.append(conductor.data.note)
         standardFreqMonitor.append(conductor.data.standardFreq)
         
-        if freqMonitor.count == R_BLOCK {
+        if octaveMonitor.count == R_BLOCK {
             monitorCount += R_BLOCK
             lblJustFrequency.text = String(dBMonitor.std())
             
@@ -181,7 +181,8 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
             // 중간에 0.75초 이상 중지시 취소
             // 4.5초동안 아래 조건이 true인 경우의 평균, 표준편차 기록
             
-            let condition = octaveMonitor.std() == 0 && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.5)
+            let condition = octaveMonitor.std() == 0
+//                && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.5)
             
             if condition {
                 conductor.data.isStdSmooth = true
@@ -198,6 +199,13 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                 if isRecordingOn {
                     failedCount += 1
                 }
+                // 여기서 지우지 않으면 찌꺼기가 남는다
+                // == reset == //
+                freqRecord45 = []
+                centRecord45 = []
+                octaveRecord45 = []
+                noteRecord45 = []
+                standardFreq45 = []
             }
             
             centMonitor = []
