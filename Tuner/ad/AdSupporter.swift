@@ -10,16 +10,10 @@ import Foundation
 struct AdSupporter {
     static let shared = AdSupporter()
     let TEST_CODE = ""
-    let TUNER_AD_CODE = ""
-    let FREQTABLE_AD_CODE = ""
-    let STATS_AD_CODE = ""
-    let HELP_AD_CODE = ""
+    let TUNER_AD_CODE = "ca-app-pub-6364767349592629/3822321902"
+    let FREQTABLE_AD_CODE = "ca-app-pub-6364767349592629/9749721412"
+    let STATS_AD_CODE = "ca-app-pub-6364767349592629/3630750214"
+    let HELP_AD_CODE = "ca-app-pub-6364767349592629/2317668543"
     
-    let showAd = false
-    
-    func randomBox() -> Bool {
-        let range = 1...150
-        let ticket = Int.random(in: range)
-        return ticket == 50
-    }
+    let showAd = true
 }

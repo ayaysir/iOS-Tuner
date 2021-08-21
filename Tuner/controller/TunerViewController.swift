@@ -116,10 +116,9 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
 
-        if AdSupporter.shared.showAd && !AdSupporter.shared.randomBox() {
+        if AdSupporter.shared.showAd {
             if #available(iOS 14, *) {
                 ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-                    // Tracking authorization completed. Start loading ads here
                 })
             }
             self.setupBannerView()

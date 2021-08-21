@@ -8,6 +8,7 @@
 import UIKit
 import Charts
 import GoogleMobileAds
+import AppTrackingTransparency
 
 class StatsViewController: UIViewController {
     
@@ -42,8 +43,12 @@ class StatsViewController: UIViewController {
         
         tblTuningRecords.allowsSelection = false
         
-        if AdSupporter.shared.showAd && !AdSupporter.shared.randomBox() {
-            setupBannerView()
+        if AdSupporter.shared.showAd {
+            if #available(iOS 14, *) {
+                ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                })
+            }
+            self.setupBannerView()
         }
         
         /**

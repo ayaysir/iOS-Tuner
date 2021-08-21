@@ -9,6 +9,7 @@ import UIKit
 import WebKit
 import MessageUI
 import GoogleMobileAds
+import AppTrackingTransparency
 
 class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
@@ -26,8 +27,12 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         btnSendMail.titleLabel?.adjustsFontSizeToFitWidth = true
         btnSendMail.layer.cornerRadius = 5
         
-        if AdSupporter.shared.showAd && !AdSupporter.shared.randomBox() {
-            setupBannerView()
+        if AdSupporter.shared.showAd {
+            if #available(iOS 14, *) {
+                ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                })
+            }
+            self.setupBannerView()
         }
     }
     

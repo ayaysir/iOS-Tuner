@@ -8,6 +8,7 @@
 import UIKit
 import DropDown
 import GoogleMobileAds
+import AppTrackingTransparency
 
 class GlobalOsc {
     static let shared = GlobalOsc()
@@ -86,8 +87,12 @@ class FreqTableViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
         
-        if AdSupporter.shared.showAd && !AdSupporter.shared.randomBox() {
-            setupBannerView()
+        if AdSupporter.shared.showAd {
+            if #available(iOS 14, *) {
+                ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                })
+            }
+            self.setupBannerView()
         }
         btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)
         
