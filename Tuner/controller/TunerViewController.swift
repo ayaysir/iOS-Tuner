@@ -106,7 +106,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         DispatchQueue.main.async {
             // 타이머는 main thread 에서 실행됨
             self.levelTimer = Timer.scheduledTimer(timeInterval: 0.0167, target: self, selector: #selector(self.levelTimerCallback), userInfo: nil, repeats: true)
-            self.levelTimer.tolerance = 0.1
+//            self.levelTimer.tolerance = 0.1
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
