@@ -75,6 +75,7 @@ class TunerConductor: ObservableObject {
         data.noteNum = noteNum
         data.noteNameWithSharps = "\(noteNamesWithSharps[data.note.rawValue])\(data.octave)"
         data.noteNameWithSharps = "\(noteNamesWithFlats[data.note.rawValue])\(data.octave)"
+        
         data.standardFreq = data.tuningSystem == .equalTemperament
             ? getStandardFrequency(noteNum: noteNum, a4Frequency: data.a4Frequency)
             : getStandardFrequency_JI(noteNum: noteNum, c4Frequency: data.c4Frequency, scale: data.jiScale)

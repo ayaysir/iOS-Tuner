@@ -68,10 +68,17 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     var isRecordingOn: Bool = false
     var failedCount: Int = 0
     
+    func setA4AndC4(baseNote4: Scale, freqOfBaseNote: Float) {
+        conductor.data.a4Frequency = getA4Frequency_ET(baseNote4: baseNote4, frequency: freqOfBaseNote)
+        conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: baseNote4, prev4frequency: freqOfBaseNote, scale: state.currentJIScale)
+    }
+    
     func loadStateFromUserDefaults() {
         do {
             let loadedState = try UserDefaults.standard.getObject(forKey: "state-tuner", castTo: TunerViewState.self)
             self.state = loadedState
+            setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: state.baseFreq)
+            print("load:", state as Any, conductor.data)
         } catch {
             print(error.localizedDescription)
             self.state = TunerViewState()
@@ -242,7 +249,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                 countdown = 0
                 lblRecordStatus.textColor = UIColor.orange
                 lblRecordStatus.doGlow(withColor: UIColor.orange)
-                lblRecordStatus.text = "실패".localized
+                lblRecordStatus.text = "기록 실패".localized
                 
             } else if isRecordingOn && freqRecord45.count == 270 {
                 var maxOctave: Int {
@@ -295,8 +302,9 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                 
                 let maxNoteNum = maxNote.rawValue + (12 * maxOctave)
                 let rangeCondition = (configLeftRangeNum != nil && configRightRangeNum != nil) ? (configLeftRangeNum! <= maxNoteNum && maxNoteNum <= configRightRangeNum!) : true
+                let totalCents = getCents(frequency: freqRecord45.avg(), noteNum: Float(maxNoteNum), standardFrequency: maxStandardFreq)
                 
-                if maxOctave >= 0 && rangeCondition{
+                if maxOctave >= 0 && rangeCondition && (-50 <= totalCents && totalCents <= 50)  {
                     // core data 기록
                     let record = TunerRecord(id: UUID(), date: Date(), avgFreq: freqRecord45.avg(), stdFreq: freqRecord45.std(), standardFreq: maxStandardFreq, centDist: centRecord45.avg(), noteIndex: maxNote.rawValue, octave: maxOctave, tuningSystem: state.currentTuningSystem)
                     
@@ -344,13 +352,19 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     @IBAction func btnPlusAct(_ sender: Any) {
         guard let text = textFreqOutlet.text else { return }
         guard let num = Float(text) else { return }
-        textFreqOutlet.text = String(num + 1)
+        let freq: Float = num + 1
+        textFreqOutlet.text = String(freq)
+        state.baseFreq = freq
+        setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: freq)
     }
     
     @IBAction func btnMinusAct(_ sender: Any) {
         guard let text = textFreqOutlet.text else { return }
         guard let num = Float(text) else { return }
-        textFreqOutlet.text = String(num - 1)
+        let freq: Float = num - 1
+        textFreqOutlet.text = String(freq)
+        state.baseFreq = freq
+        setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: freq)
     }
     
     @IBAction func btnTuningSelectAct(_ sender: Any) {
@@ -492,6 +506,8 @@ extension TunerViewController: UITextFieldDelegate {
         guard let freq = Float(text) else {
             return
         }
+        state.baseFreq = freq
+        setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: freq)
 
         if freq < 200 || freq > 600 {
             simpleAlert(self, message: "주파수의 범위는 200 ~ 600Hz만 입력할 수 있습니다.".localized, title: "범위 초과".localized, handler: nil)
