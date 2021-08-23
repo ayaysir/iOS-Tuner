@@ -100,7 +100,13 @@ public extension UIViewController {
     }
 
     internal func topMostController () -> ENSideMenuProtocol? {
-        var topController : UIViewController? = UIApplication.shared.keyWindow?.rootViewController
+        let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .compactMap({$0 as? UIWindowScene})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+//        var topController : UIViewController? = UIApplication.shared.keyWindow?.rootViewController
+        var topController = keyWindow?.rootViewController
         if (topController is UITabBarController) {
             topController = (topController as! UITabBarController).selectedViewController
         }
@@ -228,9 +234,20 @@ open class ENSideMenu : NSObject, UIGestureRecognizerDelegate {
     }
 
     fileprivate func adjustFrameDimensions( _ width: CGFloat, height: CGFloat ) -> (CGFloat,CGFloat) {
+        
+//        if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 &&
+//            (UIApplication.shared.statusBarOrientation == UIInterfaceOrientation.landscapeRight ||
+//                UIApplication.shared.statusBarOrientation == UIInterfaceOrientation.landscapeLeft) {
+//                    // iOS 7.1 or lower and landscape mode -> interchange width and height
+//                    return (height, width)
+//        }
+//        else {
+//            return (width, height)
+//        }
+        
         if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 &&
-            (UIApplication.shared.statusBarOrientation == UIInterfaceOrientation.landscapeRight ||
-                UIApplication.shared.statusBarOrientation == UIInterfaceOrientation.landscapeLeft) {
+            (UIApplication.shared.windows.first(where: {$0.isKeyWindow})?.windowScene?.interfaceOrientation == UIInterfaceOrientation.landscapeRight ||
+                UIApplication.shared.windows.first(where: {$0.isKeyWindow})?.windowScene?.interfaceOrientation == UIInterfaceOrientation.landscapeLeft) {
                     // iOS 7.1 or lower and landscape mode -> interchange width and height
                     return (height, width)
         }
