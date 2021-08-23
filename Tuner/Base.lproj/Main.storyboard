@@ -19,6 +19,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZwB-T0-Bti" customClass="TunerIndicator" customModule="Tuner" customModuleProvider="target">
+                                <rect key="frame" x="10" y="287.5" width="394" height="331"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ZwB-T0-Bti" secondAttribute="height" multiplier="394:331" id="b8A-bb-kcP"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="outlineColor">
+                                        <color key="value" systemColor="linkColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="counterColor">
+                                        <color key="value" systemColor="systemOrangeColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="counter">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="x">
+                                        <integer key="value" value="1000"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="y">
+                                        <integer key="value" value="2000"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftDegree">
+                                        <real key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sli-X6-c6k">
                                 <rect key="frame" x="0.0" y="44" width="414" height="102"/>
                                 <subviews>
@@ -174,33 +201,6 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="xibName" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZwB-T0-Bti" customClass="TunerIndicator" customModule="Tuner" customModuleProvider="target">
-                                <rect key="frame" x="10" y="287.5" width="394" height="331"/>
-                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="ZwB-T0-Bti" secondAttribute="height" multiplier="394:331" id="b8A-bb-kcP"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="outlineColor">
-                                        <color key="value" systemColor="linkColor"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="counterColor">
-                                        <color key="value" systemColor="systemOrangeColor"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="counter">
-                                        <integer key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="x">
-                                        <integer key="value" value="1000"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="y">
-                                        <integer key="value" value="2000"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="leftDegree">
-                                        <real key="value" value="6"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="기록 완료" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vw8-8E-boG">
                                 <rect key="frame" x="94" y="822" width="300" height="30"/>
                                 <constraints>
@@ -265,6 +265,7 @@
                         <outlet property="btnBottomSlide" destination="zxb-Le-WS7" id="ON8-mt-WqZ"/>
                         <outlet property="btnScaleSelect" destination="RBE-hP-YLn" id="Djc-YT-tlq"/>
                         <outlet property="btnTuningSelect" destination="pHc-3Q-ir7" id="K3F-eD-Fwd"/>
+                        <outlet property="cnstrIndicatorCenterY" destination="3SE-PY-OaS" id="hmt-Zf-26E"/>
                         <outlet property="cnstrRecordStatusBottom" destination="slc-D2-Yiw" id="5ud-2Z-vSp"/>
                         <outlet property="constrMenuButton" destination="1Zu-jI-LeU" id="X8B-7W-QBx"/>
                         <outlet property="constraintPanelLeftLeading" destination="FGJ-bd-4yj" id="2jO-tW-G6s"/>

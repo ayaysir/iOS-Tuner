@@ -19,6 +19,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     
     var recorder: AVAudioRecorder!
     var levelTimer = Timer()
+    var displayTimer = Timer()
     
     var freqTable: [FrequencyInfo]!
 
@@ -36,8 +37,10 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     @IBOutlet weak var constraintPanelLeftLeading: NSLayoutConstraint!
     @IBOutlet weak var constraintPanelRightTrailing: NSLayoutConstraint!
     @IBOutlet weak var cnstrRecordStatusBottom: NSLayoutConstraint!
+    @IBOutlet weak var cnstrIndicatorCenterY: NSLayoutConstraint!
     
     @IBOutlet weak var settingView: UIView!
+
     
     
     var conductor = TunerConductor()
@@ -110,11 +113,15 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         AVAudioSession.sharedInstance().requestRecordPermission({ (granted) in
             // Handle granted
         })
+        
         DispatchQueue.main.async {
             // 타이머는 main thread 에서 실행됨
-            self.levelTimer = Timer.scheduledTimer(timeInterval: 0.0167, target: self, selector: #selector(self.levelTimerCallback), userInfo: nil, repeats: true)
-//            self.levelTimer.tolerance = 0.1
+            // 0.0167 -> 45
+            // 0.05 -> 15
+            self.levelTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.levelTimerCallback), userInfo: nil, repeats: true)
+            self.displayTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.refreshIndicator), userInfo: nil, repeats: true)
         }
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
@@ -134,8 +141,31 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         
         btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)
         
+        viewIndicator.layer.drawsAsynchronously = true
         viewIndicator.layer.shouldRasterize = true
-        viewIndicator.layer.rasterizationScale = UIScreen.main.scale
+        
+        if UIDevice.current.orientation.isLandscape {
+            changeLandscapeMode()
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+            print("landscape")
+            changeLandscapeMode()
+        } else {
+            print("portrait")
+            changePortraitMode()
+        }
+    }
+    
+    func changeLandscapeMode() {
+        cnstrIndicatorCenterY.constant += 80
+    }
+    
+    func changePortraitMode() {
+        cnstrIndicatorCenterY.constant -= 80
     }
     
     @objc func conductorAppear() {
@@ -170,10 +200,14 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     /**
      === 타이머 갱신 ===
      */
+    @objc func refreshIndicator() {
+        viewIndicator.state = conductor.data
+    }
+    
     @objc func levelTimerCallback() {
         
         // TODO: - 분리
-        let R_BLOCK = 15
+        let R_BLOCK = 5
         
 //        monitor.append(conductor.data)
         dBMonitor.append(conductor.data.dB)
@@ -196,7 +230,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
             
             if condition {
                 conductor.data.isStdSmooth = true
-                monitorContinousCount += 15
+                monitorContinousCount += R_BLOCK
                 
                 freqRecord45.append(contentsOf: freqMonitor)
                 centRecord45.append(contentsOf: centMonitor)
@@ -231,7 +265,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                 countdown = 3
             }
             
-            if isRecordingOn && freqRecord45.count % 60 == 0 {
+            if isRecordingOn && freqRecord45.count % 20 == 0 {
                 lblRecordStatus.text = countdown == 0 ? "기록중".localized : String(countdown)
                 lblRecordStatus.textColor = UIColor.lightGray
                 lblRecordStatus.doGlow(withColor: UIColor.lightGray)
@@ -254,7 +288,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                 lblRecordStatus.doGlow(withColor: UIColor.orange)
                 lblRecordStatus.text = "기록 실패".localized
                 
-            } else if isRecordingOn && freqRecord45.count == 270 {
+            } else if isRecordingOn && freqRecord45.count == 75 {
                 var maxOctave: Int {
                     let octaveCounts = octaveRecord45.reduce(into: [:]) { $0[$1, default:0] += 1 }
                     if let (value, count) = octaveCounts.max(by: { $0.1 < $1.1 }) {
@@ -313,8 +347,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                     
                     do {
                         try saveCoreData(record: record)
-                        print(getDocumentsDirectory())
-                        lblRecordStatus.text = "기록 완료".localized
+                        lblRecordStatus.text = "기록 완료".localized + " (\(maxNote.textValueMixed))"
                         lblRecordStatus.textColor = #colorLiteral(red: 0.2535300891, green: 0.7974340783, blue: 0.2312508963, alpha: 1)
                         lblRecordStatus.doGlow(withColor: #colorLiteral(red: 0.2535300891, green: 0.7974340783, blue: 0.2312508963, alpha: 1))
                     } catch {
@@ -340,7 +373,6 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
             }
             
         }
-        viewIndicator.state = conductor.data
     }
     
     @IBAction func btnShowMenu(_ sender: Any) {
