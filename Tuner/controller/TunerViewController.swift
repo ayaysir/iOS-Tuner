@@ -133,6 +133,9 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         lblRecordStatus.text = ""
         
         btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)
+        
+        viewIndicator.layer.shouldRasterize = true
+        viewIndicator.layer.rasterizationScale = UIScreen.main.scale
     }
     
     @objc func conductorAppear() {
@@ -565,9 +568,7 @@ extension TunerViewController: GADBannerViewDelegate {
         bannerView.load(request)
         bannerView.delegate = self
         
-        // 버튼 constraint 50
-        constrMenuButton.constant -= 50
-        cnstrRecordStatusBottom.constant += 50
+
         
         
     }
@@ -580,6 +581,9 @@ extension TunerViewController: GADBannerViewDelegate {
     // GADBannerViewDelegate
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("GAD: \(#function)")
+        // 버튼 constraint 50
+        constrMenuButton.constant -= 50
+        cnstrRecordStatusBottom.constant += 50
     }
     
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {

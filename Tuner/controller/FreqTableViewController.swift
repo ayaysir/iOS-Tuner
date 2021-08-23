@@ -382,9 +382,7 @@ extension FreqTableViewController: GADBannerViewDelegate {
         bannerView.load(request)
         bannerView.delegate = self
         
-        // 버튼 constraint 50
-        cnstMenuBtnBottom.constant += 50
-        cnstFreqTableBottom.constant += 50
+
     }
     private func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
@@ -395,6 +393,9 @@ extension FreqTableViewController: GADBannerViewDelegate {
     // GADBannerViewDelegate
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("GAD: \(#function)")
+        // 버튼 constraint 50
+        cnstMenuBtnBottom.constant += 50
+        cnstFreqTableBottom.constant += 50
     }
     
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {

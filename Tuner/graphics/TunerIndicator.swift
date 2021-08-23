@@ -64,6 +64,7 @@ class TunerIndicator: UIView {
             : UIColor(named: "indicator-outline-ji")?.cgColor
         context.setStrokeColor(outerLineColor ?? UIColor.blue.cgColor)
         context.setLineWidth(2)
+        
         context.setShadow(offset: .zero, blur: 20, color: outerLineColor)
         context.setBlendMode(.sourceAtop)
         // .difference, .exclusion(stroke), .multiply(light), screen(dark), sourceAtop, In, (stroke)

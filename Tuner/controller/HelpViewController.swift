@@ -135,8 +135,7 @@ extension HelpViewController: GADBannerViewDelegate {
         bannerView.load(request)
         bannerView.delegate = self
         
-        // 버튼 constraint 50
-        cnstrWebViewBottom.constant += 50
+
         
         
     }
@@ -149,6 +148,8 @@ extension HelpViewController: GADBannerViewDelegate {
     // GADBannerViewDelegate
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("GAD: \(#function)")
+        // 버튼 constraint 50
+        cnstrWebViewBottom.constant += 50
     }
     
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {

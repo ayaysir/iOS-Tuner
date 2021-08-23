@@ -337,9 +337,7 @@ extension StatsViewController: GADBannerViewDelegate {
         bannerView.load(request)
         bannerView.delegate = self
         
-        // 버튼 constraint 50
-        cnstStackBottom.constant += 50
-        cnstMenuButtonBottom.constant += 50
+
         
     }
     private func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -351,6 +349,9 @@ extension StatsViewController: GADBannerViewDelegate {
     // GADBannerViewDelegate
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("GAD: \(#function)")
+        // 버튼 constraint 50
+        cnstStackBottom.constant += 50
+        cnstMenuButtonBottom.constant += 50
     }
     
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
