@@ -40,8 +40,6 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     @IBOutlet weak var cnstrIndicatorCenterY: NSLayoutConstraint!
     
     @IBOutlet weak var settingView: UIView!
-
-    
     
     var conductor = TunerConductor()
     
@@ -147,6 +145,14 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         if UIDevice.current.orientation.isLandscape {
             changeLandscapeMode()
         }
+        
+        // 키보드 밖 클릭하면 없어지게 하기
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(doneChangeFrequencey))
+        view.addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc func doneChangeFrequencey() {
+        view.endEditing(true)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -541,9 +547,7 @@ extension TunerViewController: UITextFieldDelegate {
         guard let freq = Float(text) else {
             return
         }
-        state.baseFreq = freq
-        setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: freq)
-
+        
         if freq < 200 || freq > 600 {
             simpleAlert(self, message: "주파수의 범위는 200 ~ 600Hz만 입력할 수 있습니다.".localized, title: "범위 초과".localized, handler: nil)
             textField.text = String(oldFreq)
@@ -551,7 +555,7 @@ extension TunerViewController: UITextFieldDelegate {
         }
         
         state.baseFreq = freq
-        
+        setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: freq)
     }
 }
 

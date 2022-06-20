@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iA2-Pj-Yt0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iA2-Pj-Yt0">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -293,7 +293,7 @@
                                 <rect key="frame" x="0.0" y="146" width="414" height="716"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="freqCell" rowHeight="40" id="jCO-j7-c0V" customClass="FreqCell" customModule="Tuner" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="40"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jCO-j7-c0V" id="DL7-co-J5B">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
@@ -337,7 +337,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="freqHeader" rowHeight="20" id="QtK-8D-gDx">
-                                        <rect key="frame" x="0.0" y="64.5" width="414" height="20"/>
+                                        <rect key="frame" x="0.0" y="84.5" width="414" height="20"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QtK-8D-gDx" id="3cr-RS-gqf">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="20"/>
@@ -632,7 +632,7 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="recordCell" rowHeight="59" id="xBe-5P-DGv" customClass="StatsTableViewCell" customModule="Tuner" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="24.5" width="394" height="59"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="394" height="59"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xBe-5P-DGv" id="xzj-Zk-hhA">
                                                     <rect key="frame" x="0.0" y="0.0" width="394" height="59"/>
