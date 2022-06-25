@@ -9,7 +9,7 @@
 </head>
 <body>
   <h1>Tuner XR</h1>
-  <p>Tuner XR은 보컬, 악기 등을 연주하는 음악가들을 위한 애플리케이션으로, 다음과 같은 기능을 제공합니다.</p>
+  <p>Tuner XR(Tuner with eXtRa features)은 보컬, 악기 등을 연주하는 음악가들을 위한 애플리케이션으로, 다음과 같은 기능을 제공합니다.</p>
   <ul>
     <li>평균율과 순정율에 모두 대응할 수 있는 튜닝 기능</li>
     <li>고정된 주파수가 아닌 다양한 주파수를 기준으로 튜닝할 수 있습니다.</li>
@@ -35,7 +35,7 @@
   <hr>
   
   <h3>튜너</h3>
-  <img src="1.png">
+  <img src="1.png" class="screenshot">
   <ul>
     <li>먼저, 이 튜너는 마이크를 통해 음을 튜닝하기 때문에, 주변 환경이 조용한 곳에서 충분한 볼륨으로 악기 또는 보컬의 특정 음을 연주하세요. 주변에 소음이 강한 경우 측정 결과가 부정확할 수 있습니다.
     </li>
@@ -55,7 +55,7 @@
   <hr>
     
     <h3>주파수 테이블 (음높이 테이블)</h3>
-    <img src="2.png">
+    <img src="2.png" class="screenshot">
     <ul>
         <li>주파수(Hz)와 튜닝 시스템, 스케일(순정율의 경우)를 입력하면 자동으로 C1 ~ B7 범위의 각 노트들의 주파수를 계산하여 표시하고 해당 음을 재생할 수 있습니다.</li>
         <li>상단 버튼과 텍스트 필드에서 기준이 되는 음과 주파수를 설정할 수 있습니다. 위의 예시는 A4 = 440Hz로 설정한 것입니다. 다른 예로, 바로크 튜닝을 사용하고자 한다면 A4 = 415Hz로 설정하면 됩니다. </li>
@@ -69,7 +69,7 @@
     <hr>
 
     <h3>통계</h3>
-    <img src="3.png">
+    <img src="3.png" class="screenshot">
     <ul>
         <li>튜너 메뉴에서 특정 음을 4.5초 이상 고르게 연주한 경우 해당 튜닝의 결과가 통계 메뉴에 기록됩니다.
         <li>표준 주파수(Hz)와 실제 연주된 음의 주파수, 두 차이 등이 센트(cent) 단위로 표시됩니다.
@@ -82,7 +82,7 @@
     <hr>
     
     <h3>설정</h3>
-    <img src="4.png">
+    <img src="4.png" class="screenshot">
     <ul>
         <li>디스플레이 모드 선택: 앱에서 표시될 디스플레이 모드를 선택합니다. '시스템'의 경우 OS의 기본 설정을 따르며, 라이트, 다크 모드는 OS의 설정 여부와 관계없이 라이트 또는 다크 모드로 표시합니다.
         <li>표기법: 튜너, 통계 메뉴에서 반음을 샤프(#)로 표시할지 또는 플랫(b)로 표시할지 결정합니다.
@@ -98,6 +98,57 @@
         <li><a href="mailto:yoonbumtae@gmail.com" target="_blank">이메일</a>
         <li><a href="https://github.com/ayaysir/iOS-Tuner" target="_blank">GitHub 저장소</a>
     </ul>
-
+    
+    <hr>
+    
+    <h3>BGSMM의 다른 앱 둘러보기</h3>
+    <ul id="introduce-app">
+        <li>
+            <div class="info">
+                <a class="store-link" data-id="1631310626" href="#" target="_blank">
+                    <img src="icon-UltimateScale.png">
+                </a>
+                <div>
+                    <div class="title">UltimateScale</div>
+                    <span>UtimateScale은 다양한 키를 지원하는 내장 신디사이저 키보드와, 퀴즈를 통한 효율적인 학습이 가능한 스케일(음계) 학습 도우미입니다.</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="info">
+                <a class="store-link" data-id="1596583920" href="#" target="_blank">
+                    <img src="icon-MusicBox.png">
+                </a>
+                <div>
+                    <div class="title">나만의 오르골 만들기</div>
+                    <span>iPhone/iPad에서 뮤직박스가 다시 태어났습니다. 나만의 오르골과 악보를 만들어보세요. </span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="info">
+                <a class="store-link" data-id="1578285458" href="#" target="_blank">
+                    <img src="icon-DiffuserStick.png">
+                </a>
+                <div>
+                    <div class="title">DiffuserStick</div>
+                    <span>DiffuserStick 앱은 디퓨저 스틱(막대기) 교체 주기 관리 도우미 앱으로, 디퓨저의 사진과 함께 디퓨저 스틱을 꽂은 날을 기록하고, 교체 기간이 되면 푸시 알람을 통해 알려줍니다.</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+    
+    <script>
+        function sendToNativeApp(event) {
+          if(webkit != null && webkit.messageHandlers) {
+              // receiveFromJS - 네이티브 앱에서 사용할 함수 이름
+              const id = event.currentTarget.dataset.id
+              webkit.messageHandlers.openAppStore.postMessage(id)
+          }
+        }
+        document.querySelectorAll(".store-link").forEach(item => {
+            item.addEventListener("click", sendToNativeApp)
+        })
+    </script>
 </body>
 </html>

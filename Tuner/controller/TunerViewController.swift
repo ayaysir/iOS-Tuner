@@ -149,6 +149,10 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         // 키보드 밖 클릭하면 없어지게 하기
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(doneChangeFrequencey))
         view.addGestureRecognizer(tapRecognizer)
+        
+        // 실행횟수 기록
+        let visited = UserDefaults.standard.integer(forKey: "TunerVC_Visitied")
+        UserDefaults.standard.set(visited + 1, forKey: "TunerVC_Visited")
     }
     
     @objc func doneChangeFrequencey() {

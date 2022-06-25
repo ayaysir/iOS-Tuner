@@ -15,6 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         return true
     }
+    
+    // disable third-party keyboard
+    func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication.ExtensionPointIdentifier) -> Bool {
+        if extensionPointIdentifier == UIApplication.ExtensionPointIdentifier.keyboard {
+            return false
+        }
+        return true
+    }
 
     // MARK: UISceneSession Lifecycle
     func applicationWillEnterForeground(_ application: UIApplication) {

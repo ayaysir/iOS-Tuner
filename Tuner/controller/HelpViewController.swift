@@ -10,8 +10,9 @@ import WebKit
 import MessageUI
 import GoogleMobileAds
 import AppTrackingTransparency
+import StoreKit
 
-class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
+class HelpViewController: UIViewController{
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var btnSendMail: UIButton!
@@ -34,20 +35,6 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             }
             self.setupBannerView()
         }
-    }
-    
-    func loadHelpPage() {
-        // 웹 파일 로딩
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-
-        let pageName = "help-ko".localized
-        guard let url = Bundle.main.url(forResource: pageName, withExtension: "html", subdirectory: "webpage") else {
-            return
-        }
-        webView.loadFileURL(url, allowingReadAccessTo: url)
-        let request = URLRequest(url: url)
-        webView.load(request)
     }
 
 }
@@ -101,7 +88,35 @@ extension HelpViewController: MFMailComposeViewControllerDelegate {
     
 }
 
-extension HelpViewController {
+extension HelpViewController: WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+    
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        switch message.name {
+            case "openAppStore":
+            let body = message.body as! String
+            print("From JS:", body)
+            popupAppStore(identifier: body)
+            default:
+                break
+            }
+    }
+    
+    func loadHelpPage() {
+        // 웹 파일 로딩
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
+        
+        webView.configuration.userContentController.add(self, name: "openAppStore")
+
+        let pageName = "help-ko".localized
+        guard let url = Bundle.main.url(forResource: pageName, withExtension: "html", subdirectory: "webpage") else {
+            return
+        }
+        webView.loadFileURL(url, allowingReadAccessTo: url)
+        let request = URLRequest(url: url)
+        webView.load(request)
+    }
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard case .linkActivated = navigationAction.navigationType,
               let url = navigationAction.request.url
@@ -112,6 +127,32 @@ extension HelpViewController {
         decisionHandler(.cancel)
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
    }
+}
+
+extension HelpViewController: SKStoreProductViewControllerDelegate {
+    
+    func popupAppStore(identifier: Any) {
+        // 1631310626
+        let parametersDictionary = [SKStoreProductParameterITunesItemIdentifier: identifier]
+        let store = SKStoreProductViewController()
+        store.delegate = self
+        
+        /*
+         Attempt to load the selected product from the App Store. Display the store product view controller if success and print an error message,
+         otherwise.
+         */
+        store.loadProduct(withParameters: parametersDictionary) { [unowned self] (result: Bool, error: Error?) in
+            if result {
+                self.present(store, animated: true, completion: {
+                    print("The store view controller was presented.")
+                })
+            } else {
+                if let error = error {
+                    print("Error: \(error)")
+                }
+            }
+        }
+    }
 }
 
 // ============ 애드몹 셋업 ============
@@ -127,17 +168,13 @@ extension HelpViewController: GADBannerViewDelegate {
         let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
         self.bannerView = GADBannerView(adSize: adSize)
         addBannerViewToView(bannerView)
-//         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
+        // bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
         bannerView.adUnitID = AdSupporter.shared.HELP_AD_CODE
         print("adUnitID: ", bannerView.adUnitID!)
         bannerView.rootViewController = self
         let request = GADRequest()
         bannerView.load(request)
         bannerView.delegate = self
-        
-
-        
-        
     }
     private func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
