@@ -81,7 +81,7 @@ class FreqTableViewController: UIViewController {
         textA4FreqOutlet.addDoneButtonOnKeyboard()
         textA4FreqOutlet.delegate = self
         
-//        selectBackgroundPlay.isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+       // selectBackgroundPlay.isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
         
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
@@ -96,19 +96,28 @@ class FreqTableViewController: UIViewController {
         }
         btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)
         
+        // 키보드 밖 클릭하면 없어지게 하기
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(doneChangeFrequencey))
+        tapRecognizer.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapRecognizer)
+        
+    }
+    
+    @objc func doneChangeFrequencey() {
+        view.endEditing(true)
     }
     
     @objc func conductorDisappear() {
         print(">> disappear")
-        //        let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
-//        if !isOn {
-//            GlobalOsc.shared.conductor.stop()
-//        }
+        // let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+        // if !isOn {
+        //     GlobalOsc.shared.conductor.stop()
+        // }
     }
     
     @objc func conductorAppear() {
         print(">> active")
-//        let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+        // let isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
         let isOn = true
         let isShoudReplay = state.isShouldReplay
         if !isOn && isShoudReplay {
