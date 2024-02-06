@@ -8,14 +8,14 @@
 import UIKit
 import AVFoundation
 import CoreAudio
-import DropDown
-import GoogleMobileAds
+// import DropDown
+// import GoogleMobileAds
 import AppTrackingTransparency
 import AdSupport
 
-class TunerViewController: UIViewController, GADFullScreenContentDelegate {
+class TunerViewController: UIViewController {
     
-    private var bannerView: GADBannerView!
+    // private var bannerView: GADBannerView!
     
     var recorder: AVAudioRecorder!
     var levelTimer = Timer()
@@ -43,13 +43,12 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     
     var conductor = TunerConductor()
     
-    let tuningDropDown = DropDown()
-    let scaleDropDown = DropDown()
-    let baseNoteDropDown = DropDown()
+    // let tuningDropDown = DropDown()
+    // let scaleDropDown = DropDown()
+    // let baseNoteDropDown = DropDown()
     
     var state: TunerViewState!
 
-//    var monitor: [TunerData] = []
     var monitorCount: Int = 0
     var countdown: Int = 0
     var freqMonitor: [Float] = []
@@ -126,14 +125,14 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIApplication.willResignActiveNotification, object: nil)
         
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        // bannerView = GADBannerView(adSize: kGADAdSizeBanner)
 
         if AdSupporter.shared.showAd {
             if #available(iOS 14, *) {
                 ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
                 })
             }
-            self.setupBannerView()
+            // self.setupBannerView()
         }
         lblRecordStatus.text = ""
         
@@ -219,7 +218,6 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         // TODO: - 분리
         let R_BLOCK = 5
         
-//        monitor.append(conductor.data)
         dBMonitor.append(conductor.data.dB)
         centMonitor.append(conductor.data.centDist)
         freqMonitor.append(conductor.data.pitch)
@@ -236,7 +234,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
             // 4.5초동안 아래 조건이 true인 경우의 평균, 표준편차 기록
             
             let condition = octaveMonitor.std() == 0
-//                && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.5)
+               // && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.5)
             
             if condition {
                 conductor.data.isStdSmooth = true
@@ -413,15 +411,15 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     }
     
     @IBAction func btnTuningSelectAct(_ sender: Any) {
-        tuningDropDown.show()
+        // tuningDropDown.show()
     }
     
     @IBAction func btnScaleSelectAct(_ sender: Any) {
-        scaleDropDown.show()
+        // scaleDropDown.show()
     }
     
     @IBAction func btnBaseNoteSelectAct(_ sender: Any) {
-        baseNoteDropDown.show()
+        // baseNoteDropDown.show()
     }
  
     var isSettingViewCollapsed = false
@@ -447,96 +445,96 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
 
 extension TunerViewController {
     func setTuningDropDown() {
-        // 튜닝 시스템 데이터소스
-        tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue.localized }
-        tuningDropDown.anchorView = btnTuningSelect
-        tuningDropDown.cornerRadius = 15
-        // 버튼 제목 설정
-        btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
-        btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
-        tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
-        
-        conductor.data.tuningSystem = state.currentTuningSystem
-        conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: state.currentJIScale)
-        
-        tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("선택한 아이템 : \(item)")
-            print("인덱스 : \(index)")
-            
-            if index == 0 {
-                btnScaleSelect.isEnabled = false
-            } else {
-                btnScaleSelect.isEnabled = true
-            }
-            
-            let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
-            // 버튼 제목 설정
-            btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
-            state.currentTuningSystem = tuningSystem
-            state.lastSelectedRow = nil
-            
-            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
-            conductor.data.tuningSystem = tuningSystem
-            print(">> tuningsystem", tuningSystem)
-            conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: state.currentJIScale)
-            conductor.data.jiScale = state.currentJIScale
-        }
+        // // 튜닝 시스템 데이터소스
+        // tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue.localized }
+        // tuningDropDown.anchorView = btnTuningSelect
+        // tuningDropDown.cornerRadius = 15
+        // // 버튼 제목 설정
+        // btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
+        // btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
+        // tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
+        // 
+        // conductor.data.tuningSystem = state.currentTuningSystem
+        // conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: state.currentJIScale)
+        // 
+        // tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+        //     print("선택한 아이템 : \(item)")
+        //     print("인덱스 : \(index)")
+        //     
+        //     if index == 0 {
+        //         btnScaleSelect.isEnabled = false
+        //     } else {
+        //         btnScaleSelect.isEnabled = true
+        //     }
+        //     
+        //     let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
+        //     // 버튼 제목 설정
+        //     btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
+        //     state.currentTuningSystem = tuningSystem
+        //     state.lastSelectedRow = nil
+        //     
+        //     // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+        //     conductor.data.tuningSystem = tuningSystem
+        //     print(">> tuningsystem", tuningSystem)
+        //     conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: state.currentJIScale)
+        //     conductor.data.jiScale = state.currentJIScale
+        // }
     }
     
     func setScaleDropDown() {
-        scaleDropDown.dataSource = Scale.allCases.map { $0.textValueMixed }
-        scaleDropDown.anchorView = btnScaleSelect
-        scaleDropDown.cornerRadius = 15
-        scaleDropDown.selectRow(state.currentJIScale.rawValue)
-        btnScaleSelect.setTitle(state.currentJIScale.textValueMixed, for: .normal)
-        
-        conductor.data.jiScale = state.currentJIScale
-        
-        scaleDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            let scale: Scale = Scale(rawValue: index) ?? Scale.C
-            btnScaleSelect.setTitle(item, for: .normal)
-            state.currentJIScale = scale
-            state.lastSelectedRow = nil
-            
-            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
-            conductor.data.tuningSystem = state.currentTuningSystem
-            conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: scale)
-            print(">> i4frequency", conductor.data.c4Frequency)
-            conductor.data.jiScale = scale
-        }
+        // scaleDropDown.dataSource = Scale.allCases.map { $0.textValueMixed }
+        // scaleDropDown.anchorView = btnScaleSelect
+        // scaleDropDown.cornerRadius = 15
+        // scaleDropDown.selectRow(state.currentJIScale.rawValue)
+        // btnScaleSelect.setTitle(state.currentJIScale.textValueMixed, for: .normal)
+        // 
+        // conductor.data.jiScale = state.currentJIScale
+        // 
+        // scaleDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+        //     let scale: Scale = Scale(rawValue: index) ?? Scale.C
+        //     btnScaleSelect.setTitle(item, for: .normal)
+        //     state.currentJIScale = scale
+        //     state.lastSelectedRow = nil
+        //     
+        //     // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+        //     conductor.data.tuningSystem = state.currentTuningSystem
+        //     conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: scale)
+        //     print(">> i4frequency", conductor.data.c4Frequency)
+        //     conductor.data.jiScale = scale
+        // }
     }
     
     func setBaseNoteDropDown() {
-        baseNoteDropDown.dataSource = Scale.allCases.map { key in
-            if key.textValueForSharp == key.textValueForFlat {
-                return key.textValueForSharp + makeSubscriptOfNumber(4)
-            } else {
-                return "\(key.textValueForSharp + makeSubscriptOfNumber(4)) / \(key.textValueForFlat + makeSubscriptOfNumber(4))"
-            }
-        }
-        baseNoteDropDown.anchorView = btnBaseNoteSelect
-        baseNoteDropDown.cornerRadius = 15
-        baseNoteDropDown.selectRow(state.baseNote.rawValue)
-        btnBaseNoteSelect.setTitle(baseNoteDropDown.dataSource[state.baseNote.rawValue], for: .normal)
-        
-        baseNoteDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            let baseNote = Scale(rawValue: index) ?? Scale.A
-            print(state.baseNote, state.baseFreq)
-            let baseFreq = getOctave4Frequency_ET(targetNote4: baseNote, prevNote4: state.baseNote, prev4frequency: state.baseFreq)
-            let a4Freq = getA4Frequency_ET(baseNote4: baseNote, frequency: baseFreq)
-            
-            btnBaseNoteSelect.setTitle(item, for: .normal)
-            state.baseNote = baseNote
-            state.baseFreq = baseFreq
-            textFreqOutlet.text = String(baseFreq.cleanFixTwo)
-            conductor.data.a4Frequency = a4Freq
-            
-            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
-            conductor.data.tuningSystem = state.currentTuningSystem
-            conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: baseNote, prev4frequency: baseFreq, scale: state.currentJIScale)
-            conductor.data.jiScale = state.currentJIScale
-            
-        }
+        // baseNoteDropDown.dataSource = Scale.allCases.map { key in
+        //     if key.textValueForSharp == key.textValueForFlat {
+        //         return key.textValueForSharp + makeSubscriptOfNumber(4)
+        //     } else {
+        //         return "\(key.textValueForSharp + makeSubscriptOfNumber(4)) / \(key.textValueForFlat + makeSubscriptOfNumber(4))"
+        //     }
+        // }
+        // baseNoteDropDown.anchorView = btnBaseNoteSelect
+        // baseNoteDropDown.cornerRadius = 15
+        // baseNoteDropDown.selectRow(state.baseNote.rawValue)
+        // btnBaseNoteSelect.setTitle(baseNoteDropDown.dataSource[state.baseNote.rawValue], for: .normal)
+        // 
+        // baseNoteDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+        //     let baseNote = Scale(rawValue: index) ?? Scale.A
+        //     print(state.baseNote, state.baseFreq)
+        //     let baseFreq = getOctave4Frequency_ET(targetNote4: baseNote, prevNote4: state.baseNote, prev4frequency: state.baseFreq)
+        //     let a4Freq = getA4Frequency_ET(baseNote4: baseNote, frequency: baseFreq)
+        //     
+        //     btnBaseNoteSelect.setTitle(item, for: .normal)
+        //     state.baseNote = baseNote
+        //     state.baseFreq = baseFreq
+        //     textFreqOutlet.text = String(baseFreq.cleanFixTwo)
+        //     conductor.data.a4Frequency = a4Freq
+        //     
+        //     // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+        //     conductor.data.tuningSystem = state.currentTuningSystem
+        //     conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: baseNote, prev4frequency: baseFreq, scale: state.currentJIScale)
+        //     conductor.data.jiScale = state.currentJIScale
+        //     
+        // }
     }
 }
 
@@ -588,57 +586,59 @@ extension TunerViewController: ENSideMenuDelegate {
 }
 
 // ============ 애드몹 셋업 ============
-extension TunerViewController: GADBannerViewDelegate {
-    // 본 클래스에 다음 선언 추가
-    // // AdMob
-    // private var bannerView: GADBannerView!
-    
-    // viewDidLoad()에 다음 추가
-    // setupBannerView()
-    
-    private func setupBannerView() {
-        let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
-        self.bannerView = GADBannerView(adSize: adSize)
-        addBannerViewToView(bannerView)
-//         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
-        bannerView.adUnitID = AdSupporter.shared.TUNER_AD_CODE
-        print("adUnitID: ", bannerView.adUnitID!)
-        bannerView.rootViewController = self
-        let request = GADRequest()
-        bannerView.load(request)
-        bannerView.delegate = self
-        
+/*
+ extension TunerViewController: GADBannerViewDelegate {
+     // 본 클래스에 다음 선언 추가
+     // // AdMob
+     // private var bannerView: GADBannerView!
+     
+     // viewDidLoad()에 다음 추가
+     // setupBannerView()
+     
+     private func setupBannerView() {
+         let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
+         self.bannerView = GADBannerView(adSize: adSize)
+         addBannerViewToView(bannerView)
+ //         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
+         bannerView.adUnitID = AdSupporter.shared.TUNER_AD_CODE
+         print("adUnitID: ", bannerView.adUnitID!)
+         bannerView.rootViewController = self
+         let request = GADRequest()
+         bannerView.load(request)
+         bannerView.delegate = self
+         
 
-        
-        
-    }
-    private func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
-    }
-    
-    // GADBannerViewDelegate
-    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-        // 버튼 constraint 50
-        constrMenuButton.constant -= 50
-        cnstrRecordStatusBottom.constant += 50
-    }
-    
-    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
-        print("GAD: \(#function)", error)
-    }
-    
-    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-    }
-    
-    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-    }
-    
-    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-    }
-}
+         
+         
+     }
+     private func addBannerViewToView(_ bannerView: GADBannerView) {
+         bannerView.translatesAutoresizingMaskIntoConstraints = false
+         view.addSubview(bannerView)
+         view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
+     }
+     
+     // GADBannerViewDelegate
+     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+         // 버튼 constraint 50
+         constrMenuButton.constant -= 50
+         cnstrRecordStatusBottom.constant += 50
+     }
+     
+     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+         print("GAD: \(#function)", error)
+     }
+     
+     func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+     }
+     
+     func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+     }
+     
+     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+     }
+ }
+ */

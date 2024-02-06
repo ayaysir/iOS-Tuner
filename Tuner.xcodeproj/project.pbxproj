@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,6 +34,7 @@
 		445F329126BD32BD00412F7B /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */; };
 		445F329426BE5B4E00412F7B /* FreqTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329326BE5B4E00412F7B /* FreqTextFieldDelegate.swift */; };
 		445F329726BE962A00412F7B /* TunerIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329626BE962A00412F7B /* TunerIndicator.swift */; };
+		449B49BE2B72062600ECA487 /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = 449B49BD2B72062600ECA487 /* .gitattributes */; };
 		44A6FDAB26C5615000C94855 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDAA26C5615000C94855 /* CoreData.swift */; };
 		44A6FDAD26C561A500C94855 /* TunerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDAC26C561A500C94855 /* TunerRecord.swift */; };
 		44A6FDB126C6AAFC00C94855 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDB026C6AAFC00C94855 /* FileUtil.swift */; };
@@ -50,11 +51,9 @@
 		44B5B34426CF8D6D007889C8 /* AdSupporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B34326CF8D6C007889C8 /* AdSupporter.swift */; };
 		44B5B34E26CFE922007889C8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B35026CFE922007889C8 /* InfoPlist.strings */; };
 		44B5B35426CFEAAA007889C8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B35326CFEAAA007889C8 /* .gitignore */; };
-		B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087577D37AE85CA890BA062C /* Pods_Tuner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		087577D37AE85CA890BA062C /* Pods_Tuner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tuner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqTableViewController.swift; sourceTree = "<group>"; };
 		440DF82026B6D6B400FDA3AA /* FrequencyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyInfo.swift; sourceTree = "<group>"; };
 		442663F726B6DE4200B5A5D9 /* TextUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextUtil.swift; sourceTree = "<group>"; };
@@ -70,7 +69,6 @@
 		4426641326BC2E6E00B5A5D9 /* ENSideMenuNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSideMenuNavigationController.swift; sourceTree = "<group>"; };
 		4426641526BC2E9A00B5A5D9 /* MenuNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuNavigationController.swift; sourceTree = "<group>"; };
 		442F0FDA26B44309004D2100 /* PitchDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchDetector.swift; sourceTree = "<group>"; };
-		444EEE3D26B4370000454428 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444EEE4026B4370000454428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		444EEE4226B4370000454428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		444EEE4426B4370000454428 /* TunerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +81,7 @@
 		445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		445F329326BE5B4E00412F7B /* FreqTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqTextFieldDelegate.swift; sourceTree = "<group>"; };
 		445F329626BE962A00412F7B /* TunerIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerIndicator.swift; sourceTree = "<group>"; };
+		449B49BD2B72062600ECA487 /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
 		44A6FDAA26C5615000C94855 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		44A6FDAC26C561A500C94855 /* TunerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerRecord.swift; sourceTree = "<group>"; };
 		44A6FDB026C6AAFC00C94855 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
@@ -108,8 +107,7 @@
 		44B5B35126CFE928007889C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		44B5B35226CFE928007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		44B5B35326CFEAAA007889C8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.release.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.release.xcconfig"; sourceTree = "<group>"; };
-		E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tuner.debug.xcconfig"; path = "Target Support Files/Pods-Tuner/Pods-Tuner.debug.xcconfig"; sourceTree = "<group>"; };
+		44E238472B7203CB00E40AF3 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +117,6 @@
 			files = (
 				4426640826BA622800B5A5D9 /* AudioKit in Frameworks */,
 				44B5B31F26CA7BFC007889C8 /* CloudKit.framework in Frameworks */,
-				B1CEFA8482CE20279FFB44E7 /* Pods_Tuner.framework in Frameworks */,
 				440DF81A26B500E600FDA3AA /* SoundpipeAudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,16 +124,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		06CB17F29091154E72595DFB /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */,
-				B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		440DF81F26B6D67100FDA3AA /* vo */ = {
+		440DF81F26B6D67100FDA3AA /* ValueObject */ = {
 			isa = PBXGroup;
 			children = (
 				440DF82026B6D6B400FDA3AA /* FrequencyInfo.swift */,
@@ -144,42 +132,31 @@
 				44A6FDAC26C561A500C94855 /* TunerRecord.swift */,
 				44A6FDBB26C9454B00C94855 /* NoteRangeConfig.swift */,
 			);
-			path = vo;
+			path = ValueObject;
 			sourceTree = "<group>";
 		};
-		442663F626B6DE3500B5A5D9 /* util */ = {
+		442663F626B6DE3500B5A5D9 /* Util */ = {
 			isa = PBXGroup;
 			children = (
 				442663F726B6DE4200B5A5D9 /* TextUtil.swift */,
-				442663FC26B8223B00B5A5D9 /* UIExtension.swift */,
-				442663FE26B8347400B5A5D9 /* StringExtension.swift */,
-				4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */,
 				4426640926BBE6B800B5A5D9 /* AlertUtil.swift */,
-				445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */,
 				44A6FDB026C6AAFC00C94855 /* FileUtil.swift */,
 				44B5B33026CE6532007889C8 /* DeviceUtil.swift */,
 			);
-			path = util;
+			path = Util;
 			sourceTree = "<group>";
 		};
-		442663F926B6E0FC00B5A5D9 /* audiokit */ = {
-			isa = PBXGroup;
-			children = (
-				442F0FDA26B44309004D2100 /* PitchDetector.swift */,
-				442663FA26B6E17600B5A5D9 /* Oscillator.swift */,
-			);
-			path = audiokit;
-			sourceTree = "<group>";
-		};
-		4426640126BA5A6500B5A5D9 /* frequency */ = {
+		442663F926B6E0FC00B5A5D9 /* AudioHelper */ = {
 			isa = PBXGroup;
 			children = (
 				4426640226BA5A7B00B5A5D9 /* FrequencyUtil.swift */,
+				442F0FDA26B44309004D2100 /* PitchDetector.swift */,
+				442663FA26B6E17600B5A5D9 /* Oscillator.swift */,
 			);
-			path = frequency;
+			path = AudioHelper;
 			sourceTree = "<group>";
 		};
-		4426640B26BC0C5C00B5A5D9 /* controller */ = {
+		4426640B26BC0C5C00B5A5D9 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				444EEE4426B4370000454428 /* TunerViewController.swift */,
@@ -190,7 +167,7 @@
 				44A6FDB426C90A7000C94855 /* SettingViewController.swift */,
 				44B5B32E26CE6083007889C8 /* HelpViewController.swift */,
 			);
-			path = controller;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		4426641026BC2E1700B5A5D9 /* ENSwiftSideMenu */ = {
@@ -205,41 +182,32 @@
 		444EEE3426B4370000454428 = {
 			isa = PBXGroup;
 			children = (
+				449B49BD2B72062600ECA487 /* .gitattributes */,
 				44B5B35326CFEAAA007889C8 /* .gitignore */,
-				4426641026BC2E1700B5A5D9 /* ENSwiftSideMenu */,
 				444EEE3F26B4370000454428 /* Tuner */,
-				444EEE3E26B4370000454428 /* Products */,
-				06CB17F29091154E72595DFB /* Pods */,
 				94DB0DF3BA5174020EFC934C /* Frameworks */,
+				44E238472B7203CB00E40AF3 /* Tuner.app */,
 			);
-			sourceTree = "<group>";
-		};
-		444EEE3E26B4370000454428 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				444EEE3D26B4370000454428 /* Tuner.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		444EEE3F26B4370000454428 /* Tuner */ = {
 			isa = PBXGroup;
 			children = (
-				44B5B34226CF8D4F007889C8 /* ad */,
 				44B5B33526CE6F76007889C8 /* webpage */,
-				44B5B32926CD51D8007889C8 /* iap */,
-				44A6FDA926C5614100C94855 /* coredata */,
-				445F329526BE95FC00412F7B /* graphics */,
-				445F329226BE5B3800412F7B /* delegate */,
-				4426640B26BC0C5C00B5A5D9 /* controller */,
-				4426640126BA5A6500B5A5D9 /* frequency */,
-				4426640026B9629900B5A5D9 /* Tuner.entitlements */,
-				442663F926B6E0FC00B5A5D9 /* audiokit */,
-				442663F626B6DE3500B5A5D9 /* util */,
-				440DF81F26B6D67100FDA3AA /* vo */,
+				44E238452B71FF2B00E40AF3 /* Dependency */,
+				44B5B32926CD51D8007889C8 /* IAP */,
+				44A6FDA926C5614100C94855 /* CoreData */,
+				445F329526BE95FC00412F7B /* View */,
+				445F329226BE5B3800412F7B /* Delegate */,
+				4426640B26BC0C5C00B5A5D9 /* ViewController */,
+				442663F926B6E0FC00B5A5D9 /* AudioHelper */,
+				44E238462B71FF9F00E40AF3 /* Extension */,
+				442663F626B6DE3500B5A5D9 /* Util */,
+				440DF81F26B6D67100FDA3AA /* ValueObject */,
 				444EEE4026B4370000454428 /* AppDelegate.swift */,
 				444EEE4226B4370000454428 /* SceneDelegate.swift */,
 				44B5B34A26CFE6E0007889C8 /* Info.plist */,
+				4426640026B9629900B5A5D9 /* Tuner.entitlements */,
 				44B5B35026CFE922007889C8 /* InfoPlist.strings */,
 				444EEE4626B4370000454428 /* Main.storyboard */,
 				444EEE4C26B4370200454428 /* Assets.xcassets */,
@@ -250,52 +218,71 @@
 			path = Tuner;
 			sourceTree = "<group>";
 		};
-		445F329226BE5B3800412F7B /* delegate */ = {
+		445F329226BE5B3800412F7B /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
 				445F329326BE5B4E00412F7B /* FreqTextFieldDelegate.swift */,
 			);
-			path = delegate;
+			path = Delegate;
 			sourceTree = "<group>";
 		};
-		445F329526BE95FC00412F7B /* graphics */ = {
+		445F329526BE95FC00412F7B /* View */ = {
 			isa = PBXGroup;
 			children = (
 				445F329626BE962A00412F7B /* TunerIndicator.swift */,
 			);
-			path = graphics;
+			path = View;
 			sourceTree = "<group>";
 		};
-		44A6FDA926C5614100C94855 /* coredata */ = {
+		44A6FDA926C5614100C94855 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
 				44A6FDAA26C5615000C94855 /* CoreData.swift */,
 			);
-			path = coredata;
+			path = CoreData;
 			sourceTree = "<group>";
 		};
-		44B5B32926CD51D8007889C8 /* iap */ = {
+		44B5B32926CD51D8007889C8 /* IAP */ = {
 			isa = PBXGroup;
 			children = (
+				44B5B34226CF8D4F007889C8 /* AD */,
 				44B5B32C26CD5238007889C8 /* IAPHelper.swift */,
 				44B5B32A26CD51EF007889C8 /* InAppProducts.swift */,
 			);
-			path = iap;
+			path = IAP;
 			sourceTree = "<group>";
 		};
-		44B5B34226CF8D4F007889C8 /* ad */ = {
+		44B5B34226CF8D4F007889C8 /* AD */ = {
 			isa = PBXGroup;
 			children = (
 				44B5B34326CF8D6C007889C8 /* AdSupporter.swift */,
 			);
-			path = ad;
+			path = AD;
+			sourceTree = "<group>";
+		};
+		44E238452B71FF2B00E40AF3 /* Dependency */ = {
+			isa = PBXGroup;
+			children = (
+				4426641026BC2E1700B5A5D9 /* ENSwiftSideMenu */,
+			);
+			path = Dependency;
+			sourceTree = "<group>";
+		};
+		44E238462B71FF9F00E40AF3 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				442663FC26B8223B00B5A5D9 /* UIExtension.swift */,
+				442663FE26B8347400B5A5D9 /* StringExtension.swift */,
+				4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */,
+				445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		94DB0DF3BA5174020EFC934C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				44B5B31E26CA7BFC007889C8 /* CloudKit.framework */,
-				087577D37AE85CA890BA062C /* Pods_Tuner.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -307,11 +294,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 444EEE5426B4370200454428 /* Build configuration list for PBXNativeTarget "Tuner" */;
 			buildPhases = (
-				E156837DFE395AA614DC53B8 /* [CP] Check Pods Manifest.lock */,
 				444EEE3926B4370000454428 /* Sources */,
 				444EEE3A26B4370000454428 /* Frameworks */,
 				444EEE3B26B4370000454428 /* Resources */,
-				E7B7C9EC46943AF0E72A45A9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -323,7 +308,7 @@
 				4426640726BA622800B5A5D9 /* AudioKit */,
 			);
 			productName = Tuner;
-			productReference = 444EEE3D26B4370000454428 /* Tuner.app */;
+			productReference = 44E238472B7203CB00E40AF3 /* Tuner.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -332,8 +317,9 @@
 		444EEE3526B4370000454428 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					444EEE3C26B4370000454428 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -355,7 +341,7 @@
 				440DF81526B4F79800FDA3AA /* XCRemoteSwiftPackageReference "AudioKit" */,
 				440DF81826B500E600FDA3AA /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
 			);
-			productRefGroup = 444EEE3E26B4370000454428 /* Products */;
+			productRefGroup = 444EEE3426B4370000454428;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -376,52 +362,11 @@
 				444EEE4D26B4370200454428 /* Assets.xcassets in Resources */,
 				44B5B33626CE6F77007889C8 /* webpage in Resources */,
 				444EEE4826B4370000454428 /* Main.storyboard in Resources */,
+				449B49BE2B72062600ECA487 /* .gitattributes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		E156837DFE395AA614DC53B8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Tuner-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E7B7C9EC46943AF0E72A45A9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Tuner/Pods-Tuner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Tuner/Pods-Tuner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tuner/Pods-Tuner-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		444EEE3926B4370000454428 /* Sources */ = {
@@ -515,6 +460,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -549,6 +495,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -577,6 +524,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -611,6 +559,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -631,7 +580,6 @@
 		};
 		444EEE5526B4370200454428 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E580F8E2E0ADB3C9E0573077 /* Pods-Tuner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -646,7 +594,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.04.1;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bgsmm.Tuner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -657,7 +605,6 @@
 		};
 		444EEE5626B4370200454428 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B4185E1D9C02CE6BAC3CC2C2 /* Pods-Tuner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -672,7 +619,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.04.1;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bgsmm.Tuner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

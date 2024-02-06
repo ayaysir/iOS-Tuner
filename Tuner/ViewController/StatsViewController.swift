@@ -7,15 +7,15 @@
 
 import UIKit
 import Charts
-import GoogleMobileAds
+// import GoogleMobileAds
 import AppTrackingTransparency
 
 class StatsViewController: UIViewController {
     
-    private var bannerView: GADBannerView!
+    // private var bannerView: GADBannerView!
     
     @IBOutlet weak var tblTuningRecords: UITableView!
-    @IBOutlet weak var combinedChartView: CombinedChartView!
+    // @IBOutlet weak var combinedChartView: CombinedChartView!
     @IBOutlet weak var segconGraphOutlet: UISegmentedControl!
     @IBOutlet weak var stackView: UIStackView!
     
@@ -48,7 +48,7 @@ class StatsViewController: UIViewController {
                 ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
                 })
             }
-            self.setupBannerView()
+            // self.setupBannerView()
         }
         
         /**
@@ -70,10 +70,7 @@ class StatsViewController: UIViewController {
         gradient.frame = CGRect(x: 0, y: 0, width: width, height: height)
         gradient.cornerRadius = 10
         
-        print("bounds:", combinedChartView.frame, combinedChartView.bounds, stackView.frame, view.frame)
-        
         stackView.layer.insertSublayer(gradient, at: 0)
-        //
     }
     
     func initData() {
@@ -110,59 +107,59 @@ class StatsViewController: UIViewController {
                 return viewModel.forChartList.map { _ in 0 }
             }
         }
-        // bar, line 엔트리 생성
-        var barDataEntries: [BarChartDataEntry] = []
-        var lineDataEntries: [ChartDataEntry] = []
-                
-        // bar, line 엔트리 삽입
-        for i in 0..<dataPoints.count {
-            let barDataEntry = BarChartDataEntry(x: Double(i), y: Double(barValues[i]))
-            let lineDataEntry = ChartDataEntry(x: Double(i), y: Double(lineValues[i]))
-            barDataEntries.append(barDataEntry)
-            lineDataEntries.append(lineDataEntry)
-                    }
-
-        // 데이터셋 생성
-        let barChartDataSet = BarChartDataSet(entries: barDataEntries, label: mode == "frequency" ? "주파수(Hz)".localized : "센트(cent)".localized)
-        let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "정확한 수치".localized)
-        
-        // bar 색깔
-        barChartDataSet.colors = [UIColor(white: 0.96, alpha: 0.85)]
-        
-        
-        // 라인 원 색깔 변경
-        lineChartDataSet.colors = [(UIColor(named: "graph-line") ?? .red)]
-        lineChartDataSet.circleColors = [(UIColor(named: "graph-line") ?? .red)]
-
-        // 데이터 생성
-        let data: CombinedChartData = CombinedChartData()
-
-        // bar 데이터 지정
-        data.barData = BarChartData(dataSet: barChartDataSet)
-        // line 데이터 지정
-        data.lineData = LineChartData(dataSet: lineChartDataSet)
-
-        // 콤비 데이터 지정
-        combinedChartView.data = data
-        
-        // 표시 여부
-        combinedChartView.leftAxis.enabled = false
-        combinedChartView.leftAxis.drawLabelsEnabled = false
-        combinedChartView.xAxis.enabled = false
-        combinedChartView.rightAxis.drawGridLinesEnabled = false
-        
-        combinedChartView.backgroundColor = UIColor.clear
-        combinedChartView.layer.masksToBounds = true
-        combinedChartView.layer.cornerRadius = 8
-        
-        // 라벨 색
-        combinedChartView.rightAxis.labelTextColor = UIColor.white
-        combinedChartView.legend.textColor = UIColor.white
-        
-        lineChartDataSet.circleRadius = 1
-        lineChartDataSet.circleHoleRadius = 1
-        lineChartDataSet.mode = .cubicBezier
-        combinedChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
+        // // bar, line 엔트리 생성
+        // var barDataEntries: [BarChartDataEntry] = []
+        // var lineDataEntries: [ChartDataEntry] = []
+        //         
+        // // bar, line 엔트리 삽입
+        // for i in 0..<dataPoints.count {
+        //     let barDataEntry = BarChartDataEntry(x: Double(i), y: Double(barValues[i]))
+        //     let lineDataEntry = ChartDataEntry(x: Double(i), y: Double(lineValues[i]))
+        //     barDataEntries.append(barDataEntry)
+        //     lineDataEntries.append(lineDataEntry)
+        //             }
+        // 
+        // // 데이터셋 생성
+        // let barChartDataSet = BarChartDataSet(entries: barDataEntries, label: mode == "frequency" ? "주파수(Hz)".localized : "센트(cent)".localized)
+        // let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "정확한 수치".localized)
+        // 
+        // // bar 색깔
+        // barChartDataSet.colors = [UIColor(white: 0.96, alpha: 0.85)]
+        // 
+        // 
+        // // 라인 원 색깔 변경
+        // lineChartDataSet.colors = [(UIColor(named: "graph-line") ?? .red)]
+        // lineChartDataSet.circleColors = [(UIColor(named: "graph-line") ?? .red)]
+        // 
+        // // 데이터 생성
+        // let data: CombinedChartData = CombinedChartData()
+        // 
+        // // bar 데이터 지정
+        // data.barData = BarChartData(dataSet: barChartDataSet)
+        // // line 데이터 지정
+        // data.lineData = LineChartData(dataSet: lineChartDataSet)
+        // 
+        // // 콤비 데이터 지정
+        // combinedChartView.data = data
+        // 
+        // // 표시 여부
+        // combinedChartView.leftAxis.enabled = false
+        // combinedChartView.leftAxis.drawLabelsEnabled = false
+        // combinedChartView.xAxis.enabled = false
+        // combinedChartView.rightAxis.drawGridLinesEnabled = false
+        // 
+        // combinedChartView.backgroundColor = UIColor.clear
+        // combinedChartView.layer.masksToBounds = true
+        // combinedChartView.layer.cornerRadius = 8
+        // 
+        // // 라벨 색
+        // combinedChartView.rightAxis.labelTextColor = UIColor.white
+        // combinedChartView.legend.textColor = UIColor.white
+        // 
+        // lineChartDataSet.circleRadius = 1
+        // lineChartDataSet.circleHoleRadius = 1
+        // lineChartDataSet.mode = .cubicBezier
+        // combinedChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
         
     }
     
@@ -229,7 +226,6 @@ extension StatsViewController: UITableViewDelegate, UITableViewDataSource {
             
         }
     }
-    
 }
 
 class StatsTableViewCell: UITableViewCell {
@@ -271,9 +267,6 @@ class StatsTableViewCell: UITableViewCell {
         lblDate.text = "\(formatter.string(from: record.date))"
         lblTuningSystem.text = record.tuningSystem.textValue.localized
     }
-    
-    
-    
 }
 
 class StatsViewModel {
@@ -317,60 +310,58 @@ class StatsViewModel {
 }
 
 // ============ 애드몹 셋업 ============
-extension StatsViewController: GADBannerViewDelegate {
-    // 본 클래스에 다음 선언 추가
-    // // AdMob
-    // private var bannerView: GADBannerView!
-    
-    // viewDidLoad()에 다음 추가
-    // setupBannerView()
-    
-    private func setupBannerView() {
-        let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
-        self.bannerView = GADBannerView(adSize: adSize)
-        addBannerViewToView(bannerView)
-//         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
-        bannerView.adUnitID = AdSupporter.shared.STATS_AD_CODE
-        print("adUnitID: ", bannerView.adUnitID!)
-        bannerView.rootViewController = self
-        let request = GADRequest()
-        bannerView.load(request)
-        bannerView.delegate = self
-        
+/*
+ extension StatsViewController: GADBannerViewDelegate {
+     // 본 클래스에 다음 선언 추가
+     // // AdMob
+     // private var bannerView: GADBannerView!
+     
+     // viewDidLoad()에 다음 추가
+     // setupBannerView()
+     
+     private func setupBannerView() {
+         let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
+         self.bannerView = GADBannerView(adSize: adSize)
+         addBannerViewToView(bannerView)
+ //         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
+         bannerView.adUnitID = AdSupporter.shared.STATS_AD_CODE
+         print("adUnitID: ", bannerView.adUnitID!)
+         bannerView.rootViewController = self
+         let request = GADRequest()
+         bannerView.load(request)
+         bannerView.delegate = self
+         
 
-        
-    }
-    private func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
-    }
-    
-    // GADBannerViewDelegate
-    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-        // 버튼 constraint 50
-        cnstStackBottom.constant += 50
-        cnstMenuButtonBottom.constant += 50
-    }
-    
-    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
-        print("GAD: \(#function)", error)
-    }
-    
-    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-    }
-    
-    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-    }
-    
-    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-    }
-}
-
-extension BarChartRenderer {
-    // drawRect 함수에서 라운드 둥글게 처리했음
-}
+         
+     }
+     private func addBannerViewToView(_ bannerView: GADBannerView) {
+         bannerView.translatesAutoresizingMaskIntoConstraints = false
+         view.addSubview(bannerView)
+         view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
+     }
+     
+     // GADBannerViewDelegate
+     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+         // 버튼 constraint 50
+         cnstStackBottom.constant += 50
+         cnstMenuButtonBottom.constant += 50
+     }
+     
+     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+         print("GAD: \(#function)", error)
+     }
+     
+     func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+     }
+     
+     func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+     }
+     
+     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+     }
+ }
+ */

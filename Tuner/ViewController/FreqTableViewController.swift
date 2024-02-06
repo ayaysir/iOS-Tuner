@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import DropDown
-import GoogleMobileAds
+// import DropDown
+// import GoogleMobileAds
 import AppTrackingTransparency
 
 class GlobalOsc {
@@ -17,17 +17,16 @@ class GlobalOsc {
 
 class FreqTableViewController: UIViewController {
     
-    private var bannerView: GADBannerView!
+    // private var bannerView: GADBannerView!
     
     var freqArray: [FrequencyInfo]!
     
-    let tuningDropDown = DropDown()
-    let scaleDropDown = DropDown()
-    let baseNoteDropDown = DropDown()
+    // let tuningDropDown = DropDown()
+    // let scaleDropDown = DropDown()
+    // let baseNoteDropDown = DropDown()
     
     @IBOutlet weak var textA4FreqOutlet: UITextField!
     @IBOutlet weak var tblFreqList: UITableView!
-//    @IBOutlet weak var selectBackgroundPlay: UISwitch!
     @IBOutlet var menuScale: UICommand!
     @IBOutlet weak var btnTuningSelect: UIButton!
     @IBOutlet weak var btnScaleSelect: UIButton!
@@ -41,8 +40,6 @@ class FreqTableViewController: UIViewController {
     
     @IBOutlet weak var cnstMenuBtnBottom: NSLayoutConstraint!
     @IBOutlet weak var cnstFreqTableBottom: NSLayoutConstraint!
-    
-    
     
     var state: TunerViewState!
     
@@ -70,20 +67,19 @@ class FreqTableViewController: UIViewController {
         print(#function)
         loadStateFromUserDefaults()
         
-        setTuningDropDown()
-        setScaleDropDown()
-        setBaseNoteDropDown()
+        // setTuningDropDown()
+        // setScaleDropDown()
+        // setBaseNoteDropDown()
         
         print(EXP)
         reloadTable(freq: state.baseFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
         textA4FreqOutlet.text = String(state.baseFreq)
         
         textA4FreqOutlet.addDoneButtonOnKeyboard()
-        textA4FreqOutlet.delegate = self
+        // textA4FreqOutlet.delegate = self
         
-       // selectBackgroundPlay.isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
+        // selectBackgroundPlay.isOn = UserDefaults.standard.bool(forKey: "freq-bg-play")
         
-        // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
         
@@ -92,7 +88,7 @@ class FreqTableViewController: UIViewController {
                 ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
                 })
             }
-            self.setupBannerView()
+            // self.setupBannerView()
         }
         btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)
         
@@ -100,7 +96,6 @@ class FreqTableViewController: UIViewController {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(doneChangeFrequencey))
         tapRecognizer.cancelsTouchesInView = false
         view.addGestureRecognizer(tapRecognizer)
-        
     }
     
     @objc func doneChangeFrequencey() {
@@ -174,50 +169,49 @@ class FreqTableViewController: UIViewController {
         }
     }
     
-//    @IBAction func selectBackgroundPlayAct(_ sender: Any) {
-//        UserDefaults.standard.setValue(selectBackgroundPlay.isOn, forKey: "freq-bg-play")
-//    }
+    // @IBAction func selectBackgroundPlayAct(_ sender: Any) {
+    //     UserDefaults.standard.setValue(selectBackgroundPlay.isOn, forKey: "freq-bg-play")
+    // }
+    
     @IBAction func btnToggleSideMenu(_ sender: Any) {
         self.toggleSideMenuView()
     }
     
     @IBAction func btnTuningSelectAct(_ sender: Any) {
-        tuningDropDown.show()
+        // tuningDropDown.show()
     }
     
     @IBAction func btnScaleSelectAct(_ sender: Any) {
-        scaleDropDown.show()
+        // scaleDropDown.show()
     }
     
     @IBAction func btnBaseNoteSelectAct(_ sender: Any) {
-        baseNoteDropDown.show()
+        // baseNoteDropDown.show()
     }
     
     var isSettingViewUpside = false
     var upsideY: CGFloat = 0
     @IBAction func btnSlideSettingView(_ sender: UIButton) {
-        if isSettingViewUpside {
-            cnstSettngViewTop.constant += upsideY
-            UIView.animate(withDuration: 0.5) {
-                self.view.layoutIfNeeded()
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
-                self.btnBottomSlide.setImage(UIImage(systemName: "arrowtriangle.up.fill"), for: .normal)
-            }
-        } else {
-            self.upsideY = settingView.frame.height - 10
-            cnstSettngViewTop.constant -= upsideY
-            UIView.animate(withDuration: 0.5) {
-                self.view.layoutIfNeeded()
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
-                self.btnBottomSlide.setImage(UIImage(systemName: "arrowtriangle.down.fill"), for: .normal)
-            }
-        }
-        isSettingViewUpside = !isSettingViewUpside
+        // if isSettingViewUpside {
+        //     cnstSettngViewTop.constant += upsideY
+        //     UIView.animate(withDuration: 0.5) {
+        //         self.view.layoutIfNeeded()
+        //     }
+        //     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+        //         self.btnBottomSlide.setImage(UIImage(systemName: "arrowtriangle.up.fill"), for: .normal)
+        //     }
+        // } else {
+        //     self.upsideY = settingView.frame.height - 10
+        //     cnstSettngViewTop.constant -= upsideY
+        //     UIView.animate(withDuration: 0.5) {
+        //         self.view.layoutIfNeeded()
+        //     }
+        //     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+        //         self.btnBottomSlide.setImage(UIImage(systemName: "arrowtriangle.down.fill"), for: .normal)
+        //     }
+        // }
+        // isSettingViewUpside = !isSettingViewUpside
     }
-    
-    
 }
 
 extension FreqTableViewController: UITableViewDataSource, UITableViewDelegate {
@@ -296,130 +290,132 @@ extension FreqTableViewController: UITextFieldDelegate {
 
 extension FreqTableViewController {
     func setTuningDropDown() {
-        tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue.localized }
-        tuningDropDown.anchorView = btnTuningSelect
-        tuningDropDown.cornerRadius = 15
-        btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
-        btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
-        tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
-        
-        tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("선택한 아이템 : \(item)")
-            print("인덱스 : \(index)")
-            
-            if index == 0 {
-                btnScaleSelect.isEnabled = false
-            } else {
-                btnScaleSelect.isEnabled = true
-            }
-            
-            let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
-            reloadTable(freq: state.baseFreq, tuningSystem: tuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
-            btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
-            GlobalOsc.shared.conductor.stop()
-            state.currentTuningSystem = tuningSystem
-            state.lastSelectedRow = nil
-        }
+        // tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue.localized }
+        // tuningDropDown.anchorView = btnTuningSelect
+        // tuningDropDown.cornerRadius = 15
+        // btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
+        // btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
+        // tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
+        // 
+        // tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+        //     print("선택한 아이템 : \(item)")
+        //     print("인덱스 : \(index)")
+        //     
+        //     if index == 0 {
+        //         btnScaleSelect.isEnabled = false
+        //     } else {
+        //         btnScaleSelect.isEnabled = true
+        //     }
+        //     
+        //     let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
+        //     reloadTable(freq: state.baseFreq, tuningSystem: tuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
+        //     btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
+        //     GlobalOsc.shared.conductor.stop()
+        //     state.currentTuningSystem = tuningSystem
+        //     state.lastSelectedRow = nil
+        // }
     }
     
     func setScaleDropDown() {
-        scaleDropDown.dataSource = Scale.allCases.map { $0.textValueMixed }
-        scaleDropDown.anchorView = btnScaleSelect
-        scaleDropDown.cornerRadius = 15
-        scaleDropDown.selectRow(state.currentJIScale.rawValue)
-        btnScaleSelect.setTitle(state.currentJIScale.textValueMixed, for: .normal)
-        
-        scaleDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            let scale: Scale = Scale(rawValue: index) ?? Scale.C
-            reloadTable(freq: state.baseFreq, tuningSystem: state.currentTuningSystem, scale: scale, baseNote: state.baseNote)
-            btnScaleSelect.setTitle(item, for: .normal)
-            GlobalOsc.shared.conductor.stop()
-            state.currentJIScale = scale
-            state.lastSelectedRow = nil
-        }
+        // scaleDropDown.dataSource = Scale.allCases.map { $0.textValueMixed }
+        // scaleDropDown.anchorView = btnScaleSelect
+        // scaleDropDown.cornerRadius = 15
+        // scaleDropDown.selectRow(state.currentJIScale.rawValue)
+        // btnScaleSelect.setTitle(state.currentJIScale.textValueMixed, for: .normal)
+        // 
+        // scaleDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+        //     let scale: Scale = Scale(rawValue: index) ?? Scale.C
+        //     reloadTable(freq: state.baseFreq, tuningSystem: state.currentTuningSystem, scale: scale, baseNote: state.baseNote)
+        //     btnScaleSelect.setTitle(item, for: .normal)
+        //     GlobalOsc.shared.conductor.stop()
+        //     state.currentJIScale = scale
+        //     state.lastSelectedRow = nil
+        // }
     }
     
     func setBaseNoteDropDown() {
-        baseNoteDropDown.dataSource = Scale.allCases.map { key in
-            if key.textValueForSharp == key.textValueForFlat {
-                return key.textValueForSharp + makeSubscriptOfNumber(4)
-            } else {
-                return "\(key.textValueForSharp + makeSubscriptOfNumber(4)) / \(key.textValueForFlat + makeSubscriptOfNumber(4))"
-            }
-        }
-        baseNoteDropDown.anchorView = btnBaseNoteSelect
-        baseNoteDropDown.cornerRadius = 15
-        baseNoteDropDown.selectRow(state.baseNote.rawValue)
-        btnBaseNoteSelect.setTitle(baseNoteDropDown.dataSource[state.baseNote.rawValue], for: .normal)
-        
-        baseNoteDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            let baseNote = Scale(rawValue: index) ?? Scale.A
-            // baseFreq 변경
-            guard let freqObj = freqArray.first(where: { $0.octave == 4 && $0.note == baseNote }) else {
-                return
-            }
-            
-            reloadTable(freq: freqObj.eachFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: baseNote)
-            btnBaseNoteSelect.setTitle(item, for: .normal)
-            GlobalOsc.shared.conductor.stop()
-            state.baseNote = baseNote
-            state.baseFreq = freqObj.eachFreq
-            textA4FreqOutlet.text = String(freqObj.eachFreq.cleanFixTwo)
-            state.lastSelectedRow = nil
-        }
+        // baseNoteDropDown.dataSource = Scale.allCases.map { key in
+        //     if key.textValueForSharp == key.textValueForFlat {
+        //         return key.textValueForSharp + makeSubscriptOfNumber(4)
+        //     } else {
+        //         return "\(key.textValueForSharp + makeSubscriptOfNumber(4)) / \(key.textValueForFlat + makeSubscriptOfNumber(4))"
+        //     }
+        // }
+        // baseNoteDropDown.anchorView = btnBaseNoteSelect
+        // baseNoteDropDown.cornerRadius = 15
+        // baseNoteDropDown.selectRow(state.baseNote.rawValue)
+        // btnBaseNoteSelect.setTitle(baseNoteDropDown.dataSource[state.baseNote.rawValue], for: .normal)
+        // 
+        // baseNoteDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+        //     let baseNote = Scale(rawValue: index) ?? Scale.A
+        //     // baseFreq 변경
+        //     guard let freqObj = freqArray.first(where: { $0.octave == 4 && $0.note == baseNote }) else {
+        //         return
+        //     }
+        //     
+        //     reloadTable(freq: freqObj.eachFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: baseNote)
+        //     btnBaseNoteSelect.setTitle(item, for: .normal)
+        //     GlobalOsc.shared.conductor.stop()
+        //     state.baseNote = baseNote
+        //     state.baseFreq = freqObj.eachFreq
+        //     textA4FreqOutlet.text = String(freqObj.eachFreq.cleanFixTwo)
+        //     state.lastSelectedRow = nil
+        // }
     }
 }
 
 // ============ 애드몹 셋업 ============
-extension FreqTableViewController: GADBannerViewDelegate {
-    // 본 클래스에 다음 선언 추가
-    // // AdMob
-    // private var bannerView: GADBannerView!
-    
-    // viewDidLoad()에 다음 추가
-    // setupBannerView()
-    
-    private func setupBannerView() {
-        let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
-        self.bannerView = GADBannerView(adSize: adSize)
-        addBannerViewToView(bannerView)
-//         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
-        bannerView.adUnitID = AdSupporter.shared.FREQTABLE_AD_CODE
-        print("adUnitID: ", bannerView.adUnitID!)
-        bannerView.rootViewController = self
-        let request = GADRequest()
-        bannerView.load(request)
-        bannerView.delegate = self
-        
+/*
+ extension FreqTableViewController: GADBannerViewDelegate {
+     // 본 클래스에 다음 선언 추가
+     // // AdMob
+     // private var bannerView: GADBannerView!
+     
+     // viewDidLoad()에 다음 추가
+     // setupBannerView()
+     
+     private func setupBannerView() {
+         let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
+         self.bannerView = GADBannerView(adSize: adSize)
+         addBannerViewToView(bannerView)
+ //         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
+         bannerView.adUnitID = AdSupporter.shared.FREQTABLE_AD_CODE
+         print("adUnitID: ", bannerView.adUnitID!)
+         bannerView.rootViewController = self
+         let request = GADRequest()
+         bannerView.load(request)
+         bannerView.delegate = self
+         
 
-    }
-    private func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
-    }
-    
-    // GADBannerViewDelegate
-    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-        // 버튼 constraint 50
-        cnstMenuBtnBottom.constant += 50
-        cnstFreqTableBottom.constant += 50
-    }
-    
-    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
-        print("GAD: \(#function)", error)
-    }
-    
-    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-    }
-    
-    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-    }
-    
-    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
-        print("GAD: \(#function)")
-    }
-}
+     }
+     private func addBannerViewToView(_ bannerView: GADBannerView) {
+         bannerView.translatesAutoresizingMaskIntoConstraints = false
+         view.addSubview(bannerView)
+         view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
+     }
+     
+     // GADBannerViewDelegate
+     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+         // 버튼 constraint 50
+         cnstMenuBtnBottom.constant += 50
+         cnstFreqTableBottom.constant += 50
+     }
+     
+     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+         print("GAD: \(#function)", error)
+     }
+     
+     func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+     }
+     
+     func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+     }
+     
+     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+         print("GAD: \(#function)")
+     }
+ }
+ */

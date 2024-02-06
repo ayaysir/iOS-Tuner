@@ -8,7 +8,6 @@
 import UIKit
 
 class TunerIndicator: UIView {
-    
     var state: TunerData = TunerData() {
         didSet {
             self.setNeedsDisplay()
