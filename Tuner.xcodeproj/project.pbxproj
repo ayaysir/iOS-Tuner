@@ -35,6 +35,7 @@
 		445F329426BE5B4E00412F7B /* FreqTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329326BE5B4E00412F7B /* FreqTextFieldDelegate.swift */; };
 		445F329726BE962A00412F7B /* TunerIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F329626BE962A00412F7B /* TunerIndicator.swift */; };
 		449B49BE2B72062600ECA487 /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = 449B49BD2B72062600ECA487 /* .gitattributes */; };
+		449B49C12B723FBB00ECA487 /* ChangeKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449B49C02B723FBB00ECA487 /* ChangeKeyViewController.swift */; };
 		44A6FDAB26C5615000C94855 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDAA26C5615000C94855 /* CoreData.swift */; };
 		44A6FDAD26C561A500C94855 /* TunerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDAC26C561A500C94855 /* TunerRecord.swift */; };
 		44A6FDB126C6AAFC00C94855 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A6FDB026C6AAFC00C94855 /* FileUtil.swift */; };
@@ -82,6 +83,7 @@
 		445F329326BE5B4E00412F7B /* FreqTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqTextFieldDelegate.swift; sourceTree = "<group>"; };
 		445F329626BE962A00412F7B /* TunerIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerIndicator.swift; sourceTree = "<group>"; };
 		449B49BD2B72062600ECA487 /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
+		449B49C02B723FBB00ECA487 /* ChangeKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeKeyViewController.swift; sourceTree = "<group>"; };
 		44A6FDAA26C5615000C94855 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		44A6FDAC26C561A500C94855 /* TunerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerRecord.swift; sourceTree = "<group>"; };
 		44A6FDB026C6AAFC00C94855 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 		4426640B26BC0C5C00B5A5D9 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				449B49BF2B723F8B00ECA487 /* Popover */,
 				444EEE4426B4370000454428 /* TunerViewController.swift */,
 				440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */,
 				4426640E26BC0D5600B5A5D9 /* SlideMenuViewController.swift */,
@@ -232,6 +235,14 @@
 				445F329626BE962A00412F7B /* TunerIndicator.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		449B49BF2B723F8B00ECA487 /* Popover */ = {
+			isa = PBXGroup;
+			children = (
+				449B49C02B723FBB00ECA487 /* ChangeKeyViewController.swift */,
+			);
+			path = Popover;
 			sourceTree = "<group>";
 		};
 		44A6FDA926C5614100C94855 /* CoreData */ = {
@@ -385,6 +396,7 @@
 				444EEE4126B4370000454428 /* AppDelegate.swift in Sources */,
 				44A6FDB326C7D4A500C94855 /* StatsViewController.swift in Sources */,
 				44A6FDBC26C9454B00C94855 /* NoteRangeConfig.swift in Sources */,
+				449B49C12B723FBB00ECA487 /* ChangeKeyViewController.swift in Sources */,
 				440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */,
 				445F328F26BD2C1100412F7B /* ViewState.swift in Sources */,
 				4426641426BC2E6E00B5A5D9 /* ENSideMenuNavigationController.swift in Sources */,
@@ -589,7 +601,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				INFOPLIST_FILE = Tuner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -614,7 +626,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				INFOPLIST_FILE = Tuner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

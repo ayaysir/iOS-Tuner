@@ -106,7 +106,6 @@ class TunerViewController: UIViewController {
         
         self.sideMenuController()?.sideMenu?.delegate = self
         
-        // Do any additional setup after loading the view.
         AVAudioSession.sharedInstance().requestRecordPermission({ (granted) in
             // Handle granted
         })
@@ -391,7 +390,6 @@ class TunerViewController: UIViewController {
         
     }
     
-    
     @IBAction func btnPlusAct(_ sender: Any) {
         guard let text = textFreqOutlet.text else { return }
         guard let num = Float(text) else { return }
@@ -410,12 +408,13 @@ class TunerViewController: UIViewController {
         setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: freq)
     }
     
-    @IBAction func btnTuningSelectAct(_ sender: Any) {
+    @IBAction func btnTuningSelectAct(_ sender: UIButton) {
         // tuningDropDown.show()
     }
     
     @IBAction func btnScaleSelectAct(_ sender: Any) {
         // scaleDropDown.show()
+        
     }
     
     @IBAction func btnBaseNoteSelectAct(_ sender: Any) {
@@ -445,40 +444,45 @@ class TunerViewController: UIViewController {
 
 extension TunerViewController {
     func setTuningDropDown() {
-        // // 튜닝 시스템 데이터소스
-        // tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue.localized }
-        // tuningDropDown.anchorView = btnTuningSelect
-        // tuningDropDown.cornerRadius = 15
-        // // 버튼 제목 설정
-        // btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
-        // btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
-        // tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
-        // 
-        // conductor.data.tuningSystem = state.currentTuningSystem
-        // conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: state.currentJIScale)
-        // 
-        // tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-        //     print("선택한 아이템 : \(item)")
-        //     print("인덱스 : \(index)")
-        //     
-        //     if index == 0 {
-        //         btnScaleSelect.isEnabled = false
-        //     } else {
-        //         btnScaleSelect.isEnabled = true
-        //     }
-        //     
-        //     let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
-        //     // 버튼 제목 설정
-        //     btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
-        //     state.currentTuningSystem = tuningSystem
-        //     state.lastSelectedRow = nil
-        //     
-        //     // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
-        //     conductor.data.tuningSystem = tuningSystem
-        //     print(">> tuningsystem", tuningSystem)
-        //     conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: state.currentJIScale)
-        //     conductor.data.jiScale = state.currentJIScale
-        // }
+        // 튜닝 시스템 데이터소스
+        let actions: [UIAction] = TuningSystem.allCases.map { tuningSystem in
+            UIAction(title: tuningSystem.textValue.localized,
+                     handler: { [unowned self, tuningSystem] action in
+                btnScaleSelect.isEnabled = tuningSystem == .justIntonationMajor
+                
+                // 버튼 제목 설정
+                btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
+                state.currentTuningSystem = tuningSystem
+                state.lastSelectedRow = nil
+                
+                // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+                conductor.data.tuningSystem = tuningSystem
+                print(">> tuningsystem", tuningSystem)
+                conductor.data.c4Frequency = getC4Frequency_JI(
+                    prevNote4: state.baseNote,
+                    prev4frequency: state.baseFreq,
+                    scale: state.currentJIScale)
+                conductor.data.jiScale = state.currentJIScale
+                
+                saveStateToUserDefaults()
+            })
+        }
+        
+        btnTuningSelect.showsMenuAsPrimaryAction = true
+        btnTuningSelect.menu = UIMenu(
+            title: "튜닝 시스템을 선택하세요",
+            options: .displayInline,
+            children: actions)
+        
+        conductor.data.tuningSystem = state.currentTuningSystem
+        conductor.data.c4Frequency = getC4Frequency_JI(
+            prevNote4: state.baseNote,
+            prev4frequency: state.baseFreq,
+            scale: state.currentJIScale)
+        
+        // 버튼 제목 설정
+        btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
+        btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
     }
     
     func setScaleDropDown() {

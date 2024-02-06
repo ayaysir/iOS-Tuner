@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return container
     }()
     
-    static var persistentContainer : NSPersistentContainer {
+    static var persistentContainer: NSPersistentContainer {
         return (UIApplication.shared.delegate as! AppDelegate).persistentContainer
     }
     
