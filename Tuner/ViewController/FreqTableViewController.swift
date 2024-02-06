@@ -61,15 +61,14 @@ class FreqTableViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
         loadStateFromUserDefaults()
         
-        // setTuningDropDown()
-        // setScaleDropDown()
-        // setBaseNoteDropDown()
+        setTuningDropDown()
+        setScaleDropDown()
+        setBaseNoteDropDown()
         
         print(EXP)
         reloadTable(freq: state.baseFreq, tuningSystem: state.currentTuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
@@ -177,9 +176,7 @@ class FreqTableViewController: UIViewController {
         self.toggleSideMenuView()
     }
     
-    @IBAction func btnTuningSelectAct(_ sender: Any) {
-        // tuningDropDown.show()
-    }
+    @IBAction func btnTuningSelectAct(_ sender: UIButton) {}
     
     @IBAction func btnScaleSelectAct(_ sender: Any) {
         // scaleDropDown.show()
@@ -290,13 +287,37 @@ extension FreqTableViewController: UITextFieldDelegate {
 
 extension FreqTableViewController {
     func setTuningDropDown() {
-        // tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue.localized }
-        // tuningDropDown.anchorView = btnTuningSelect
-        // tuningDropDown.cornerRadius = 15
-        // btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
-        // btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
-        // tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
-        // 
+        // 튜닝 시스템 데이터소스
+        let actions: [UIAction] = TuningSystem.allCases.map { tuningSystem in
+            UIAction(title: tuningSystem.textValue.localized,
+                     handler: { [unowned self, tuningSystem] action in
+                btnScaleSelect.isEnabled = tuningSystem == .justIntonationMajor
+                
+                // 버튼 제목 설정
+                btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
+                state.currentTuningSystem = tuningSystem
+                state.lastSelectedRow = nil
+                
+                reloadTable(freq: state.baseFreq, tuningSystem: tuningSystem, scale: state.currentJIScale, baseNote: state.baseNote)
+                btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
+                GlobalOsc.shared.conductor.stop()
+                state.currentTuningSystem = tuningSystem
+                state.lastSelectedRow = nil
+                
+                saveStateToUserDefaults()
+            })
+        }
+        
+        btnTuningSelect.showsMenuAsPrimaryAction = true
+        btnTuningSelect.menu = UIMenu(
+            title: "튜닝 시스템을 선택하세요",
+            options: .displayInline,
+            children: actions)
+        
+        // 버튼 제목 설정
+        btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
+        btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
+
         // tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
         //     print("선택한 아이템 : \(item)")
         //     print("인덱스 : \(index)")

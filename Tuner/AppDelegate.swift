@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data stack
 
-    lazy var persistentContainer: NSPersistentContainer = {
+    lazy var persistentContainer: NSPersistentCloudKitContainer = {
         /*
          The persistent container for the application. This implementation
          creates and returns a container, having loaded the store for the
@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return container
     }()
     
-    static var persistentContainer: NSPersistentContainer {
+    static var persistentContainer: NSPersistentCloudKitContainer {
         return (UIApplication.shared.delegate as! AppDelegate).persistentContainer
     }
     

@@ -118,7 +118,6 @@ class TunerViewController: UIViewController {
             self.displayTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.refreshIndicator), userInfo: nil, repeats: true)
         }
         
-        
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
         
@@ -378,7 +377,6 @@ class TunerViewController: UIViewController {
                 isRecordingOn = false
                 countdown = 0
             }
-            
         }
     }
     
