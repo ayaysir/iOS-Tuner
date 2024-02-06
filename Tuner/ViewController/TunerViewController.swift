@@ -8,7 +8,6 @@
 import UIKit
 import AVFoundation
 import CoreAudio
-// import DropDown
 // import GoogleMobileAds
 import AppTrackingTransparency
 import AdSupport
@@ -43,10 +42,6 @@ class TunerViewController: UIViewController {
     @IBOutlet weak var settingAboveStackView: UIStackView!
     
     var conductor = TunerConductor()
-    
-    // let tuningDropDown = DropDown()
-    // let scaleDropDown = DropDown()
-    // let baseNoteDropDown = DropDown()
     
     var state: TunerViewState!
 
@@ -501,25 +496,6 @@ extension TunerViewController {
     
     func setBaseNote() {
         btnBaseNoteSelect.setTitle(state.baseNote.textValueMixedAttach4, for: .normal)
-
-        // baseNoteDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-        //     let baseNote = Scale(rawValue: index) ?? Scale.A
-        //     print(state.baseNote, state.baseFreq)
-        //     let baseFreq = getOctave4Frequency_ET(targetNote4: baseNote, prevNote4: state.baseNote, prev4frequency: state.baseFreq)
-        //     let a4Freq = getA4Frequency_ET(baseNote4: baseNote, frequency: baseFreq)
-        //     
-        //     btnBaseNoteSelect.setTitle(item, for: .normal)
-        //     state.baseNote = baseNote
-        //     state.baseFreq = baseFreq
-        //     textFreqOutlet.text = String(baseFreq.cleanFixTwo)
-        //     conductor.data.a4Frequency = a4Freq
-        //     
-        //     // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
-        //     conductor.data.tuningSystem = state.currentTuningSystem
-        //     conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: baseNote, prev4frequency: baseFreq, scale: state.currentJIScale)
-        //     conductor.data.jiScale = state.currentJIScale
-        //     
-        // }
     }
 }
 
@@ -588,6 +564,7 @@ extension TunerViewController: ChangeKeyVCDelegate {
         if isLimitedOctave {
             // 베이스 노트
             btnBaseNoteSelect.setTitle(key.textValueMixedAttach4, for: .normal)
+            
             let baseFreq = getOctave4Frequency_ET(
                 targetNote4: key,
                 prevNote4: state.baseNote,

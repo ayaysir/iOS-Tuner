@@ -591,6 +591,7 @@
                         <outlet property="cnstSettingViewBottom" destination="g4C-RI-pN4" id="3tN-rX-nad"/>
                         <outlet property="cnstSettngViewTop" destination="fLe-F2-dwA" id="7Jb-85-AHl"/>
                         <outlet property="menuScale" destination="Y47-ka-Vg3" id="eWP-As-OkE"/>
+                        <outlet property="settingAboveStackView" destination="s2q-um-EZ4" id="6am-VJ-UW2"/>
                         <outlet property="settingView" destination="bbN-sn-5bL" id="NZ0-7b-3C5"/>
                         <outlet property="tblFreqList" destination="OCd-JB-dXJ" id="xv4-k6-bO9"/>
                         <outlet property="textA4FreqOutlet" destination="gCa-fJ-RSw" id="twf-wc-wWz"/>
