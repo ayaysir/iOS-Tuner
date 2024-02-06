@@ -74,17 +74,18 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="phb-9n-SQZ">
-                                        <rect key="frame" x="184" y="10" width="220" height="34"/>
+                                        <rect key="frame" x="144" y="10" width="260" height="34"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oy6-VJ-JHg">
-                                                <rect key="frame" x="0.0" y="0.0" width="60" height="34"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oy6-VJ-JHg">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="34"/>
                                                 <color key="backgroundColor" systemColor="separatorColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="60" id="KhE-0t-gGJ"/>
+                                                    <constraint firstAttribute="width" constant="100" id="KhE-0t-gGJ"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                 <color key="tintColor" name="indicator-black"/>
-                                                <state key="normal" title="A₄"/>
+                                                <state key="normal" title="A₄">
+                                                    <color key="titleColor" name="indicator-black"/>
+                                                </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="roundButton" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
@@ -94,7 +95,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="=" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1Y-j0-SBc">
-                                                <rect key="frame" x="65" y="0.0" width="20" height="34"/>
+                                                <rect key="frame" x="105" y="0.0" width="20" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="oNR-8e-TzQ"/>
                                                 </constraints>
@@ -103,7 +104,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XiZ-V6-Qce">
-                                                <rect key="frame" x="90" y="0.0" width="80" height="34"/>
+                                                <rect key="frame" x="130" y="0.0" width="80" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="80" id="lWE-oL-CGi"/>
                                                 </constraints>
@@ -117,7 +118,7 @@
                                                 </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7C0-XW-Nsa">
-                                                <rect key="frame" x="175" y="0.0" width="20" height="34"/>
+                                                <rect key="frame" x="215" y="0.0" width="20" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="zEO-gn-rNQ"/>
                                                 </constraints>
@@ -129,7 +130,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YZG-ky-cLm">
-                                                <rect key="frame" x="200" y="0.0" width="20" height="34"/>
+                                                <rect key="frame" x="240" y="0.0" width="20" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="Xat-qd-QlD"/>
                                                 </constraints>
@@ -275,6 +276,7 @@
                         <outlet property="constraintPanelRightTrailing" destination="oFy-ZV-qQe" id="z35-RG-ZdC"/>
                         <outlet property="lblJustFrequency" destination="RQt-3G-VPh" id="r6a-NY-Pdc"/>
                         <outlet property="lblRecordStatus" destination="Vw8-8E-boG" id="T40-IA-Rtf"/>
+                        <outlet property="settingAboveStackView" destination="phb-9n-SQZ" id="gOz-DA-WVr"/>
                         <outlet property="settingView" destination="sli-X6-c6k" id="NcI-D1-C4E"/>
                         <outlet property="textFreqOutlet" destination="XiZ-V6-Qce" id="I0Z-fH-qRY"/>
                         <outlet property="viewIndicator" destination="ZwB-T0-Bti" id="dhc-Gd-5Z0"/>
@@ -410,17 +412,18 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="s2q-um-EZ4">
-                                        <rect key="frame" x="189" y="10" width="220" height="34"/>
+                                        <rect key="frame" x="149" y="10" width="260" height="34"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aV6-17-VqD">
-                                                <rect key="frame" x="0.0" y="0.0" width="60" height="34"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aV6-17-VqD">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="34"/>
                                                 <color key="backgroundColor" systemColor="separatorColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="60" id="UfA-qc-3X7"/>
+                                                    <constraint firstAttribute="width" constant="100" id="UfA-qc-3X7"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                 <color key="tintColor" name="indicator-black"/>
-                                                <state key="normal" title="A₄"/>
+                                                <state key="normal" title="A₄">
+                                                    <color key="titleColor" systemColor="labelColor"/>
+                                                </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="roundButton" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
@@ -429,7 +432,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="=" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4W-bW-Yds">
-                                                <rect key="frame" x="65" y="0.0" width="20" height="34"/>
+                                                <rect key="frame" x="105" y="0.0" width="20" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="2Jt-e6-8An"/>
                                                 </constraints>
@@ -438,7 +441,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gCa-fJ-RSw">
-                                                <rect key="frame" x="90" y="0.0" width="80" height="34"/>
+                                                <rect key="frame" x="130" y="0.0" width="80" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="80" id="QNS-nf-ZtU"/>
                                                 </constraints>
@@ -449,7 +452,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HdR-UF-HA5">
-                                                <rect key="frame" x="175" y="0.0" width="20" height="34"/>
+                                                <rect key="frame" x="215" y="0.0" width="20" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="zpL-FX-pfL"/>
                                                 </constraints>
@@ -461,7 +464,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CoL-rS-ae3">
-                                                <rect key="frame" x="200" y="0.0" width="20" height="34"/>
+                                                <rect key="frame" x="240" y="0.0" width="20" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="gjY-40-7pc"/>
                                                 </constraints>
@@ -1152,21 +1155,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XqV-Zl-J0i">
-                                <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="250"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMR-MK-Zfl">
+                                <rect key="frame" x="9" y="258" width="183" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="button"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="선택"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundButton" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="btnActSubmit:" destination="nfi-Nq-6pX" eventType="touchUpInside" id="Zfm-hr-rdZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nIf-lI-tBg"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <size key="freeformSize" width="200" height="300"/>
                     <connections>
+                        <outlet property="btnSubmit" destination="iMR-MK-Zfl" id="AWQ-U5-lRK"/>
                         <outlet property="pkvKeyList" destination="XqV-Zl-J0i" id="ZNi-GM-QVZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G5X-oZ-Udm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1760.8695652173915" y="93.75"/>
+            <point key="canvasLocation" x="1410.144927536232" y="-106.47321428571428"/>
         </scene>
     </scenes>
     <resources>
@@ -1185,6 +1202,9 @@
         <namedColor name="indicator-black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

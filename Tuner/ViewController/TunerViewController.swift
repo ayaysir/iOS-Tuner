@@ -32,14 +32,15 @@ class TunerViewController: UIViewController {
     @IBOutlet weak var lblJustFrequency: UILabel!
     
     @IBOutlet weak var viewIndicator: TunerIndicator!
-    @IBOutlet weak var constrMenuButton: NSLayoutConstraint!
     
+    @IBOutlet weak var constrMenuButton: NSLayoutConstraint!
     @IBOutlet weak var constraintPanelLeftLeading: NSLayoutConstraint!
     @IBOutlet weak var constraintPanelRightTrailing: NSLayoutConstraint!
     @IBOutlet weak var cnstrRecordStatusBottom: NSLayoutConstraint!
     @IBOutlet weak var cnstrIndicatorCenterY: NSLayoutConstraint!
     
     @IBOutlet weak var settingView: UIView!
+    @IBOutlet weak var settingAboveStackView: UIStackView!
     
     var conductor = TunerConductor()
     
@@ -98,9 +99,9 @@ class TunerViewController: UIViewController {
 
         loadStateFromUserDefaults()
         
-        setTuningDropDown()
-        setScaleDropDown()
-        setBaseNoteDropDown()
+        setTuningList()
+        setScale()
+        setBaseNote()
         
         initField()
         
@@ -380,15 +381,15 @@ class TunerViewController: UIViewController {
         }
     }
     
-    @IBAction func btnShowMenu(_ sender: Any) {
+    // MARK: - IBActions
+    
+    @IBAction func btnShowMenu(_ sender: UIButton) {
         self.toggleSideMenuView()
     }
     
-    @IBAction func textFreqAct(_ sender: UITextField) {
-        
-    }
+    @IBAction func textFreqAct(_ sender: UITextField) {}
     
-    @IBAction func btnPlusAct(_ sender: Any) {
+    @IBAction func btnPlusAct(_ sender: UIButton) {
         guard let text = textFreqOutlet.text else { return }
         guard let num = Float(text) else { return }
         let freq: Float = num + 1
@@ -397,7 +398,7 @@ class TunerViewController: UIViewController {
         setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: freq)
     }
     
-    @IBAction func btnMinusAct(_ sender: Any) {
+    @IBAction func btnMinusAct(_ sender: UIButton) {
         guard let text = textFreqOutlet.text else { return }
         guard let num = Float(text) else { return }
         let freq: Float = num - 1
@@ -406,17 +407,27 @@ class TunerViewController: UIViewController {
         setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: freq)
     }
     
-    @IBAction func btnTuningSelectAct(_ sender: UIButton) {
-        // tuningDropDown.show()
-    }
+    @IBAction func btnTuningSelectAct(_ sender: UIButton) {}
     
-    @IBAction func btnScaleSelectAct(_ sender: Any) {
-        // scaleDropDown.show()
+    @IBAction func btnScaleSelectAct(_ sender: UIButton) {
+        view.layoutIfNeeded()
+        let buttonFrame = CGRect(
+            x: sender.frame.minX,
+            y: sender.frame.maxY,
+            width: sender.frame.size.width,
+            height: sender.frame.size.height)
         
+        ChangeKeyViewController.show(self, displayKey: state.currentJIScale, buttonFrame: buttonFrame)
     }
     
-    @IBAction func btnBaseNoteSelectAct(_ sender: Any) {
-        // baseNoteDropDown.show()
+    @IBAction func btnBaseNoteSelectAct(_ sender: UIButton) {
+        let buttonFrame = CGRect(
+            x: settingAboveStackView.frame.minX,
+            y: settingAboveStackView.frame.minY + btnBaseNoteSelect.frame.size.height,
+            width: btnBaseNoteSelect.frame.size.width,
+            height: btnBaseNoteSelect.frame.size.height)
+        
+        ChangeKeyViewController.show(self, displayKey: state.baseNote, buttonFrame: buttonFrame, isAddOctave: true)
     }
  
     var isSettingViewCollapsed = false
@@ -441,7 +452,7 @@ class TunerViewController: UIViewController {
 }
 
 extension TunerViewController {
-    func setTuningDropDown() {
+    func setTuningList() {
         // 튜닝 시스템 데이터소스
         let actions: [UIAction] = TuningSystem.allCases.map { tuningSystem in
             UIAction(title: tuningSystem.textValue.localized,
@@ -483,42 +494,14 @@ extension TunerViewController {
         btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
     }
     
-    func setScaleDropDown() {
-        // scaleDropDown.dataSource = Scale.allCases.map { $0.textValueMixed }
-        // scaleDropDown.anchorView = btnScaleSelect
-        // scaleDropDown.cornerRadius = 15
-        // scaleDropDown.selectRow(state.currentJIScale.rawValue)
-        // btnScaleSelect.setTitle(state.currentJIScale.textValueMixed, for: .normal)
-        // 
-        // conductor.data.jiScale = state.currentJIScale
-        // 
-        // scaleDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-        //     let scale: Scale = Scale(rawValue: index) ?? Scale.C
-        //     btnScaleSelect.setTitle(item, for: .normal)
-        //     state.currentJIScale = scale
-        //     state.lastSelectedRow = nil
-        //     
-        //     // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
-        //     conductor.data.tuningSystem = state.currentTuningSystem
-        //     conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: scale)
-        //     print(">> i4frequency", conductor.data.c4Frequency)
-        //     conductor.data.jiScale = scale
-        // }
+    func setScale() {
+        btnScaleSelect.setTitle(state.currentJIScale.textValueMixed, for: .normal)
+        conductor.data.jiScale = state.currentJIScale
     }
     
-    func setBaseNoteDropDown() {
-        // baseNoteDropDown.dataSource = Scale.allCases.map { key in
-        //     if key.textValueForSharp == key.textValueForFlat {
-        //         return key.textValueForSharp + makeSubscriptOfNumber(4)
-        //     } else {
-        //         return "\(key.textValueForSharp + makeSubscriptOfNumber(4)) / \(key.textValueForFlat + makeSubscriptOfNumber(4))"
-        //     }
-        // }
-        // baseNoteDropDown.anchorView = btnBaseNoteSelect
-        // baseNoteDropDown.cornerRadius = 15
-        // baseNoteDropDown.selectRow(state.baseNote.rawValue)
-        // btnBaseNoteSelect.setTitle(baseNoteDropDown.dataSource[state.baseNote.rawValue], for: .normal)
-        // 
+    func setBaseNote() {
+        btnBaseNoteSelect.setTitle(state.baseNote.textValueMixedAttach4, for: .normal)
+
         // baseNoteDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
         //     let baseNote = Scale(rawValue: index) ?? Scale.A
         //     print(state.baseNote, state.baseFreq)
@@ -584,6 +567,62 @@ extension TunerViewController: ENSideMenuDelegate {
     
     func sideMenuDidOpen() {
         print("sideMenuDidOpen")
+    }
+}
+
+extension TunerViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        .none
+    }
+
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {}
+
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
+        true
+    }
+}
+
+extension TunerViewController: ChangeKeyVCDelegate {
+    func didSelectedKey(_ controller: ChangeKeyViewController, key: Scale, isLimitedOctave: Bool) {
+        // print(key, isLimitedOctave)
+        if isLimitedOctave {
+            // 베이스 노트
+            btnBaseNoteSelect.setTitle(key.textValueMixedAttach4, for: .normal)
+            let baseFreq = getOctave4Frequency_ET(
+                targetNote4: key,
+                prevNote4: state.baseNote,
+                prev4frequency: state.baseFreq)
+            let a4Freq = getA4Frequency_ET(baseNote4: key, frequency: baseFreq)
+        
+            state.baseNote = key
+            state.baseFreq = baseFreq
+            textFreqOutlet.text = String(baseFreq.cleanFixTwo)
+            conductor.data.a4Frequency = a4Freq
+        
+            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+            conductor.data.tuningSystem = state.currentTuningSystem
+            conductor.data.c4Frequency = getC4Frequency_JI(
+                prevNote4: key,
+                prev4frequency: baseFreq,
+                scale: state.currentJIScale)
+            conductor.data.jiScale = state.currentJIScale
+        } else {
+            // 순정 스케일
+            btnScaleSelect.setTitle(key.textValueMixed, for: .normal)
+            
+            state.currentJIScale = key
+            state.lastSelectedRow = nil
+            
+            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+            conductor.data.tuningSystem = state.currentTuningSystem
+            conductor.data.c4Frequency = getC4Frequency_JI(
+                prevNote4: state.baseNote,
+                prev4frequency: state.baseFreq,
+                scale: key)
+            conductor.data.jiScale = key
+        }
+        
+        saveStateToUserDefaults()
     }
 }
 
