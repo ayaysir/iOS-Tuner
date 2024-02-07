@@ -614,7 +614,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wxw-Ri-tlL">
                                 <rect key="frame" x="10" y="48" width="394" height="814"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EfR-vE-a5v">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EfR-vE-a5v" customClass="CombinedChartView" customModule="CustomizedDGCharts">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="219"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -753,6 +753,7 @@
                     <connections>
                         <outlet property="cnstMenuButtonBottom" destination="uyc-j3-Nz0" id="1Sh-Tx-6KC"/>
                         <outlet property="cnstStackBottom" destination="gcB-zo-ybI" id="obu-N0-KJf"/>
+                        <outlet property="combinedChartView" destination="EfR-vE-a5v" id="qTW-aj-7uI"/>
                         <outlet property="segconGraphOutlet" destination="2Er-Z5-FPY" id="Rrj-Ml-JLM"/>
                         <outlet property="stackView" destination="wxw-Ri-tlL" id="qdn-5k-2NN"/>
                         <outlet property="tblTuningRecords" destination="gmS-ip-bqi" id="DE8-AJ-jdt"/>

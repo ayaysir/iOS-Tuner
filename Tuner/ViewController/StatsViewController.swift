@@ -6,16 +6,17 @@
 //
 
 import UIKit
-import Charts
 // import GoogleMobileAds
 import AppTrackingTransparency
+import CustomizedDGCharts
 
 class StatsViewController: UIViewController {
     
     // private var bannerView: GADBannerView!
     
     @IBOutlet weak var tblTuningRecords: UITableView!
-    // @IBOutlet weak var combinedChartView: CombinedChartView!
+    @IBOutlet weak var combinedChartView: CombinedChartView!
+    
     @IBOutlet weak var segconGraphOutlet: UISegmentedControl!
     @IBOutlet weak var stackView: UIStackView!
     
@@ -107,62 +108,69 @@ class StatsViewController: UIViewController {
                 return viewModel.forChartList.map { _ in 0 }
             }
         }
-        // // bar, line 엔트리 생성
-        // var barDataEntries: [BarChartDataEntry] = []
-        // var lineDataEntries: [ChartDataEntry] = []
-        //         
-        // // bar, line 엔트리 삽입
-        // for i in 0..<dataPoints.count {
-        //     let barDataEntry = BarChartDataEntry(x: Double(i), y: Double(barValues[i]))
-        //     let lineDataEntry = ChartDataEntry(x: Double(i), y: Double(lineValues[i]))
-        //     barDataEntries.append(barDataEntry)
-        //     lineDataEntries.append(lineDataEntry)
-        //             }
-        // 
-        // // 데이터셋 생성
-        // let barChartDataSet = BarChartDataSet(entries: barDataEntries, label: mode == "frequency" ? "주파수(Hz)".localized : "센트(cent)".localized)
-        // let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "정확한 수치".localized)
-        // 
-        // // bar 색깔
-        // barChartDataSet.colors = [UIColor(white: 0.96, alpha: 0.85)]
-        // 
-        // 
-        // // 라인 원 색깔 변경
-        // lineChartDataSet.colors = [(UIColor(named: "graph-line") ?? .red)]
-        // lineChartDataSet.circleColors = [(UIColor(named: "graph-line") ?? .red)]
-        // 
-        // // 데이터 생성
-        // let data: CombinedChartData = CombinedChartData()
-        // 
-        // // bar 데이터 지정
-        // data.barData = BarChartData(dataSet: barChartDataSet)
-        // // line 데이터 지정
-        // data.lineData = LineChartData(dataSet: lineChartDataSet)
-        // 
-        // // 콤비 데이터 지정
-        // combinedChartView.data = data
-        // 
-        // // 표시 여부
-        // combinedChartView.leftAxis.enabled = false
-        // combinedChartView.leftAxis.drawLabelsEnabled = false
-        // combinedChartView.xAxis.enabled = false
-        // combinedChartView.rightAxis.drawGridLinesEnabled = false
-        // 
-        // combinedChartView.backgroundColor = UIColor.clear
-        // combinedChartView.layer.masksToBounds = true
-        // combinedChartView.layer.cornerRadius = 8
-        // 
-        // // 라벨 색
-        // combinedChartView.rightAxis.labelTextColor = UIColor.white
-        // combinedChartView.legend.textColor = UIColor.white
-        // 
-        // lineChartDataSet.circleRadius = 1
-        // lineChartDataSet.circleHoleRadius = 1
-        // lineChartDataSet.mode = .cubicBezier
-        // combinedChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
         
+        // bar, line 엔트리 생성
+        var barDataEntries: [BarChartDataEntry] = []
+        var lineDataEntries: [ChartDataEntry] = []
+                
+        // bar, line 엔트리 삽입
+        for i in 0..<dataPoints.count {
+            let barValue = Double(round(barValues[i] * 100)) / 100.0
+            let lineValue = Double(round(lineValues[i] * 100)) / 100.0
+            
+            let barDataEntry = BarChartDataEntry(x: Double(i), y: barValue)
+            let lineDataEntry = ChartDataEntry(x: Double(i), y: lineValue)
+            
+            barDataEntries.append(barDataEntry)
+            lineDataEntries.append(lineDataEntry)
+        }
+        
+        // 데이터셋 생성
+        let barChartDataSet = BarChartDataSet(entries: barDataEntries, label: mode == "frequency" ? "주파수(Hz)".localized : "센트(cent)".localized)
+        let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: "정확한 수치".localized)
+        
+        // bar 색깔
+        barChartDataSet.colors = [UIColor(white: 0.96, alpha: 0.85)]
+        // bar 값 위치 변경
+        
+        
+        // 라인 원 색깔 변경
+        lineChartDataSet.colors = [(UIColor(named: "graph-line") ?? .red)]
+        lineChartDataSet.circleColors = [(UIColor(named: "graph-line") ?? .red)]
+        // 밸류값 표시하지 않음
+        // lineChartDataSet.drawValuesEnabled = false
+        
+        // 데이터 생성
+        let data: CombinedChartData = CombinedChartData()
+        
+        // bar 데이터 지정
+        data.barData = BarChartData(dataSet: barChartDataSet)
+        // line 데이터 지정
+        data.lineData = LineChartData(dataSet: lineChartDataSet)
+        
+        // 콤비 데이터 지정
+        combinedChartView.data = data
+        
+        // 표시 여부
+        combinedChartView.leftAxis.enabled = false
+        combinedChartView.leftAxis.drawLabelsEnabled = false
+        combinedChartView.xAxis.enabled = false
+        combinedChartView.rightAxis.drawGridLinesEnabled = false
+        
+        combinedChartView.backgroundColor = UIColor.clear
+        combinedChartView.layer.masksToBounds = true
+        combinedChartView.layer.cornerRadius = 8
+        
+        // 라벨 색
+        combinedChartView.rightAxis.labelTextColor = UIColor.white
+        combinedChartView.legend.textColor = UIColor.white
+        combinedChartView.drawValueAboveBarEnabled = false
+        
+        lineChartDataSet.circleRadius = 1
+        lineChartDataSet.circleHoleRadius = 1
+        lineChartDataSet.mode = .cubicBezier
+        combinedChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
     }
-    
     
     @IBAction func segConSelectGraph(_ sender: UISegmentedControl) {
         if viewModel.listCount != 0 {
@@ -180,18 +188,6 @@ class StatsViewController: UIViewController {
     @IBAction func btnToggleSideMenu(_ sender: Any) {
         self.toggleSideMenuView()
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension StatsViewController: UITableViewDelegate, UITableViewDataSource {

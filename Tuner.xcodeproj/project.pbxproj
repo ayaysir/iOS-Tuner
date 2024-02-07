@@ -52,7 +52,33 @@
 		44B5B34426CF8D6D007889C8 /* AdSupporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B5B34326CF8D6C007889C8 /* AdSupporter.swift */; };
 		44B5B34E26CFE922007889C8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B35026CFE922007889C8 /* InfoPlist.strings */; };
 		44B5B35426CFEAAA007889C8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B35326CFEAAA007889C8 /* .gitignore */; };
+		44BBEA2D2B73CDDA0086F90A /* CustomizedDGCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BBEA2C2B73CDC70086F90A /* CustomizedDGCharts.framework */; };
+		44BBEA2E2B73CDDA0086F90A /* CustomizedDGCharts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 44BBEA2C2B73CDC70086F90A /* CustomizedDGCharts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		44BBEA2B2B73CDC70086F90A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 44BBEA272B73CDC70086F90A /* CustomizedDGCharts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 44BBE8AB2B73CA280086F90A;
+			remoteInfo = CustomizedDGCharts;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		44BBE8E42B73CCA10086F90A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				44BBEA2E2B73CDDA0086F90A /* CustomizedDGCharts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqTableViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +135,7 @@
 		44B5B35126CFE928007889C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		44B5B35226CFE928007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		44B5B35326CFEAAA007889C8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		44BBEA272B73CDC70086F90A /* CustomizedDGCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CustomizedDGCharts.xcodeproj; path = ../CustomizedDGCharts/CustomizedDGCharts.xcodeproj; sourceTree = "<group>"; };
 		44E238472B7203CB00E40AF3 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -120,6 +147,7 @@
 				4426640826BA622800B5A5D9 /* AudioKit in Frameworks */,
 				44B5B31F26CA7BFC007889C8 /* CloudKit.framework in Frameworks */,
 				440DF81A26B500E600FDA3AA /* SoundpipeAudioKit in Frameworks */,
+				44BBEA2D2B73CDDA0086F90A /* CustomizedDGCharts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +168,7 @@
 		442663F626B6DE3500B5A5D9 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				4426641026BC2E1700B5A5D9 /* ENSwiftSideMenu */,
 				442663F726B6DE4200B5A5D9 /* TextUtil.swift */,
 				4426640926BBE6B800B5A5D9 /* AlertUtil.swift */,
 				44A6FDB026C6AAFC00C94855 /* FileUtil.swift */,
@@ -197,7 +226,6 @@
 			isa = PBXGroup;
 			children = (
 				44B5B33526CE6F76007889C8 /* webpage */,
-				44E238452B71FF2B00E40AF3 /* Dependency */,
 				44B5B32926CD51D8007889C8 /* IAP */,
 				44A6FDA926C5614100C94855 /* CoreData */,
 				445F329526BE95FC00412F7B /* View */,
@@ -271,12 +299,12 @@
 			path = AD;
 			sourceTree = "<group>";
 		};
-		44E238452B71FF2B00E40AF3 /* Dependency */ = {
+		44BBEA282B73CDC70086F90A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4426641026BC2E1700B5A5D9 /* ENSwiftSideMenu */,
+				44BBEA2C2B73CDC70086F90A /* CustomizedDGCharts.framework */,
 			);
-			path = Dependency;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		44E238462B71FF9F00E40AF3 /* Extension */ = {
@@ -293,6 +321,7 @@
 		94DB0DF3BA5174020EFC934C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				44BBEA272B73CDC70086F90A /* CustomizedDGCharts.xcodeproj */,
 				44B5B31E26CA7BFC007889C8 /* CloudKit.framework */,
 			);
 			name = Frameworks;
@@ -308,6 +337,7 @@
 				444EEE3926B4370000454428 /* Sources */,
 				444EEE3A26B4370000454428 /* Frameworks */,
 				444EEE3B26B4370000454428 /* Resources */,
+				44BBE8E42B73CCA10086F90A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -354,12 +384,28 @@
 			);
 			productRefGroup = 444EEE3426B4370000454428;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 44BBEA282B73CDC70086F90A /* Products */;
+					ProjectRef = 44BBEA272B73CDC70086F90A /* CustomizedDGCharts.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				444EEE3C26B4370000454428 /* Tuner */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		44BBEA2C2B73CDC70086F90A /* CustomizedDGCharts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CustomizedDGCharts.framework;
+			remoteRef = 44BBEA2B2B73CDC70086F90A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		444EEE3B26B4370000454428 /* Resources */ = {
