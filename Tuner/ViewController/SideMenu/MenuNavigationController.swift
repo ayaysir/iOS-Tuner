@@ -12,7 +12,6 @@ class MenuNavigationController: ENSideMenuNavigationController {
         // Create a table view controller
         let menuViewController = self.storyboard?.instantiateViewController(identifier: "SlideMenuViewController")
         
-        
         // Create side menu
         self.sideMenu = ENSideMenu(sourceView: view, menuViewController: menuViewController!, menuPosition:.left)
         
@@ -55,19 +54,19 @@ class MenuNavigationController: ENSideMenuNavigationController {
 
 extension MenuNavigationController: ENSideMenuDelegate {
     func sideMenuWillOpen() {
-        print("sideMenuWillOpen")
+        // print("sideMenuWillOpen")
     }
     
     func sideMenuWillClose() {
-        print("sideMenuWillClose")
+        // print("sideMenuWillClose")
     }
     
     func sideMenuDidClose() {
-        print("sideMenuDidClose")
+        // print("sideMenuDidClose")
     }
     
     func sideMenuDidOpen() {
-        print("sideMenuDidOpen")
+        // print("sideMenuDidOpen")
     }
     
     func sideMenuShouldOpenSideMenu() -> Bool {

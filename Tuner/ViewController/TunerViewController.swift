@@ -8,13 +8,10 @@
 import UIKit
 import AVFoundation
 import CoreAudio
-import DropDown
-import GoogleMobileAds
 import AppTrackingTransparency
-import AdSupport
+import GoogleMobileAds
 
-class TunerViewController: UIViewController, GADFullScreenContentDelegate {
-    
+class TunerViewController: UIViewController {
     private var bannerView: GADBannerView!
     
     var recorder: AVAudioRecorder!
@@ -32,24 +29,20 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
     @IBOutlet weak var lblJustFrequency: UILabel!
     
     @IBOutlet weak var viewIndicator: TunerIndicator!
-    @IBOutlet weak var constrMenuButton: NSLayoutConstraint!
     
+    @IBOutlet weak var constrMenuButton: NSLayoutConstraint!
     @IBOutlet weak var constraintPanelLeftLeading: NSLayoutConstraint!
     @IBOutlet weak var constraintPanelRightTrailing: NSLayoutConstraint!
     @IBOutlet weak var cnstrRecordStatusBottom: NSLayoutConstraint!
     @IBOutlet weak var cnstrIndicatorCenterY: NSLayoutConstraint!
     
     @IBOutlet weak var settingView: UIView!
+    @IBOutlet weak var settingAboveStackView: UIStackView!
     
     var conductor = TunerConductor()
     
-    let tuningDropDown = DropDown()
-    let scaleDropDown = DropDown()
-    let baseNoteDropDown = DropDown()
-    
     var state: TunerViewState!
 
-//    var monitor: [TunerData] = []
     var monitorCount: Int = 0
     var countdown: Int = 0
     var freqMonitor: [Float] = []
@@ -99,15 +92,14 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
 
         loadStateFromUserDefaults()
         
-        setTuningDropDown()
-        setScaleDropDown()
-        setBaseNoteDropDown()
+        setTuningList()
+        setScale()
+        setBaseNote()
         
         initField()
         
         self.sideMenuController()?.sideMenu?.delegate = self
         
-        // Do any additional setup after loading the view.
         AVAudioSession.sharedInstance().requestRecordPermission({ (granted) in
             // Handle granted
         })
@@ -120,13 +112,10 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
             self.displayTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.refreshIndicator), userInfo: nil, repeats: true)
         }
         
-        
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIApplication.willResignActiveNotification, object: nil)
-        
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
 
         if AdSupporter.shared.showAd {
             if #available(iOS 14, *) {
@@ -135,6 +124,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
             }
             self.setupBannerView()
         }
+        
         lblRecordStatus.text = ""
         
         btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)
@@ -219,7 +209,6 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         // TODO: - 분리
         let R_BLOCK = 5
         
-//        monitor.append(conductor.data)
         dBMonitor.append(conductor.data.dB)
         centMonitor.append(conductor.data.centDist)
         freqMonitor.append(conductor.data.pitch)
@@ -236,7 +225,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
             // 4.5초동안 아래 조건이 true인 경우의 평균, 표준편차 기록
             
             let condition = octaveMonitor.std() == 0
-//                && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.5)
+               // && (freqMonitor.std() <= 0.3 || centMonitor.std() <= 0.12 || dBMonitor.std() <= 0.5)
             
             if condition {
                 conductor.data.isStdSmooth = true
@@ -381,20 +370,18 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
                 isRecordingOn = false
                 countdown = 0
             }
-            
         }
     }
     
-    @IBAction func btnShowMenu(_ sender: Any) {
+    // MARK: - IBActions
+    
+    @IBAction func btnShowMenu(_ sender: UIButton) {
         self.toggleSideMenuView()
     }
     
-    @IBAction func textFreqAct(_ sender: UITextField) {
-        
-    }
+    @IBAction func textFreqAct(_ sender: UITextField) {}
     
-    
-    @IBAction func btnPlusAct(_ sender: Any) {
+    @IBAction func btnPlusAct(_ sender: UIButton) {
         guard let text = textFreqOutlet.text else { return }
         guard let num = Float(text) else { return }
         let freq: Float = num + 1
@@ -403,7 +390,7 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: freq)
     }
     
-    @IBAction func btnMinusAct(_ sender: Any) {
+    @IBAction func btnMinusAct(_ sender: UIButton) {
         guard let text = textFreqOutlet.text else { return }
         guard let num = Float(text) else { return }
         let freq: Float = num - 1
@@ -412,16 +399,27 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
         setA4AndC4(baseNote4: state.baseNote, freqOfBaseNote: freq)
     }
     
-    @IBAction func btnTuningSelectAct(_ sender: Any) {
-        tuningDropDown.show()
+    @IBAction func btnTuningSelectAct(_ sender: UIButton) {}
+    
+    @IBAction func btnScaleSelectAct(_ sender: UIButton) {
+        view.layoutIfNeeded()
+        let buttonFrame = CGRect(
+            x: sender.frame.minX,
+            y: sender.frame.maxY,
+            width: sender.frame.size.width,
+            height: sender.frame.size.height)
+        
+        ChangeKeyViewController.show(self, displayKey: state.currentJIScale, buttonFrame: buttonFrame)
     }
     
-    @IBAction func btnScaleSelectAct(_ sender: Any) {
-        scaleDropDown.show()
-    }
-    
-    @IBAction func btnBaseNoteSelectAct(_ sender: Any) {
-        baseNoteDropDown.show()
+    @IBAction func btnBaseNoteSelectAct(_ sender: UIButton) {
+        let buttonFrame = CGRect(
+            x: settingAboveStackView.frame.minX,
+            y: settingAboveStackView.frame.minY + btnBaseNoteSelect.frame.size.height,
+            width: btnBaseNoteSelect.frame.size.width,
+            height: btnBaseNoteSelect.frame.size.height)
+        
+        ChangeKeyViewController.show(self, displayKey: state.baseNote, buttonFrame: buttonFrame, isAddOctave: true)
     }
  
     var isSettingViewCollapsed = false
@@ -446,97 +444,55 @@ class TunerViewController: UIViewController, GADFullScreenContentDelegate {
 }
 
 extension TunerViewController {
-    func setTuningDropDown() {
+    func setTuningList() {
         // 튜닝 시스템 데이터소스
-        tuningDropDown.dataSource = TuningSystem.allCases.map { $0.textValue.localized }
-        tuningDropDown.anchorView = btnTuningSelect
-        tuningDropDown.cornerRadius = 15
+        let actions: [UIAction] = TuningSystem.allCases.map { tuningSystem in
+            UIAction(title: tuningSystem.textValue.localized,
+                     handler: { [unowned self, tuningSystem] action in
+                btnScaleSelect.isEnabled = tuningSystem == .justIntonationMajor
+                
+                // 버튼 제목 설정
+                btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
+                state.currentTuningSystem = tuningSystem
+                state.lastSelectedRow = nil
+                
+                // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+                conductor.data.tuningSystem = tuningSystem
+                print(">> tuningsystem", tuningSystem)
+                conductor.data.c4Frequency = getC4Frequency_JI(
+                    prevNote4: state.baseNote,
+                    prev4frequency: state.baseFreq,
+                    scale: state.currentJIScale)
+                conductor.data.jiScale = state.currentJIScale
+                
+                saveStateToUserDefaults()
+            })
+        }
+        
+        btnTuningSelect.showsMenuAsPrimaryAction = true
+        btnTuningSelect.menu = UIMenu(
+            title: "튜닝 시스템을 선택하세요",
+            options: .displayInline,
+            children: actions)
+        
+        conductor.data.tuningSystem = state.currentTuningSystem
+        conductor.data.c4Frequency = getC4Frequency_JI(
+            prevNote4: state.baseNote,
+            prev4frequency: state.baseFreq,
+            scale: state.currentJIScale)
+        
         // 버튼 제목 설정
         btnTuningSelect.setTitle(state.currentTuningSystem.textValue.localized, for: .normal)
         btnScaleSelect.isEnabled = (state.currentTuningSystem != .equalTemperament)
-        tuningDropDown.selectRow(state.currentTuningSystem.rawValue)
-        
-        conductor.data.tuningSystem = state.currentTuningSystem
-        conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: state.currentJIScale)
-        
-        tuningDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("선택한 아이템 : \(item)")
-            print("인덱스 : \(index)")
-            
-            if index == 0 {
-                btnScaleSelect.isEnabled = false
-            } else {
-                btnScaleSelect.isEnabled = true
-            }
-            
-            let tuningSystem: TuningSystem = TuningSystem(rawValue: index) ?? TuningSystem.equalTemperament
-            // 버튼 제목 설정
-            btnTuningSelect.setTitle(tuningSystem.textValue.localized, for: .normal)
-            state.currentTuningSystem = tuningSystem
-            state.lastSelectedRow = nil
-            
-            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
-            conductor.data.tuningSystem = tuningSystem
-            print(">> tuningsystem", tuningSystem)
-            conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: state.currentJIScale)
-            conductor.data.jiScale = state.currentJIScale
-        }
     }
     
-    func setScaleDropDown() {
-        scaleDropDown.dataSource = Scale.allCases.map { $0.textValueMixed }
-        scaleDropDown.anchorView = btnScaleSelect
-        scaleDropDown.cornerRadius = 15
-        scaleDropDown.selectRow(state.currentJIScale.rawValue)
+    func setScale() {
         btnScaleSelect.setTitle(state.currentJIScale.textValueMixed, for: .normal)
-        
         conductor.data.jiScale = state.currentJIScale
-        
-        scaleDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            let scale: Scale = Scale(rawValue: index) ?? Scale.C
-            btnScaleSelect.setTitle(item, for: .normal)
-            state.currentJIScale = scale
-            state.lastSelectedRow = nil
-            
-            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
-            conductor.data.tuningSystem = state.currentTuningSystem
-            conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: state.baseNote, prev4frequency: state.baseFreq, scale: scale)
-            print(">> i4frequency", conductor.data.c4Frequency)
-            conductor.data.jiScale = scale
-        }
     }
     
-    func setBaseNoteDropDown() {
-        baseNoteDropDown.dataSource = Scale.allCases.map { key in
-            if key.textValueForSharp == key.textValueForFlat {
-                return key.textValueForSharp + makeSubscriptOfNumber(4)
-            } else {
-                return "\(key.textValueForSharp + makeSubscriptOfNumber(4)) / \(key.textValueForFlat + makeSubscriptOfNumber(4))"
-            }
-        }
-        baseNoteDropDown.anchorView = btnBaseNoteSelect
-        baseNoteDropDown.cornerRadius = 15
-        baseNoteDropDown.selectRow(state.baseNote.rawValue)
-        btnBaseNoteSelect.setTitle(baseNoteDropDown.dataSource[state.baseNote.rawValue], for: .normal)
-        
-        baseNoteDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            let baseNote = Scale(rawValue: index) ?? Scale.A
-            print(state.baseNote, state.baseFreq)
-            let baseFreq = getOctave4Frequency_ET(targetNote4: baseNote, prevNote4: state.baseNote, prev4frequency: state.baseFreq)
-            let a4Freq = getA4Frequency_ET(baseNote4: baseNote, frequency: baseFreq)
-            
-            btnBaseNoteSelect.setTitle(item, for: .normal)
-            state.baseNote = baseNote
-            state.baseFreq = baseFreq
-            textFreqOutlet.text = String(baseFreq.cleanFixTwo)
-            conductor.data.a4Frequency = a4Freq
-            
-            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
-            conductor.data.tuningSystem = state.currentTuningSystem
-            conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: baseNote, prev4frequency: baseFreq, scale: state.currentJIScale)
-            conductor.data.jiScale = state.currentJIScale
-            
-        }
+    func setBaseNote() {
+        btnBaseNoteSelect.setTitle(state.baseNote.textValueMixedAttach4, for: .normal)
     }
 }
 
@@ -565,53 +521,96 @@ extension TunerViewController: UITextFieldDelegate {
 
 extension TunerViewController: ENSideMenuDelegate {
     // MARK: - ENSideMenu Delegate
-    func sideMenuWillOpen() {
-        print("sideMenuWillOpen")
-    }
+    func sideMenuWillOpen() {}
     
-    func sideMenuWillClose() {
-        print("sideMenuWillClose")
-    }
+    func sideMenuWillClose() {}
     
     func sideMenuShouldOpenSideMenu() -> Bool {
-        print("sideMenuShouldOpenSideMenu")
-        return true
+        true
     }
     
-    func sideMenuDidClose() {
-        print("sideMenuDidClose")
-    }
+    func sideMenuDidClose() {}
     
-    func sideMenuDidOpen() {
-        print("sideMenuDidOpen")
+    func sideMenuDidOpen() {}
+}
+
+extension TunerViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        .none
+    }
+
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {}
+
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
+        true
+    }
+}
+
+extension TunerViewController: ChangeKeyVCDelegate {
+    func didSelectedKey(_ controller: ChangeKeyViewController, key: Scale, isLimitedOctave: Bool) {
+        // print(key, isLimitedOctave)
+        if isLimitedOctave {
+            // 베이스 노트
+            btnBaseNoteSelect.setTitle(key.textValueMixedAttach4, for: .normal)
+            
+            let baseFreq = getOctave4Frequency_ET(
+                targetNote4: key,
+                prevNote4: state.baseNote,
+                prev4frequency: state.baseFreq)
+            let a4Freq = getA4Frequency_ET(baseNote4: key, frequency: baseFreq)
+        
+            state.baseNote = key
+            state.baseFreq = baseFreq
+            textFreqOutlet.text = String(baseFreq.cleanFixTwo)
+            conductor.data.a4Frequency = a4Freq
+        
+            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+            conductor.data.tuningSystem = state.currentTuningSystem
+            conductor.data.c4Frequency = getC4Frequency_JI(
+                prevNote4: key,
+                prev4frequency: baseFreq,
+                scale: state.currentJIScale)
+            conductor.data.jiScale = state.currentJIScale
+        } else {
+            // 순정 스케일
+            btnScaleSelect.setTitle(key.textValueMixed, for: .normal)
+            
+            state.currentJIScale = key
+            state.lastSelectedRow = nil
+            
+            // JI - PitchDetector에 스케일 정보 전달 - 튜닝, 스케일, 기본 노트(i4 주파수)
+            conductor.data.tuningSystem = state.currentTuningSystem
+            conductor.data.c4Frequency = getC4Frequency_JI(
+                prevNote4: state.baseNote,
+                prev4frequency: state.baseFreq,
+                scale: key)
+            conductor.data.jiScale = key
+        }
+        
+        saveStateToUserDefaults()
     }
 }
 
 // ============ 애드몹 셋업 ============
 extension TunerViewController: GADBannerViewDelegate {
-    // 본 클래스에 다음 선언 추가
-    // // AdMob
-    // private var bannerView: GADBannerView!
-    
-    // viewDidLoad()에 다음 추가
-    // setupBannerView()
-    
+    /// 1. 본 클래스 멤버 변수로 다음 선언 추가
+    /// `private var bannerView: GADBannerView!`
+    ///
+    /// 2. viewDidLoad()에 다음 추가
+    /// `setupBannerView()`
     private func setupBannerView() {
         let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
         self.bannerView = GADBannerView(adSize: adSize)
         addBannerViewToView(bannerView)
-//         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
         bannerView.adUnitID = AdSupporter.shared.TUNER_AD_CODE
+        // bannerView.adUnitID = AdSupporter.shared.TEST_CODE
         print("adUnitID: ", bannerView.adUnitID!)
         bannerView.rootViewController = self
         let request = GADRequest()
         bannerView.load(request)
         bannerView.delegate = self
-        
-
-        
-        
     }
+    
     private func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bannerView)

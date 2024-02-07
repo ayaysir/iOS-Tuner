@@ -7,12 +7,14 @@
 
 import UIKit
 import CoreData
+import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         return true
     }
     
@@ -53,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data stack
 
-    lazy var persistentContainer: NSPersistentContainer = {
+    lazy var persistentContainer: NSPersistentCloudKitContainer = {
         /*
          The persistent container for the application. This implementation
          creates and returns a container, having loaded the store for the
@@ -81,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return container
     }()
     
-    static var persistentContainer : NSPersistentContainer {
+    static var persistentContainer: NSPersistentCloudKitContainer {
         return (UIApplication.shared.delegate as! AppDelegate).persistentContainer
     }
     

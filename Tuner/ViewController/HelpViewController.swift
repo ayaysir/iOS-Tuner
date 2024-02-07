@@ -8,17 +8,16 @@
 import UIKit
 import WebKit
 import MessageUI
-import GoogleMobileAds
 import AppTrackingTransparency
 import StoreKit
+import GoogleMobileAds
 
-class HelpViewController: UIViewController{
+class HelpViewController: UIViewController {
+    private var bannerView: GADBannerView!
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var btnSendMail: UIButton!
     @IBOutlet weak var cnstrWebViewBottom: NSLayoutConstraint!
-    
-    private var bannerView: GADBannerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +35,11 @@ class HelpViewController: UIViewController{
             self.setupBannerView()
         }
     }
-
+    
+    @IBAction func btnActShowMenu(_ sender: UIButton) {
+        self.toggleSideMenuView()
+    }
+    
 }
 
 extension HelpViewController: MFMailComposeViewControllerDelegate {
@@ -157,25 +160,23 @@ extension HelpViewController: SKStoreProductViewControllerDelegate {
 
 // ============ 애드몹 셋업 ============
 extension HelpViewController: GADBannerViewDelegate {
-    // 본 클래스에 다음 선언 추가
-    // // AdMob
-    // private var bannerView: GADBannerView!
-    
-    // viewDidLoad()에 다음 추가
-    // setupBannerView()
-    
+    /// 1. 본 클래스 멤버 변수로 다음 선언 추가
+    /// `private var bannerView: GADBannerView!`
+    ///
+    /// 2. viewDidLoad()에 다음 추가
+    /// `setupBannerView()`
     private func setupBannerView() {
         let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
         self.bannerView = GADBannerView(adSize: adSize)
         addBannerViewToView(bannerView)
-        // bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
         bannerView.adUnitID = AdSupporter.shared.HELP_AD_CODE
-        print("adUnitID: ", bannerView.adUnitID!)
+        // bannerView.adUnitID = AdSupporter.shared.TEST_CODE
         bannerView.rootViewController = self
         let request = GADRequest()
         bannerView.load(request)
         bannerView.delegate = self
     }
+    
     private func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bannerView)

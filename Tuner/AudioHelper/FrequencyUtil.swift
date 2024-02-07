@@ -40,39 +40,33 @@ enum Scale: Int, CaseIterable, Codable {
     
     var textValueForFlat: String {
         switch self {
-        case .C: return "C"
-        case .C_sharp: return "D♭"
-        case .D: return "D"
-        case .D_sharp: return "E♭"
-        case .E: return "E"
-        case .F: return "F"
-        case .F_sharp: return "G♭"
-        case .G: return "G"
-        case .G_sharp: return "A♭"
-        case .A: return "A"
-        case .A_sharp: return "B♭"
-        case .B: return "B"
+        case .C, .D, .E, .F, .G, .A, .B:
+            textValueForSharp
+        case .C_sharp: "D♭"
+        case .D_sharp: "E♭"
+        case .F_sharp: "G♭"
+        case .G_sharp: "A♭"
+        case .A_sharp: "B♭"
         }
     }
     
     var textValueMixed: String {
         switch self {
-        case .C: return "C"
-        case .C_sharp: return "C# / D♭"
-        case .D: return "D"
-        case .D_sharp: return "D♯ / E♭"
-        case .E: return "E"
-        case .F: return "F"
-        case .F_sharp: return "F♯ / G♭"
-        case .G: return "G"
-        case .G_sharp: return "G♯ / A♭"
-        case .A: return "A"
-        case .A_sharp: return "A♯ / B♭"
-        case .B: return "B"
+        case .C, .D, .E, .F, .G, .A, .B:
+            textValueForSharp
+        case .C_sharp, .D_sharp, .F_sharp, .G_sharp, .A_sharp:
+            textValueForSharp + " / " + textValueForFlat
         }
     }
     
-    
+    var textValueMixedAttach4: String {
+        switch self {
+        case .C, .D, .E, .F, .G, .A, .B:
+            textValueForSharp + makeSubscriptOfNumber(4)
+        case .C_sharp, .D_sharp, .F_sharp, .G_sharp, .A_sharp:
+            textValueForSharp + makeSubscriptOfNumber(4) + " / " + textValueForFlat + makeSubscriptOfNumber(4)
+        }
+    }
     
     var justIntonationRatio: [Float] {
         switch self {
@@ -137,9 +131,6 @@ private func makeFreqArrayEqualTemperament(baseFreq: Float = 440.0, baseNote: Sc
             let eachFreq = baseFreq * pow(EXP, Float(dist))
             
             let speedOfSound = Float(SPEED_OF_SOUND) / eachFreq
-//            let altNote: String = ALT_NOTE_NAMES[note] ?? ""
-//            let appendedNote: String = altNote != "" ? "\(note) / \(altNote)" : note
-            
             freqArray.append(FrequencyInfo(note: Scale(rawValue: noteIndex)!, octave: octave, eachFreq: eachFreq, speedOfSound: speedOfSound))
             
             // Base note (440)의 경우 하이라이트

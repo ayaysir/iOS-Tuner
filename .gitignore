@@ -1,2 +1,7 @@
 AdSupporter.swift
-./Tuner/ad/AdSupporter.swift
+./Tuner/IAP/AD/AdSupporter.swift
+
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
