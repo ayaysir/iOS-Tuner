@@ -987,6 +987,7 @@
                         <outlet property="constrMenuButton" destination="7Ln-dn-moE" id="Uz1-3L-FBn"/>
                         <outlet property="segconMode" destination="zpm-XA-vg7" id="2OE-tx-3Cp"/>
                         <outlet property="segconNotation" destination="hJI-xG-FkT" id="wx6-77-6GX"/>
+                        <outlet property="stackViewRange" destination="km1-Pp-TC6" id="rzR-aH-HY2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jhd-wJ-tos" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1209,6 +1210,45 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G5X-oZ-Udm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1410.144927536232" y="-106.47321428571428"/>
+        </scene>
+        <!--Change Range View Controller-->
+        <scene sceneID="D7d-be-VsZ">
+            <objects>
+                <viewController storyboardIdentifier="ChangeRangeVC" id="zJc-Qi-69T" customClass="ChangeRangeViewController" customModule="Tuner" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Vym-L4-jzG">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t04-N4-iQS">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="150"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RNR-Io-ac3">
+                                <rect key="frame" x="9" y="158" width="183" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="button"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="선택"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundButton" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="btnActSubmit:" destination="zJc-Qi-69T" eventType="touchUpInside" id="KYi-ur-H5E"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Mlh-ZU-1YV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <size key="freeformSize" width="200" height="200"/>
+                    <connections>
+                        <outlet property="btnSubmit" destination="RNR-Io-ac3" id="Bsa-5v-0BM"/>
+                        <outlet property="pkvKeyList" destination="t04-N4-iQS" id="DMj-FG-fyj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JUk-B7-fHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1795.6521739130437" y="-106.47321428571428"/>
         </scene>
     </scenes>
     <resources>

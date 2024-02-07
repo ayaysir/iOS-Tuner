@@ -20,6 +20,7 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var btnOctave1: UIButton!
     @IBOutlet weak var btnOctave2: UIButton!
     
+    @IBOutlet weak var stackViewRange: UIStackView!
     @IBOutlet weak var constrMenuButton: NSLayoutConstraint!
     
     var leftRange = NoteRangeConfig(note: Scale.C, octave: 1)
@@ -71,10 +72,29 @@ class SettingViewController: UIViewController {
         do {
             leftRange = try UserDefaults.standard.getObject(forKey: "config-rangeLeft", castTo: NoteRangeConfig.self)
             rightRange = try UserDefaults.standard.getObject(forKey: "config-rangeRight", castTo: NoteRangeConfig.self)
+            print(leftRange, rightRange)
+            
             btnRange1.setTitle(leftRange.note.textValueMixed, for: .normal)
             btnOctave1.setTitle(String(leftRange.octave), for: .normal)
+            
             btnRange2.setTitle(rightRange.note.textValueMixed, for: .normal)
             btnOctave2.setTitle(String(rightRange.octave), for: .normal)
+        } catch {
+            print(#function, error.localizedDescription)
+        }
+    }
+    
+    func saveLeftRangeToUserDefaults() {
+        do {
+            try UserDefaults.standard.setObject(leftRange, forKey: "config-rangeLeft")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func saveRightRangeToUserDefaults() {
+        do {
+            try UserDefaults.standard.setObject(rightRange, forKey: "config-rangeRight")
         } catch {
             print(error.localizedDescription)
         }
@@ -130,30 +150,49 @@ class SettingViewController: UIViewController {
         self.toggleSideMenuView()
     }
     
-    @IBAction func btnRangeNoteLeftAct(_ sender: Any) {
-        // noteDropDownLeft.show()
+    @IBAction func btnRangeNoteLeftAct(_ sender: UIButton) {
+        showPopover()
     }
     
-    @IBAction func btnRangeOctaveLeftAct(_ sender: Any) {
-        // octaveDropDownLeft.show()
+    @IBAction func btnRangeOctaveLeftAct(_ sender: UIButton) {
+        showPopover()
     }
     
-    @IBAction func btnRangeNoteRightAct(_ sender: Any) {
-        // noteDropDownRight.show()
+    @IBAction func btnRangeNoteRightAct(_ sender: UIButton) {
+        showPopover(isLeft: false)
     }
     
-    @IBAction func btnRangeOctaveRightAct(_ sender: Any) {
-        // octaveDropDownRight.show()
+    @IBAction func btnRangeOctaveRightAct(_ sender: UIButton) {
+        showPopover(isLeft: false)
     }
     
+    private func showPopover(isLeft: Bool = true) {
+        view.layoutIfNeeded()
+        stackViewRange.layoutIfNeeded()
+        
+        let x = isLeft ? stackViewRange.frame.minX : stackViewRange.frame.maxX - (btnRange2.frame.width + btnOctave2.frame.width)
+        
+        let buttonFrame = CGRect(
+            x: x,
+            y: stackViewRange.frame.minY + btnRange1.frame.height / 2,
+            width: btnRange1.frame.width + btnOctave1.frame.width,
+            height: btnRange1.frame.height)
+        
+        ChangeRangeViewController.show(
+            self,
+            displayKey: isLeft ? leftRange.note : rightRange.note,
+            displayOctave: isLeft ? leftRange.octave : rightRange.octave,
+            buttonFrame: buttonFrame,
+            isLeft: isLeft)
+    }
 }
 
 extension SettingViewController {
     func setRange() {
-        setRangeLeftNote()
-        setRangeLeftOctave()
-        setRangeRightNote()
-        setRangeRightOctave()
+        btnRange1.setTitle(leftRange.note.textValueMixed, for: .normal)
+        btnOctave1.setTitle(String(leftRange.octave), for: .normal)
+        btnRange2.setTitle(rightRange.note.textValueMixed, for: .normal)
+        btnOctave2.setTitle(String(rightRange.octave), for: .normal)
     }
     
     func validateRange() -> Bool {
@@ -167,7 +206,7 @@ extension SettingViewController {
         // noteDropDownLeft.anchorView = btnRange1
         // noteDropDownLeft.cornerRadius = 15
         // noteDropDownLeft.selectRow(leftRange.note.rawValue)
-        // btnRange1.setTitle(noteDropDownLeft.dataSource[leftRange.note.rawValue], for: .normal)
+        //
         // 
         // noteDropDownLeft.selectionAction = { [unowned self] (index: Int, item: String) in
         //     let oldItem = leftRange.note
@@ -191,7 +230,7 @@ extension SettingViewController {
         // octaveDropDownLeft.anchorView = btnOctave1
         // octaveDropDownLeft.cornerRadius = 15
         // octaveDropDownLeft.selectRow(leftRange.octave)
-        // btnOctave1.setTitle(String(leftRange.octave), for: .normal)
+        //
         // 
         // octaveDropDownLeft.selectionAction = { [unowned self] (index: Int, item: String) in
         //     let oldItem = leftRange.octave
@@ -215,7 +254,7 @@ extension SettingViewController {
         // noteDropDownRight.anchorView = btnRange2
         // noteDropDownRight.cornerRadius = 15
         // noteDropDownRight.selectRow(rightRange.note.rawValue)
-        // btnRange2.setTitle(noteDropDownRight.dataSource[rightRange.note.rawValue], for: .normal)
+        //
         // 
         // noteDropDownRight.selectionAction = { [unowned self] (index: Int, item: String) in
         //     let oldItem = rightRange.note
@@ -254,6 +293,58 @@ extension SettingViewController {
         //         }
         //     }
         // }
+    }
+}
+
+extension SettingViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        .none
+    }
+
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {}
+
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
+        true
+    }
+}
+
+extension SettingViewController: ChangeRangeVCDelegate {
+    func didSelectedNote(_ controller: ChangeRangeViewController, key: Scale, octave: Int, isLeft: Bool) {
+        if isLeft {
+            let oldItem = leftRange
+            
+            leftRange.note = key
+            leftRange.octave = octave
+            
+            if validateRange() {
+                saveLeftRangeToUserDefaults()
+                btnRange1.setTitle(key.textValueMixed, for: .normal)
+                btnOctave1.setTitle(String(octave), for: .normal)
+            } else {
+                simpleAlert(self, message: "범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다.".localized, title: "범위 오류".localized) { [unowned self] _ in
+                    btnOctave1.setTitle(oldItem.note.textValueMixed, for: .normal)
+                    btnOctave1.setTitle(String(oldItem.octave), for: .normal)
+                    leftRange = oldItem
+                }
+            }
+        } else {
+            let oldItem = rightRange
+            
+            rightRange.note = key
+            rightRange.octave = octave
+            
+            if validateRange() {
+                saveRightRangeToUserDefaults()
+                btnRange2.setTitle(key.textValueMixed, for: .normal)
+                btnOctave2.setTitle(String(octave), for: .normal)
+            } else {
+                simpleAlert(self, message: "범위는 왼쪽 노트보다 오른쪽 노트의 음높이가 높아야 합니다.".localized, title: "범위 오류".localized) { [unowned self] _ in
+                    btnOctave2.setTitle(oldItem.note.textValueMixed, for: .normal)
+                    btnOctave2.setTitle(String(oldItem.octave), for: .normal)
+                    rightRange = oldItem
+                }
+            }
+        }
     }
 }
 

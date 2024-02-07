@@ -55,6 +55,7 @@
 		44BBEA2D2B73CDDA0086F90A /* CustomizedDGCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BBEA2C2B73CDC70086F90A /* CustomizedDGCharts.framework */; };
 		44BBEA2E2B73CDDA0086F90A /* CustomizedDGCharts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 44BBEA2C2B73CDC70086F90A /* CustomizedDGCharts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		44BBEA312B73CFF20086F90A /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 44BBEA302B73CFF20086F90A /* GoogleMobileAds */; };
+		44BBEA342B73D9730086F90A /* ChangeRangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BBEA332B73D9730086F90A /* ChangeRangeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,7 @@
 		44B5B35226CFE928007889C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		44B5B35326CFEAAA007889C8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		44BBEA272B73CDC70086F90A /* CustomizedDGCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CustomizedDGCharts.xcodeproj; path = ../CustomizedDGCharts/CustomizedDGCharts.xcodeproj; sourceTree = "<group>"; };
+		44BBEA332B73D9730086F90A /* ChangeRangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRangeViewController.swift; sourceTree = "<group>"; };
 		44E238472B7203CB00E40AF3 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -270,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				449B49C02B723FBB00ECA487 /* ChangeKeyViewController.swift */,
+				44BBEA332B73D9730086F90A /* ChangeRangeViewController.swift */,
 			);
 			path = Popover;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				44A6FDB526C90A7000C94855 /* SettingViewController.swift in Sources */,
 				44A6FDAB26C5615000C94855 /* CoreData.swift in Sources */,
 				440DF82126B6D6B400FDA3AA /* FrequencyInfo.swift in Sources */,
+				44BBEA342B73D9730086F90A /* ChangeRangeViewController.swift in Sources */,
 				44B5B32D26CD5238007889C8 /* IAPHelper.swift in Sources */,
 				44A6FDB126C6AAFC00C94855 /* FileUtil.swift in Sources */,
 			);

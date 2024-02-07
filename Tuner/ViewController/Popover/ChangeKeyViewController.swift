@@ -28,8 +28,9 @@ class ChangeKeyViewController: UIViewController {
     }
     
     @IBAction func btnActSubmit(_ sender: UIButton) {
-        delegate?.didSelectedKey(self, key: key, isLimitedOctave: isAddOctave)
-        dismiss(animated: true)
+        dismiss(animated: true) { [unowned self] in
+            delegate?.didSelectedKey(self, key: key, isLimitedOctave: isAddOctave)
+        }
     }
     
     static func show(_ viewController: UIViewController, displayKey: Scale, buttonFrame: CGRect, isAddOctave: Bool = false) {
