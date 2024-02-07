@@ -8,17 +8,16 @@
 import UIKit
 import WebKit
 import MessageUI
-// import GoogleMobileAds
 import AppTrackingTransparency
 import StoreKit
+import GoogleMobileAds
 
-class HelpViewController: UIViewController{
+class HelpViewController: UIViewController {
+    private var bannerView: GADBannerView!
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var btnSendMail: UIButton!
     @IBOutlet weak var cnstrWebViewBottom: NSLayoutConstraint!
-    
-    // private var bannerView: GADBannerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +32,14 @@ class HelpViewController: UIViewController{
                 ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
                 })
             }
-            // self.setupBannerView()
+            self.setupBannerView()
         }
     }
-
+    
+    @IBAction func btnActShowMenu(_ sender: UIButton) {
+        self.toggleSideMenuView()
+    }
+    
 }
 
 extension HelpViewController: MFMailComposeViewControllerDelegate {
@@ -156,55 +159,50 @@ extension HelpViewController: SKStoreProductViewControllerDelegate {
 }
 
 // ============ 애드몹 셋업 ============
-/*
- extension HelpViewController: GADBannerViewDelegate {
-     // 본 클래스에 다음 선언 추가
-     // // AdMob
-     // private var bannerView: GADBannerView!
-     
-     // viewDidLoad()에 다음 추가
-     // setupBannerView()
-     
-     private func setupBannerView() {
-         let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
-         self.bannerView = GADBannerView(adSize: adSize)
-         addBannerViewToView(bannerView)
-         // bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
-         bannerView.adUnitID = AdSupporter.shared.HELP_AD_CODE
-         print("adUnitID: ", bannerView.adUnitID!)
-         bannerView.rootViewController = self
-         let request = GADRequest()
-         bannerView.load(request)
-         bannerView.delegate = self
-     }
-     private func addBannerViewToView(_ bannerView: GADBannerView) {
-         bannerView.translatesAutoresizingMaskIntoConstraints = false
-         view.addSubview(bannerView)
-         view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
-     }
-     
-     // GADBannerViewDelegate
-     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-         print("GAD: \(#function)")
-         // 버튼 constraint 50
-         cnstrWebViewBottom.constant += 50
-     }
-     
-     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
-         print("GAD: \(#function)", error)
-     }
-     
-     func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
-         print("GAD: \(#function)")
-     }
-     
-     func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
-         print("GAD: \(#function)")
-     }
-     
-     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
-         print("GAD: \(#function)")
-     }
- }
-
- */
+extension HelpViewController: GADBannerViewDelegate {
+    /// 1. 본 클래스 멤버 변수로 다음 선언 추가
+    /// `private var bannerView: GADBannerView!`
+    ///
+    /// 2. viewDidLoad()에 다음 추가
+    /// `setupBannerView()`
+    private func setupBannerView() {
+        let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
+        self.bannerView = GADBannerView(adSize: adSize)
+        addBannerViewToView(bannerView)
+        bannerView.adUnitID = AdSupporter.shared.HELP_AD_CODE
+        // bannerView.adUnitID = AdSupporter.shared.TEST_CODE
+        bannerView.rootViewController = self
+        let request = GADRequest()
+        bannerView.load(request)
+        bannerView.delegate = self
+    }
+    
+    private func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
+    }
+    
+    // GADBannerViewDelegate
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+        // 버튼 constraint 50
+        cnstrWebViewBottom.constant += 50
+    }
+    
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("GAD: \(#function)", error)
+    }
+    
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+}

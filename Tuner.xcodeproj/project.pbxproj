@@ -54,6 +54,7 @@
 		44B5B35426CFEAAA007889C8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 44B5B35326CFEAAA007889C8 /* .gitignore */; };
 		44BBEA2D2B73CDDA0086F90A /* CustomizedDGCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BBEA2C2B73CDC70086F90A /* CustomizedDGCharts.framework */; };
 		44BBEA2E2B73CDDA0086F90A /* CustomizedDGCharts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 44BBEA2C2B73CDC70086F90A /* CustomizedDGCharts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		44BBEA312B73CFF20086F90A /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 44BBEA302B73CFF20086F90A /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +147,7 @@
 			files = (
 				4426640826BA622800B5A5D9 /* AudioKit in Frameworks */,
 				44B5B31F26CA7BFC007889C8 /* CloudKit.framework in Frameworks */,
+				44BBEA312B73CFF20086F90A /* GoogleMobileAds in Frameworks */,
 				440DF81A26B500E600FDA3AA /* SoundpipeAudioKit in Frameworks */,
 				44BBEA2D2B73CDDA0086F90A /* CustomizedDGCharts.framework in Frameworks */,
 			);
@@ -190,11 +192,10 @@
 		4426640B26BC0C5C00B5A5D9 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				44BBEA322B73D3D30086F90A /* SideMenu */,
 				449B49BF2B723F8B00ECA487 /* Popover */,
 				444EEE4426B4370000454428 /* TunerViewController.swift */,
 				440DF81B26B58D5F00FDA3AA /* FreqTableViewController.swift */,
-				4426640E26BC0D5600B5A5D9 /* SlideMenuViewController.swift */,
-				4426641526BC2E9A00B5A5D9 /* MenuNavigationController.swift */,
 				44A6FDB226C7D4A500C94855 /* StatsViewController.swift */,
 				44A6FDB426C90A7000C94855 /* SettingViewController.swift */,
 				44B5B32E26CE6083007889C8 /* HelpViewController.swift */,
@@ -307,6 +308,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		44BBEA322B73D3D30086F90A /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				4426640E26BC0D5600B5A5D9 /* SlideMenuViewController.swift */,
+				4426641526BC2E9A00B5A5D9 /* MenuNavigationController.swift */,
+			);
+			path = SideMenu;
+			sourceTree = "<group>";
+		};
 		44E238462B71FF9F00E40AF3 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +357,7 @@
 			packageProductDependencies = (
 				440DF81926B500E600FDA3AA /* SoundpipeAudioKit */,
 				4426640726BA622800B5A5D9 /* AudioKit */,
+				44BBEA302B73CFF20086F90A /* GoogleMobileAds */,
 			);
 			productName = Tuner;
 			productReference = 44E238472B7203CB00E40AF3 /* Tuner.app */;
@@ -381,6 +392,7 @@
 			packageReferences = (
 				440DF81526B4F79800FDA3AA /* XCRemoteSwiftPackageReference "AudioKit" */,
 				440DF81826B500E600FDA3AA /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
+				44BBEA2F2B73CFF20086F90A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 444EEE3426B4370000454428;
 			projectDirPath = "";
@@ -726,6 +738,14 @@
 				minimumVersion = 5.2.0;
 			};
 		};
+		44BBEA2F2B73CFF20086F90A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -738,6 +758,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 440DF81526B4F79800FDA3AA /* XCRemoteSwiftPackageReference "AudioKit" */;
 			productName = AudioKit;
+		};
+		44BBEA302B73CFF20086F90A /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44BBEA2F2B73CFF20086F90A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 

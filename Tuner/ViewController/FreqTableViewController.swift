@@ -6,9 +6,8 @@
 //
 
 import UIKit
-// import DropDown
-// import GoogleMobileAds
 import AppTrackingTransparency
+import GoogleMobileAds
 
 class GlobalOsc {
     static let shared = GlobalOsc()
@@ -16,8 +15,7 @@ class GlobalOsc {
 }
 
 class FreqTableViewController: UIViewController {
-    
-    // private var bannerView: GADBannerView!
+    private var bannerView: GADBannerView!
     
     var freqArray: [FrequencyInfo]!
     
@@ -83,7 +81,7 @@ class FreqTableViewController: UIViewController {
                 ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
                 })
             }
-            // self.setupBannerView()
+            self.setupBannerView()
         }
         btnScaleSelect.setBackgroundColor(UIColor(named: "button-disabled") ?? UIColor.systemGray, for: .disabled)
         
@@ -382,57 +380,52 @@ extension FreqTableViewController: ChangeKeyVCDelegate {
 }
 
 // ============ 애드몹 셋업 ============
-/*
- extension FreqTableViewController: GADBannerViewDelegate {
-     // 본 클래스에 다음 선언 추가
-     // // AdMob
-     // private var bannerView: GADBannerView!
-     
-     // viewDidLoad()에 다음 추가
-     // setupBannerView()
-     
-     private func setupBannerView() {
-         let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
-         self.bannerView = GADBannerView(adSize: adSize)
-         addBannerViewToView(bannerView)
- //         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // test
-         bannerView.adUnitID = AdSupporter.shared.FREQTABLE_AD_CODE
-         print("adUnitID: ", bannerView.adUnitID!)
-         bannerView.rootViewController = self
-         let request = GADRequest()
-         bannerView.load(request)
-         bannerView.delegate = self
-         
-
-     }
-     private func addBannerViewToView(_ bannerView: GADBannerView) {
-         bannerView.translatesAutoresizingMaskIntoConstraints = false
-         view.addSubview(bannerView)
-         view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
-     }
-     
-     // GADBannerViewDelegate
-     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-         print("GAD: \(#function)")
-         // 버튼 constraint 50
-         cnstMenuBtnBottom.constant += 50
-         cnstFreqTableBottom.constant += 50
-     }
-     
-     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
-         print("GAD: \(#function)", error)
-     }
-     
-     func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
-         print("GAD: \(#function)")
-     }
-     
-     func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
-         print("GAD: \(#function)")
-     }
-     
-     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
-         print("GAD: \(#function)")
-     }
- }
- */
+extension FreqTableViewController: GADBannerViewDelegate {
+    /// 1. 본 클래스 멤버 변수로 다음 선언 추가
+    /// `private var bannerView: GADBannerView!`
+    ///
+    /// 2. viewDidLoad()에 다음 추가
+    /// `setupBannerView()`
+    private func setupBannerView() {
+        let adSize = GADAdSizeFromCGSize(CGSize(width: self.view.frame.width, height: 50))
+        self.bannerView = GADBannerView(adSize: adSize)
+        addBannerViewToView(bannerView)
+        bannerView.adUnitID = AdSupporter.shared.FREQTABLE_AD_CODE
+        // bannerView.adUnitID = AdSupporter.shared.TEST_CODE
+        print("adUnitID: ", bannerView.adUnitID!)
+        bannerView.rootViewController = self
+        let request = GADRequest()
+        bannerView.load(request)
+        bannerView.delegate = self
+    }
+    
+    private func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints( [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0), NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0) ])
+    }
+    
+    // GADBannerViewDelegate
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+        // 버튼 constraint 50
+        cnstMenuBtnBottom.constant += 50
+        cnstFreqTableBottom.constant += 50
+    }
+    
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("GAD: \(#function)", error)
+    }
+    
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+    
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("GAD: \(#function)")
+    }
+}
