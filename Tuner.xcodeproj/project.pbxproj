@@ -56,6 +56,7 @@
 		44BBEA2E2B73CDDA0086F90A /* CustomizedDGCharts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 44BBEA2C2B73CDC70086F90A /* CustomizedDGCharts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		44BBEA312B73CFF20086F90A /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 44BBEA302B73CFF20086F90A /* GoogleMobileAds */; };
 		44BBEA342B73D9730086F90A /* ChangeRangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BBEA332B73D9730086F90A /* ChangeRangeViewController.swift */; };
+		44BBEA382B74B6100086F90A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BBEA372B74B6100086F90A /* Persistence.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +140,8 @@
 		44B5B35326CFEAAA007889C8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		44BBEA272B73CDC70086F90A /* CustomizedDGCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CustomizedDGCharts.xcodeproj; path = ../CustomizedDGCharts/CustomizedDGCharts.xcodeproj; sourceTree = "<group>"; };
 		44BBEA332B73D9730086F90A /* ChangeRangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRangeViewController.swift; sourceTree = "<group>"; };
+		44BBEA372B74B6100086F90A /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		44BBEA3A2B74B8EF0086F90A /* CustomizingDGCharts.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CustomizingDGCharts.md; sourceTree = "<group>"; };
 		44E238472B7203CB00E40AF3 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -228,6 +231,7 @@
 		444EEE3F26B4370000454428 /* Tuner */ = {
 			isa = PBXGroup;
 			children = (
+				44BBEA392B74B8D70086F90A /* Report */,
 				44B5B33526CE6F76007889C8 /* webpage */,
 				44B5B32926CD51D8007889C8 /* IAP */,
 				44A6FDA926C5614100C94855 /* CoreData */,
@@ -281,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				44A6FDAA26C5615000C94855 /* CoreData.swift */,
+				44BBEA372B74B6100086F90A /* Persistence.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -318,6 +323,14 @@
 				4426641526BC2E9A00B5A5D9 /* MenuNavigationController.swift */,
 			);
 			path = SideMenu;
+			sourceTree = "<group>";
+		};
+		44BBEA392B74B8D70086F90A /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				44BBEA3A2B74B8EF0086F90A /* CustomizingDGCharts.md */,
+			);
+			path = Report;
 			sourceTree = "<group>";
 		};
 		44E238462B71FF9F00E40AF3 /* Extension */ = {
@@ -454,6 +467,7 @@
 				442663FD26B8223B00B5A5D9 /* UIExtension.swift in Sources */,
 				4426641626BC2E9A00B5A5D9 /* MenuNavigationController.swift in Sources */,
 				4426640526BA5C6E00B5A5D9 /* NumberExtension.swift in Sources */,
+				44BBEA382B74B6100086F90A /* Persistence.swift in Sources */,
 				444EEE4126B4370000454428 /* AppDelegate.swift in Sources */,
 				44A6FDB326C7D4A500C94855 /* StatsViewController.swift in Sources */,
 				44A6FDBC26C9454B00C94855 /* NoteRangeConfig.swift in Sources */,
@@ -668,7 +682,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bgsmm.Tuner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -693,7 +707,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bgsmm.Tuner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
