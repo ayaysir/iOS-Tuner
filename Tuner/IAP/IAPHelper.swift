@@ -15,10 +15,10 @@ open class IAPHelper: NSObject  {
     
     public init(productIds: Set<ProductIdentifier>) {
         productIdentifiers = productIds
-
+        
         for productIdentifier in productIds {
             let purchased = UserDefaults.standard.bool(forKey: productIdentifier)
-
+            
             if purchased {
                 purchasedProductIdentifiers.insert(productIdentifier)
                 print("Previously purchased: \(productIdentifier)")
@@ -26,13 +26,14 @@ open class IAPHelper: NSObject  {
                 print("Not purchased: \(productIdentifier)")
             }
         }
-
+        
         super.init()
-        SKPaymentQueue.default().add(self)
+        SKPaymentQueue.default().add(self) // App Store와 지불정보를 동기화하기 위한 Observer 추가
     }
 }
 
 extension IAPHelper {
+    /// 앱스토어에서 결제된 인앱결제 상품들을 가져옵니다.
     public func requestProducts(_ completionHandler: @escaping ProductsRequestCompletionHandler) {
         productsRequest?.cancel()
         productsRequestCompletionHandler = completionHandler
@@ -41,6 +42,7 @@ extension IAPHelper {
         productsRequest!.start()
     }
     
+    /// 인앱결제 상품을 구입합니다.
     public func buyProduct(_ product: SKProduct) {
         print("Buying \(product.productIdentifier)...")
         let payment = SKPayment(product: product)
@@ -55,6 +57,7 @@ extension IAPHelper {
         return SKPaymentQueue.canMakePayments()
     }
     
+    /// 구입내역을 복원합니다.
     public func restorePurchases() {
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
@@ -108,37 +111,61 @@ extension IAPHelper: SKPaymentTransactionObserver {
         }
     }
     
+    /// 구입 성공
     private func complete(transaction: SKPaymentTransaction) {
         print("complete...")
         deliverPurchaseNotificationFor(identifier: transaction.payment.productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
     }
     
+    /// 복원 성공
     private func restore(transaction: SKPaymentTransaction) {
         guard let productIdentifier = transaction.original?.payment.productIdentifier else { return }
-
+        
         print("restore... \(productIdentifier)")
         deliverPurchaseNotificationFor(identifier: productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
     }
     
+    /// 구매 실패
     private func fail(transaction: SKPaymentTransaction) {
         print("fail...")
         
         if let transactionError = transaction.error as NSError?,
-            let localizedDescription = transaction.error?.localizedDescription,
-            transactionError.code != SKError.paymentCancelled.rawValue {
+           let localizedDescription = transaction.error?.localizedDescription,
+           transactionError.code != SKError.paymentCancelled.rawValue {
             print("Transaction Error: \(localizedDescription)")
         }
         
         SKPaymentQueue.default().finishTransaction(transaction)
     }
     
+    /// 구매한 인앱 상품 키를 UserDefaults로 로컬에 저장
     private func deliverPurchaseNotificationFor(identifier: String?) {
         guard let identifier = identifier else { return }
-
+        
         purchasedProductIdentifiers.insert(identifier)
         UserDefaults.standard.set(true, forKey: identifier)
         NotificationCenter.default.post(name: .IAPHelperPurchaseNotification, object: identifier)
+    }
+}
+
+extension IAPHelper {
+    /// 구매이력 영수증 가져오기 - 검증용
+    public func getReceiptData() -> String? {
+        if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
+            FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
+            do {
+                let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
+                let receiptString = receiptData.base64EncodedString(options: [])
+                return receiptString
+            }
+            catch {
+                print("Couldn't read receipt data with error: " + error.localizedDescription)
+                return nil
+            }
+        }
+        
+        return nil
     }
 }

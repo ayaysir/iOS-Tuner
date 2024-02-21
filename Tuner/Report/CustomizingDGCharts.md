@@ -6,7 +6,7 @@
 
 ## 구현
 - SPM의 소스를 그대로 복사해 iOS Framework로 분리
-- `BarChartRenderer` 클래스의 drawDataSet(context:dataSet:index)를 다음과 같이 변경
+- `BarChartRenderer` 클래스의 `drawDataSet(context:dataSet:index:)`를 다음과 같이 변경
 ```swift
 @objc open func drawDataSet(context: CGContext, dataSet: BarChartDataSetProtocol, index: Int)
 {

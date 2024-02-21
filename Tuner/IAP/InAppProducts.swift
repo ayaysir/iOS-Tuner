@@ -8,7 +8,7 @@
 import Foundation
 
 public struct InAppProducts {
-    public static let product = "com.bgsmm.Tuner.removeAllAds"
+    public static let product = "IAP.Tuner.Basic.1"
     private static let productIdentifiers: Set<ProductIdentifier> = [InAppProducts.product]
     public static let store = IAPHelper(productIds: InAppProducts.productIdentifiers)
 }

@@ -9,6 +9,7 @@ import UIKit
 import AVFoundation
 import CoreAudio
 import AppTrackingTransparency
+import StoreKit
 import GoogleMobileAds
 
 class TunerViewController: UIViewController {
@@ -62,10 +63,12 @@ class TunerViewController: UIViewController {
     var isRecordingOn: Bool = false
     var failedCount: Int = 0
     
-    func setA4AndC4(baseNote4: Scale, freqOfBaseNote: Float) {
-        conductor.data.a4Frequency = getA4Frequency_ET(baseNote4: baseNote4, frequency: freqOfBaseNote)
-        conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: baseNote4, prev4frequency: freqOfBaseNote, scale: state.currentJIScale)
-    }
+    var isSettingViewCollapsed = false
+    var moveXtoRight: CGFloat = 0
+    
+    private var products: [SKProduct]?
+    
+    // MARK: - Local Storage Management
     
     func loadStateFromUserDefaults() {
         do {
@@ -86,6 +89,8 @@ class TunerViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
+    
+    // MARK: - View Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,10 +148,8 @@ class TunerViewController: UIViewController {
         // 실행횟수 기록
         let visited = UserDefaults.standard.integer(forKey: "TunerVC_Visitied")
         UserDefaults.standard.set(visited + 1, forKey: "TunerVC_Visited")
-    }
-    
-    @objc func doneChangeFrequencey() {
-        view.endEditing(true)
+        
+        initIAP()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -160,13 +163,16 @@ class TunerViewController: UIViewController {
         }
     }
     
-    func changeLandscapeMode() {
-        cnstrIndicatorCenterY.constant += 80
+    override func viewWillAppear(_ animated: Bool) {
+        conductorAppear()
     }
     
-    func changePortraitMode() {
-        cnstrIndicatorCenterY.constant -= 80
+    override func viewWillDisappear(_ animated: Bool) {
+        print("Tuner: viewWillDisappear")
+        conductorDisappear()
     }
+    
+    // MARK: - OBJC annotated
     
     @objc func conductorAppear() {
         let oldData = conductor.data
@@ -183,20 +189,10 @@ class TunerViewController: UIViewController {
         print("tuning conductor stopped")
     }
     
-    func initField() {
-        textFreqOutlet.text = String(state.baseFreq.cleanFixTwo)
-        textFreqOutlet.delegate = self
+    @objc func doneChangeFrequencey() {
+        view.endEditing(true)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        conductorAppear()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        print("Tuner: viewWillDisappear")
-        conductorDisappear()
-    }
-   
     /**
      === 타이머 갱신 ===
      */
@@ -204,8 +200,8 @@ class TunerViewController: UIViewController {
         viewIndicator.state = conductor.data
     }
     
+    /// 튜닝 분석 기록
     @objc func levelTimerCallback() {
-        
         // TODO: - 분리
         let R_BLOCK = 5
         
@@ -359,7 +355,6 @@ class TunerViewController: UIViewController {
                     lblRecordStatus.text = "기록 대상이 아닙니다.".localized
                 }
                 
-                
                 // == reset == //
                 freqRecord45 = []
                 centRecord45 = []
@@ -371,6 +366,23 @@ class TunerViewController: UIViewController {
                 countdown = 0
             }
         }
+    }
+    
+    // MARK: - UI Assistants
+    
+    func changeLandscapeMode() {
+        cnstrIndicatorCenterY.constant += 80
+    }
+    
+    func changePortraitMode() {
+        cnstrIndicatorCenterY.constant -= 80
+    }
+    
+    // MARK: - Utility Methods
+    
+    func setA4AndC4(baseNote4: Scale, freqOfBaseNote: Float) {
+        conductor.data.a4Frequency = getA4Frequency_ET(baseNote4: baseNote4, frequency: freqOfBaseNote)
+        conductor.data.c4Frequency = getC4Frequency_JI(prevNote4: baseNote4, prev4frequency: freqOfBaseNote, scale: state.currentJIScale)
     }
     
     // MARK: - IBActions
@@ -422,12 +434,11 @@ class TunerViewController: UIViewController {
         ChangeKeyViewController.show(self, displayKey: state.baseNote, buttonFrame: buttonFrame, isAddOctave: true)
     }
  
-    var isSettingViewCollapsed = false
-    var moveXtoRight: CGFloat = 0
     @IBAction func btnSlideRight(_ sender: UIButton) {
         if isSettingViewCollapsed {
             constraintPanelLeftLeading.constant -= moveXtoRight
             constraintPanelRightTrailing.constant += moveXtoRight
+            
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
             }
@@ -435,15 +446,24 @@ class TunerViewController: UIViewController {
             self.moveXtoRight = settingView.frame.width - 10
             constraintPanelLeftLeading.constant += moveXtoRight
             constraintPanelRightTrailing.constant -= moveXtoRight
+            
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
             }
         }
+        
         isSettingViewCollapsed = !isSettingViewCollapsed
     }
 }
 
 extension TunerViewController {
+    // MARK: - Initializers
+
+    func initField() {
+        textFreqOutlet.text = String(state.baseFreq.cleanFixTwo)
+        textFreqOutlet.delegate = self
+    }
+    
     func setTuningList() {
         // 튜닝 시스템 데이터소스
         let actions: [UIAction] = TuningSystem.allCases.map { tuningSystem in
@@ -494,6 +514,43 @@ extension TunerViewController {
     func setBaseNote() {
         btnBaseNoteSelect.setTitle(state.baseNote.textValueMixedAttach4, for: .normal)
     }
+    
+    func initIAP() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleIAPPurchase(_:)), name: .IAPHelperPurchaseNotification, object: nil)
+        
+        // IAP 불러오기
+        InAppProducts.store.requestProducts { [weak self] (success, products) in
+            guard let self, success else { return }
+            self.products = products
+            // ...
+        }
+    }
+}
+
+extension TunerViewController {
+    // 인앱 결제 버튼 눌렀을 때
+    private func touchIAP() {
+        if let product = products?.first {
+            InAppProducts.store.buyProduct(product) // 구매하기
+        }
+    }
+    
+    // 결제 후 Notification을 받아 처리
+    @objc func handleIAPPurchase(_ notification: Notification) {
+        guard let success = notification.object as? Bool else { return }
+        
+        if success {
+            DispatchQueue.main.async {
+                simpleAlert(self, message: "구매 성공", title: "구매 성공") { action in
+                    // 결제 성공하면 해야할 작업...
+                }
+            }
+        } else {
+            DispatchQueue.main.async {
+                simpleAlert(self, message: "구매 실패", title: "구매 실패", handler: nil)
+            }
+        }
+    }
 }
 
 extension TunerViewController: UITextFieldDelegate {
@@ -522,16 +579,13 @@ extension TunerViewController: UITextFieldDelegate {
 extension TunerViewController: ENSideMenuDelegate {
     // MARK: - ENSideMenu Delegate
     func sideMenuWillOpen() {}
-    
     func sideMenuWillClose() {}
+    func sideMenuDidClose() {}
+    func sideMenuDidOpen() {}
     
     func sideMenuShouldOpenSideMenu() -> Bool {
         true
     }
-    
-    func sideMenuDidClose() {}
-    
-    func sideMenuDidOpen() {}
 }
 
 extension TunerViewController: UIPopoverPresentationControllerDelegate {
@@ -548,7 +602,6 @@ extension TunerViewController: UIPopoverPresentationControllerDelegate {
 
 extension TunerViewController: ChangeKeyVCDelegate {
     func didSelectedKey(_ controller: ChangeKeyViewController, key: Scale, isLimitedOctave: Bool) {
-        // print(key, isLimitedOctave)
         if isLimitedOctave {
             // 베이스 노트
             btnBaseNoteSelect.setTitle(key.textValueMixedAttach4, for: .normal)

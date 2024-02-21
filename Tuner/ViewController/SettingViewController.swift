@@ -144,7 +144,9 @@ class SettingViewController: UIViewController {
         }
     }
     
-    @IBAction func btnRemoveAdsIAP(_ sender: Any) {}
+    @IBAction func btnRemoveAdsIAP(_ sender: UIButton) {
+        
+    }
     
     @IBAction func btnToggleSideMenu(_ sender: Any) {
         self.toggleSideMenuView()
