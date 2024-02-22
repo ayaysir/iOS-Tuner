@@ -149,7 +149,7 @@ class TunerViewController: UIViewController {
         let visited = UserDefaults.standard.integer(forKey: "TunerVC_Visitied")
         UserDefaults.standard.set(visited + 1, forKey: "TunerVC_Visited")
         
-        initIAP()
+        // initIAP()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -528,14 +528,14 @@ extension TunerViewController {
 }
 
 extension TunerViewController {
-    // 인앱 결제 버튼 눌렀을 때
+    /// 인앱 결제 버튼 눌렀을 때
     private func touchIAP() {
         if let product = products?.first {
             InAppProducts.store.buyProduct(product) // 구매하기
         }
     }
     
-    // 결제 후 Notification을 받아 처리
+    /// 결제 후 Notification을 받아 처리
     @objc func handleIAPPurchase(_ notification: Notification) {
         guard let success = notification.object as? Bool else { return }
         

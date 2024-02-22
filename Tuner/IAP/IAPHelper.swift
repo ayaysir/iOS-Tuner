@@ -44,7 +44,7 @@ extension IAPHelper {
     
     /// 인앱결제 상품을 구입합니다.
     public func buyProduct(_ product: SKProduct) {
-        print("Buying \(product.productIdentifier)...")
+        print("IAP Buying: \(product.productIdentifier)...")
         let payment = SKPayment(product: product)
         SKPaymentQueue.default().add(payment)
     }
@@ -91,7 +91,7 @@ extension IAPHelper: SKProductsRequestDelegate {
 extension IAPHelper: SKPaymentTransactionObserver {
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
-            switch (transaction.transactionState) {
+            switch transaction.transactionState {
             case .purchased:
                 complete(transaction: transaction)
                 break
@@ -102,18 +102,20 @@ extension IAPHelper: SKPaymentTransactionObserver {
                 restore(transaction: transaction)
                 break
             case .deferred:
+                print("IAP Transaction: Deferred")
                 break
             case .purchasing:
+                print("IAP Transaction: Purchasing")
                 break
             @unknown default:
-                fatalError()
+                break
             }
         }
     }
     
     /// 구입 성공
     private func complete(transaction: SKPaymentTransaction) {
-        print("complete...")
+        print("IAP Transaction Purchase: complete...")
         deliverPurchaseNotificationFor(identifier: transaction.payment.productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
     }
@@ -122,28 +124,28 @@ extension IAPHelper: SKPaymentTransactionObserver {
     private func restore(transaction: SKPaymentTransaction) {
         guard let productIdentifier = transaction.original?.payment.productIdentifier else { return }
         
-        print("restore... \(productIdentifier)")
+        print("IAP Transaction: restore... \(productIdentifier)")
         deliverPurchaseNotificationFor(identifier: productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
     }
     
     /// 구매 실패
     private func fail(transaction: SKPaymentTransaction) {
-        print("fail...")
+        print("IAP Transaction Purchase: fail...")
         
-        if let transactionError = transaction.error as NSError?,
-           let localizedDescription = transaction.error?.localizedDescription,
-           transactionError.code != SKError.paymentCancelled.rawValue {
-            print("Transaction Error: \(localizedDescription)")
+        if let transactionError = transaction.error as NSError? {
+            print("IAP Transaction Error: \(transactionError.localizedDescription)")
         }
         
         SKPaymentQueue.default().finishTransaction(transaction)
     }
     
     /// 구매한 인앱 상품 키를 UserDefaults로 로컬에 저장
+    /// - 실제로 구입 성공/복원된 경우에만 실행된다.
     private func deliverPurchaseNotificationFor(identifier: String?) {
+        print(#function, identifier ?? "")
         guard let identifier = identifier else { return }
-        
+
         purchasedProductIdentifiers.insert(identifier)
         UserDefaults.standard.set(true, forKey: identifier)
         NotificationCenter.default.post(name: .IAPHelperPurchaseNotification, object: identifier)
