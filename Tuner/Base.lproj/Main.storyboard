@@ -982,6 +982,7 @@
                     <connections>
                         <outlet property="btnOctave1" destination="LRl-b9-UKZ" id="D1t-wv-Uf3"/>
                         <outlet property="btnOctave2" destination="H42-B0-OSK" id="Gat-je-koD"/>
+                        <outlet property="btnPurchaseAdRemoval" destination="1rq-3p-4Mv" id="z50-Zz-xKW"/>
                         <outlet property="btnRange1" destination="DtU-aV-HCs" id="acR-bq-Q5y"/>
                         <outlet property="btnRange2" destination="GJI-M1-cbc" id="Qoi-GB-5fg"/>
                         <outlet property="constrMenuButton" destination="7Ln-dn-moE" id="Uz1-3L-FBn"/>

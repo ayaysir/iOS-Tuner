@@ -57,6 +57,7 @@
 		44BBEA312B73CFF20086F90A /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 44BBEA302B73CFF20086F90A /* GoogleMobileAds */; };
 		44BBEA342B73D9730086F90A /* ChangeRangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BBEA332B73D9730086F90A /* ChangeRangeViewController.swift */; };
 		44BBEA382B74B6100086F90A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BBEA372B74B6100086F90A /* Persistence.swift */; };
+		44C418142B87BABA00B99126 /* SKProduct+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C418132B87BABA00B99126 /* SKProduct+.swift */; };
 		44EFF28C2B865F4300458971 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EFF28B2B865F4300458971 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -143,6 +144,7 @@
 		44BBEA332B73D9730086F90A /* ChangeRangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRangeViewController.swift; sourceTree = "<group>"; };
 		44BBEA372B74B6100086F90A /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		44BBEA3A2B74B8EF0086F90A /* CustomizingDGCharts.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CustomizingDGCharts.md; sourceTree = "<group>"; };
+		44C418132B87BABA00B99126 /* SKProduct+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+.swift"; sourceTree = "<group>"; };
 		44E238472B7203CB00E40AF3 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44EFF28B2B865F4300458971 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -343,6 +345,7 @@
 				442663FE26B8347400B5A5D9 /* StringExtension.swift */,
 				4426640426BA5C6E00B5A5D9 /* NumberExtension.swift */,
 				445F329026BD32BD00412F7B /* UserDefaultsExtension.swift */,
+				44C418132B87BABA00B99126 /* SKProduct+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				44B5B34426CF8D6D007889C8 /* AdSupporter.swift in Sources */,
 				445F329726BE962A00412F7B /* TunerIndicator.swift in Sources */,
 				442663FB26B6E17600B5A5D9 /* Oscillator.swift in Sources */,
+				44C418142B87BABA00B99126 /* SKProduct+.swift in Sources */,
 				444EEE4B26B4370000454428 /* Tuner.xcdatamodeld in Sources */,
 				444EEE4526B4370000454428 /* TunerViewController.swift in Sources */,
 				44B5B32B26CD51EF007889C8 /* InAppProducts.swift in Sources */,

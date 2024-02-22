@@ -44,10 +44,10 @@ class StatsViewController: UIViewController {
         tblTuningRecords.allowsSelection = false
         
         if AdSupporter.shared.showAd {
-            if #available(iOS 14, *) {
-                ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-                })
+            ATTrackingManager.requestTrackingAuthorization { status in
+                // 광고 개인화 설정으로 허가 여부에 상관없이 광고는 표시됨
             }
+            
             self.setupBannerView()
         }
         

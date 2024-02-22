@@ -19,6 +19,7 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var btnRange2: UIButton!
     @IBOutlet weak var btnOctave1: UIButton!
     @IBOutlet weak var btnOctave2: UIButton!
+    @IBOutlet weak var btnPurchaseAdRemoval: UIButton!
     
     @IBOutlet weak var stackViewRange: UIStackView!
     @IBOutlet weak var constrMenuButton: NSLayoutConstraint!
@@ -37,10 +38,10 @@ class SettingViewController: UIViewController {
         initIAP()
         
         if AdSupporter.shared.showAd {
-            if #available(iOS 14, *) {
-                ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-                })
+            ATTrackingManager.requestTrackingAuthorization { status in
+                // 광고 개인화 설정으로 허가 여부에 상관없이 광고는 표시됨
             }
+            
             self.setupBannerView()
         }
     }
@@ -208,16 +209,19 @@ extension SettingViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         .none
     }
-
+    
     func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {}
-
+    
     func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         true
     }
 }
 
 extension SettingViewController: ChangeRangeVCDelegate {
-    func didSelectedNote(_ controller: ChangeRangeViewController, key: Scale, octave: Int, isLeft: Bool) {
+    func didSelectedNote(_ controller: ChangeRangeViewController, 
+                         key: Scale,
+                         octave: Int,
+                         isLeft: Bool) {
         if isLeft {
             let oldItem = leftRange
             
@@ -311,23 +315,34 @@ extension SettingViewController: GADBannerViewDelegate {
 extension SettingViewController {
     
     private func initIAP() {
+        let purchasedButtonText = "광고 제거됨"
         NotificationCenter.default.addObserver(self, selector: #selector(handleIAPPurchase(_:)), name: .IAPHelperPurchaseNotification, object: nil)
-
+        
         // IAP 불러오기
         InAppProducts.store.requestProducts { [weak self] (success, products) in
             guard let self, success else { return }
-            print(self)
             self.products = products
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self,
+                      let product = products?.first,
+                      let price =  product.localizedPrice else {
+                    return
+                }
+                
+                btnPurchaseAdRemoval.setTitle(" \(product.localizedTitle) (\(price))", for: .normal)
+                btnPurchaseAdRemoval.isEnabled = !InAppProducts.store.isProductPurchased(product.productIdentifier)
+            }
         }
     }
-
+    
     /// 인앱 결제 버튼 눌렀을 때
     private func touchIAP() {
         if let product = products?.first {
             InAppProducts.store.buyProduct(product) // 구매하기
         }
     }
-
+    
     /// 결제 후 Notification을 받아 처리
     @objc func handleIAPPurchase(_ notification: Notification) {
         print(#function, "IAP-", notification.object ?? "")
@@ -340,7 +355,7 @@ extension SettingViewController {
         }
         
         // if success {
-        //     
+        //
         // } else {
         //     DispatchQueue.main.async {
         //         simpleAlert(self, message: "구매 실패", title: "구매 실패", handler: nil)

@@ -8,6 +8,8 @@
 import Foundation
 
 public struct InAppProducts {
+    private init() {}
+    
     public static let product = "IAP.Tuner.Basic.1"
     private static let productIdentifiers: Set<ProductIdentifier> = [InAppProducts.product]
     public static let store = IAPHelper(productIds: InAppProducts.productIdentifiers)
