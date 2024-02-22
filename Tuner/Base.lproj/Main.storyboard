@@ -861,6 +861,9 @@
                                         <color key="backgroundColor" name="button"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="구매 내역 복원"/>
+                                        <connections>
+                                            <action selector="btnRestoreAdsIAP:" destination="i0D-nr-fGj" eventType="touchUpInside" id="x9t-jM-NHF"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>

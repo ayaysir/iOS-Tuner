@@ -110,6 +110,8 @@ class SettingViewController: UIViewController {
         }
     }
     
+    // MARK: - IBActions
+    
     @IBAction func segconSelectAppearance(_ sender: UISegmentedControl) {
         let key = "config-appearance"
         switch sender.selectedSegmentIndex {
@@ -148,6 +150,11 @@ class SettingViewController: UIViewController {
     @IBAction func btnRemoveAdsIAP(_ sender: UIButton) {
         touchIAP()
     }
+    
+    @IBAction func btnRestoreAdsIAP(_ sender: UIButton) {
+        restoreIAP()
+    }
+    
     
     @IBAction func btnToggleSideMenu(_ sender: Any) {
         self.toggleSideMenuView()
@@ -336,11 +343,16 @@ extension SettingViewController {
         }
     }
     
-    /// 인앱 결제 버튼 눌렀을 때
+    /// 구매: 인앱 결제 버튼 눌렀을 때
     private func touchIAP() {
         if let product = products?.first {
             InAppProducts.store.buyProduct(product) // 구매하기
         }
+    }
+    
+    /// 복원: 인앱 복원 버튼 눌렀을 때
+    private func restoreIAP() {
+        InAppProducts.store.restorePurchases()
     }
     
     /// 결제 후 Notification을 받아 처리
