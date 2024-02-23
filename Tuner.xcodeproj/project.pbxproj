@@ -58,6 +58,7 @@
 		44BBEA342B73D9730086F90A /* ChangeRangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BBEA332B73D9730086F90A /* ChangeRangeViewController.swift */; };
 		44BBEA382B74B6100086F90A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BBEA372B74B6100086F90A /* Persistence.swift */; };
 		44C418142B87BABA00B99126 /* SKProduct+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C418132B87BABA00B99126 /* SKProduct+.swift */; };
+		44C4181E2B88F23B00B99126 /* LoadingIndicatorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C4181D2B88F23B00B99126 /* LoadingIndicatorUtil.swift */; };
 		44EFF28C2B865F4300458971 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EFF28B2B865F4300458971 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -145,6 +146,7 @@
 		44BBEA372B74B6100086F90A /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		44BBEA3A2B74B8EF0086F90A /* CustomizingDGCharts.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CustomizingDGCharts.md; sourceTree = "<group>"; };
 		44C418132B87BABA00B99126 /* SKProduct+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+.swift"; sourceTree = "<group>"; };
+		44C4181D2B88F23B00B99126 /* LoadingIndicatorUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorUtil.swift; sourceTree = "<group>"; };
 		44E238472B7203CB00E40AF3 /* Tuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44EFF28B2B865F4300458971 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -342,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				4426640926BBE6B800B5A5D9 /* AlertUtil.swift */,
+				44C4181D2B88F23B00B99126 /* LoadingIndicatorUtil.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				444EEE4126B4370000454428 /* AppDelegate.swift in Sources */,
 				44A6FDB326C7D4A500C94855 /* StatsViewController.swift in Sources */,
 				44A6FDBC26C9454B00C94855 /* NoteRangeConfig.swift in Sources */,
+				44C4181E2B88F23B00B99126 /* LoadingIndicatorUtil.swift in Sources */,
 				449B49C12B723FBB00ECA487 /* ChangeKeyViewController.swift in Sources */,
 				440DF81C26B58D5F00FDA3AA /* FreqTableViewController.swift in Sources */,
 				445F328F26BD2C1100412F7B /* ViewState.swift in Sources */,

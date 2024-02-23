@@ -324,6 +324,7 @@ extension SettingViewController {
     private func initIAP() {
         let purchasedButtonText = "광고 제거됨"
         NotificationCenter.default.addObserver(self, selector: #selector(handleIAPPurchase(_:)), name: .IAPHelperPurchaseNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hadnleIAPError(_:)), name: .IAPHelperErrorNotification, object: nil)
         
         // IAP 불러오기
         InAppProducts.store.requestProducts { [weak self] (success, products) in
@@ -347,6 +348,10 @@ extension SettingViewController {
     private func touchIAP() {
         if let product = products?.first {
             InAppProducts.store.buyProduct(product) // 구매하기
+            LoadingIndicatorUtil.default.show(
+                self,
+                style: .blur,
+                text: "결제 작업을 처리중입니다.\n잠시만 기다려 주세요...")
         }
     }
     
@@ -363,6 +368,10 @@ extension SettingViewController {
         DispatchQueue.main.async {
             simpleAlert(self, message: "구매 성공: \(identifier)", title: "구매 성공") { action in
                 // 결제 성공하면 해야할 작업...
+                // 1. 로딩 인디케이터 숨기기
+                LoadingIndicatorUtil.default.hide(self)
+                
+                // TODO: - 2. 세팅VC 광고 제거 (나머지 뷰는 다시 들어가면 제거되어 있음)
             }
         }
         
@@ -373,5 +382,9 @@ extension SettingViewController {
         //         simpleAlert(self, message: "구매 실패", title: "구매 실패", handler: nil)
         //     }
         // }
+    }
+    
+    @objc func hadnleIAPError(_ notification: Notification) {
+        LoadingIndicatorUtil.default.hide(self)
     }
 }

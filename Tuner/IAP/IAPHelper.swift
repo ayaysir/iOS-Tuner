@@ -5,6 +5,7 @@ public typealias ProductsRequestCompletionHandler = (_ success: Bool, _ products
 
 extension Notification.Name {
     static let IAPHelperPurchaseNotification = Notification.Name("IAPHelperPurchaseNotification")
+    static let IAPHelperErrorNotification = Notification.Name("IAPHelperErrorNotification")
 }
 
 open class IAPHelper: NSObject  {
@@ -21,9 +22,9 @@ open class IAPHelper: NSObject  {
             
             if purchased {
                 purchasedProductIdentifiers.insert(productIdentifier)
-                print("Previously purchased: \(productIdentifier)")
+                print("IAP: (Maybe previously purchased): \(productIdentifier)")
             } else {
-                print("Not purchased: \(productIdentifier)")
+                print("IAP: (Maybe not purchased): \(productIdentifier)")
             }
         }
         
@@ -137,6 +138,7 @@ extension IAPHelper: SKPaymentTransactionObserver {
             print("IAP Transaction Error: \(transactionError.localizedDescription)")
         }
         
+        deliverPurchaseErrorNotification()
         SKPaymentQueue.default().finishTransaction(transaction)
     }
     
@@ -149,6 +151,11 @@ extension IAPHelper: SKPaymentTransactionObserver {
         purchasedProductIdentifiers.insert(identifier)
         UserDefaults.standard.set(true, forKey: identifier)
         NotificationCenter.default.post(name: .IAPHelperPurchaseNotification, object: identifier)
+    }
+    
+    /// 실패시 보냄
+    private func deliverPurchaseErrorNotification() {
+        NotificationCenter.default.post(name: .IAPHelperErrorNotification, object: nil)
     }
 }
 
