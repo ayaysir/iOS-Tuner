@@ -28,6 +28,7 @@ class SettingViewController: UIViewController {
     var rightRange = NoteRangeConfig(note: Scale.B, octave: 7)
     
     private var products: [SKProduct]? = []
+    let purchasedButtonText = "구매 완료"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -299,6 +300,13 @@ extension SettingViewController: GADBannerViewDelegate {
         constrMenuButton.constant += 50
     }
     
+    private func removeBannerView() {
+        if let bannerView {
+            bannerView.removeFromSuperview()
+            constrMenuButton.constant -= 50
+        }
+    }
+    
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
         print("GAD: \(#function)", error)
     }
@@ -322,24 +330,29 @@ extension SettingViewController: GADBannerViewDelegate {
 extension SettingViewController {
     
     private func initIAP() {
-        let purchasedButtonText = "광고 제거됨"
         NotificationCenter.default.addObserver(self, selector: #selector(handleIAPPurchase(_:)), name: .IAPHelperPurchaseNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hadnleIAPError(_:)), name: .IAPHelperErrorNotification, object: nil)
         
-        // IAP 불러오기
-        InAppProducts.store.requestProducts { [weak self] (success, products) in
-            guard let self, success else { return }
-            self.products = products
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self,
-                      let product = products?.first,
-                      let price =  product.localizedPrice else {
-                    return
-                }
+        if InAppProducts.store.isProductPurchased(InAppProducts.product) || UserDefaults.standard.bool(forKey: InAppProducts.product) {
+            btnPurchaseAdRemoval.backgroundColor = .green
+            btnPurchaseAdRemoval.setTitle(purchasedButtonText, for: .normal)
+            btnPurchaseAdRemoval.isEnabled = false
+        } else {
+            // IAP 불러오기
+            InAppProducts.store.requestProducts { [weak self] (success, products) in
+                guard let self, success else { return }
+                self.products = products
                 
-                btnPurchaseAdRemoval.setTitle(" \(product.localizedTitle) (\(price))", for: .normal)
-                btnPurchaseAdRemoval.isEnabled = !InAppProducts.store.isProductPurchased(product.productIdentifier)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self,
+                          let product = products?.first,
+                          let price =  product.localizedPrice else {
+                        return
+                    }
+                    
+                    btnPurchaseAdRemoval.setTitle(" \(product.localizedTitle) (\(price))", for: .normal)
+                    btnPurchaseAdRemoval.isEnabled = !InAppProducts.store.isProductPurchased(product.productIdentifier)
+                }
             }
         }
     }
@@ -365,13 +378,22 @@ extension SettingViewController {
         print(#function, "IAP-", notification.object ?? "")
         guard let identifier = notification.object as? String else { return }
         
-        DispatchQueue.main.async {
-            simpleAlert(self, message: "구매 성공: \(identifier)", title: "구매 성공") { action in
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            simpleAlert(self, message: "구매 성공: \(identifier)", title: "구매 성공") { [weak self] action in
+                guard let self else { return }
                 // 결제 성공하면 해야할 작업...
                 // 1. 로딩 인디케이터 숨기기
                 LoadingIndicatorUtil.default.hide(self)
                 
-                // TODO: - 2. 세팅VC 광고 제거 (나머지 뷰는 다시 들어가면 제거되어 있음)
+                // 2. 세팅VC 광고 제거 (나머지 뷰는 다시 들어가면 제거되어 있음)
+                removeBannerView()
+                
+                // 3. 버튼
+                btnPurchaseAdRemoval.backgroundColor = .green
+                btnPurchaseAdRemoval.setTitle(purchasedButtonText, for: .normal)
+                btnPurchaseAdRemoval.isEnabled = false
+                
             }
         }
         
