@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // // Test only
-        // UserDefaults.standard.set(false, forKey: InAppProducts.product)
+        UserDefaults.standard.set(false, forKey: InAppProducts.product)
         
         // Override point for customization after application launch.
         GADMobileAds.sharedInstance().start(completionHandler: nil)

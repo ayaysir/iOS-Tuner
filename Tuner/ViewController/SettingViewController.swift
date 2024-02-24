@@ -28,7 +28,6 @@ class SettingViewController: UIViewController {
     var rightRange = NoteRangeConfig(note: Scale.B, octave: 7)
     
     private var products: [SKProduct]? = []
-    let purchasedButtonText = "구매 완료"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -334,9 +333,7 @@ extension SettingViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(hadnleIAPError(_:)), name: .IAPHelperErrorNotification, object: nil)
         
         if InAppProducts.store.isProductPurchased(InAppProducts.product) || UserDefaults.standard.bool(forKey: InAppProducts.product) {
-            btnPurchaseAdRemoval.backgroundColor = .green
-            btnPurchaseAdRemoval.setTitle(purchasedButtonText, for: .normal)
-            btnPurchaseAdRemoval.isEnabled = false
+            changePurchaseButtonStyle(isPurchased: true)
         } else {
             // IAP 불러오기
             InAppProducts.store.requestProducts { [weak self] (success, products) in
@@ -350,8 +347,10 @@ extension SettingViewController {
                         return
                     }
                     
-                    btnPurchaseAdRemoval.setTitle(" \(product.localizedTitle) (\(price))", for: .normal)
-                    btnPurchaseAdRemoval.isEnabled = !InAppProducts.store.isProductPurchased(product.productIdentifier)
+                    // 서버로부터 상품 정보를 받아옴
+                    if !InAppProducts.store.isProductPurchased(product.productIdentifier) {
+                        changePurchaseButtonStyle(isPurchased: false, buttonTitleForSell: "\(product.localizedTitle) (\(price))")
+                    }
                 }
             }
         }
@@ -359,12 +358,14 @@ extension SettingViewController {
     
     /// 구매: 인앱 결제 버튼 눌렀을 때
     private func touchIAP() {
-        if let product = products?.first {
+        if let product = products?.first, !InAppProducts.store.isProductPurchased(product.productIdentifier) {
             InAppProducts.store.buyProduct(product) // 구매하기
             LoadingIndicatorUtil.default.show(
                 self,
                 style: .blur,
                 text: "결제 작업을 처리중입니다.\n잠시만 기다려 주세요...")
+        } else {
+            simpleAlert(self, message: "구매 완료되었습니다. 이제 광고가 표시되지 않습니다.", title: "구매 완료", handler: nil)
         }
     }
     
@@ -376,11 +377,14 @@ extension SettingViewController {
     /// 결제 후 Notification을 받아 처리
     @objc func handleIAPPurchase(_ notification: Notification) {
         print(#function, "IAP-", notification.object ?? "")
-        guard let identifier = notification.object as? String else { return }
+        guard let identifier = notification.object as? String else {
+            simpleAlert(self, message: "구매 실패: 다시 시도해주세요.")
+            return
+        }
         
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            simpleAlert(self, message: "구매 성공: \(identifier)", title: "구매 성공") { [weak self] action in
+            simpleAlert(self, message: "구매 성공하였습니다. 이제 앱에서 광고가 표시되지 않습니다.", title: "구매 성공") { [weak self] action in
                 guard let self else { return }
                 // 결제 성공하면 해야할 작업...
                 // 1. 로딩 인디케이터 숨기기
@@ -390,23 +394,20 @@ extension SettingViewController {
                 removeBannerView()
                 
                 // 3. 버튼
-                btnPurchaseAdRemoval.backgroundColor = .green
-                btnPurchaseAdRemoval.setTitle(purchasedButtonText, for: .normal)
-                btnPurchaseAdRemoval.isEnabled = false
-                
+                changePurchaseButtonStyle(isPurchased: true)
             }
         }
-        
-        // if success {
-        //
-        // } else {
-        //     DispatchQueue.main.async {
-        //         simpleAlert(self, message: "구매 실패", title: "구매 실패", handler: nil)
-        //     }
-        // }
     }
     
     @objc func hadnleIAPError(_ notification: Notification) {
         LoadingIndicatorUtil.default.hide(self)
     }
+    
+    private func changePurchaseButtonStyle(isPurchased: Bool, buttonTitleForSell: String? = nil) {
+        let buttonTitle = isPurchased ? "구매 완료" : buttonTitleForSell
+        btnPurchaseAdRemoval.backgroundColor = isPurchased ? .green : .button
+        btnPurchaseAdRemoval.setTitle(buttonTitle, for: .normal)
+        btnPurchaseAdRemoval.isEnabled = true
+    }
+    
 }

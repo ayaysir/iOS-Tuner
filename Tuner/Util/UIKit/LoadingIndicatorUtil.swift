@@ -17,6 +17,7 @@ struct LoadingIndicatorUtil {
         case clear, blur
     }
     
+    /// 로딩 인디케이터 창을 띄웁니다.
     func show(_ viewController: UIViewController, style: Style = .clear, text: String = "") {
         let container: UIView = UIView()
         container.frame = CGRect(x: 0, y: 0, width: 80, height: 80) // Set X and Y whatever you want
@@ -53,10 +54,10 @@ struct LoadingIndicatorUtil {
         }
         
         viewController.view.addSubview(container)
-        
         activityView.startAnimating()
     }
     
+    /// 현재 떠있는 로딩 인디케이터 창을 제거합니다.
     func hide(_ viewController: UIViewController) {
         viewController.view.subviews.forEach {
             if $0.tag == TAG {
