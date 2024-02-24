@@ -363,9 +363,9 @@ extension SettingViewController {
             LoadingIndicatorUtil.default.show(
                 self,
                 style: .blur,
-                text: "결제 작업을 처리중입니다.\n잠시만 기다려 주세요...")
+                text: "결제 작업을 처리중입니다.\n잠시만 기다려 주세요...".localized)
         } else {
-            simpleAlert(self, message: "구매 완료되었습니다. 이제 광고가 표시되지 않습니다.", title: "구매 완료", handler: nil)
+            simpleAlert(self, message: "구매 완료되었습니다. 이제 앱에서 광고가 표시되지 않습니다.".localized, title: "구매 완료".localized, handler: nil)
         }
     }
     
@@ -377,14 +377,14 @@ extension SettingViewController {
     /// 결제 후 Notification을 받아 처리
     @objc func handleIAPPurchase(_ notification: Notification) {
         print(#function, "IAP-", notification.object ?? "")
-        guard let identifier = notification.object as? String else {
-            simpleAlert(self, message: "구매 실패: 다시 시도해주세요.")
+        guard notification.object is String else {
+            simpleAlert(self, message: "구매 실패: 다시 시도해주세요.".localized)
             return
         }
         
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            simpleAlert(self, message: "구매 성공하였습니다. 이제 앱에서 광고가 표시되지 않습니다.", title: "구매 성공") { [weak self] action in
+            simpleAlert(self, message: "구매 완료되었습니다. 이제 앱에서 광고가 표시되지 않습니다.".localized, title: "구매 완료".localized) { [weak self] action in
                 guard let self else { return }
                 // 결제 성공하면 해야할 작업...
                 // 1. 로딩 인디케이터 숨기기
@@ -404,7 +404,7 @@ extension SettingViewController {
     }
     
     private func changePurchaseButtonStyle(isPurchased: Bool, buttonTitleForSell: String? = nil) {
-        let buttonTitle = isPurchased ? "구매 완료" : buttonTitleForSell
+        let buttonTitle = isPurchased ? "구매 완료".localized : buttonTitleForSell
         btnPurchaseAdRemoval.backgroundColor = isPurchased ? .green : .button
         btnPurchaseAdRemoval.setTitle(buttonTitle, for: .normal)
         btnPurchaseAdRemoval.isEnabled = true

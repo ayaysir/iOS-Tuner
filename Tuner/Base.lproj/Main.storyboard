@@ -844,11 +844,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="0hO-77-Dte">
-                                <rect key="frame" x="54" y="455" width="308" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="0hO-77-Dte">
+                                <rect key="frame" x="54" y="455" width="308" height="72"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rq-3p-4Mv">
-                                        <rect key="frame" x="0.0" y="0.0" width="148" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="308" height="30"/>
                                         <color key="backgroundColor" name="button"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="광고 제거 구매하기"/>
@@ -857,7 +857,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuq-SY-IBx">
-                                        <rect key="frame" x="160" y="0.0" width="148" height="30"/>
+                                        <rect key="frame" x="0.0" y="42" width="308" height="30"/>
                                         <color key="backgroundColor" name="button"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="구매 내역 복원"/>

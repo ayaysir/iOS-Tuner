@@ -43,3 +43,9 @@
 
 /* UIExtension.swift */
 "완료" = "Done";
+
+/* SettingViewController.swift (2024-02-25) */
+"결제 작업을 처리중입니다.\n잠시만 기다려 주세요..." = "Processing in-app purchase operation.\nPlease wait...";
+"구매 완료되었습니다. 이제 앱에서 광고가 표시되지 않습니다." = "Your purchase has been completed. You will no longer see ads in the app.";
+"구매 완료" = "Purchase completed";
+"구매 실패: 다시 시도해주세요." = "Purchase failed: Please try again.";
