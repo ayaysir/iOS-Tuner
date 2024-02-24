@@ -16,6 +16,7 @@ class GlobalOsc {
 
 class FreqTableViewController: UIViewController {
     private var bannerView: GADBannerView!
+    private var interstitial: GADInterstitialAd?
     
     var freqArray: [FrequencyInfo]!
     
@@ -58,6 +59,7 @@ class FreqTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        prepareAndShowFullScreenAd()
         loadStateFromUserDefaults()
         
         setTuningList()
@@ -427,5 +429,53 @@ extension FreqTableViewController: GADBannerViewDelegate {
     
     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
         print("GAD: \(#function)")
+    }
+}
+
+extension FreqTableViewController: GADFullScreenContentDelegate {
+    /// 전면 광고 준비 및 트리거
+    /// 멤버변수에 `private var interstitial: GADInterstitialAd?` 추가
+    private func prepareAndShowFullScreenAd() {
+        guard AdSupporter.shared.showAd else {
+            return
+        }
+        
+        toggleViewAndTabBarView(false)
+        let request = GADRequest()
+        GADInterstitialAd.load(withAdUnitID: AdSupporter.shared.FULL_AD_1,
+                               request: request) { [weak self] ad, error in
+            guard let self else { return }
+            
+            if let error {
+                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                toggleViewAndTabBarView(true)
+                return
+            }
+            
+            interstitial = ad
+            guard let interstitial else {
+                return
+            }
+            
+            interstitial.fullScreenContentDelegate = self
+            interstitial.present(fromRootViewController: self)
+        }
+    }
+    
+    private func toggleViewAndTabBarView(_ isShow: Bool = true) {
+        self.view.isUserInteractionEnabled = isShow
+        self.view.alpha = isShow ? 1 : 0
+    }
+    
+    /// Tells the delegate that the ad failed to present full screen content.
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("Ad did fail to present full screen content.")
+        toggleViewAndTabBarView()
+    }
+    
+    /// Tells the delegate that the ad dismissed full screen content.
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did dismiss full screen content.")
+        toggleViewAndTabBarView()
     }
 }

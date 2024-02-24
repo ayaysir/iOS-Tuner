@@ -6,18 +6,17 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class MenuState {
     static let shared = MenuState()
+    private init() {}
     var currentMenu = "TunerViewController"
 }
 
 class SlideMenuViewController: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func btnFreqTable(_ sender: UIButton) {
@@ -49,8 +48,4 @@ class SlideMenuViewController: UIViewController {
         let targetVC = self.storyboard?.instantiateViewController(identifier: menu)
         self.sideMenuController()?.setContentViewController(targetVC!)
     }
-    
-    
 }
-
-

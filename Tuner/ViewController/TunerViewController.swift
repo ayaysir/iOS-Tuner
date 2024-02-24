@@ -94,7 +94,6 @@ class TunerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         loadStateFromUserDefaults()
         
         setTuningList()
@@ -119,7 +118,6 @@ class TunerViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIScene.willDeactivateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(conductorAppear), name: UIScene.didActivateNotification, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(conductorDisappear), name: UIApplication.willResignActiveNotification, object: nil)
 
         if AdSupporter.shared.showAd {
@@ -170,6 +168,10 @@ class TunerViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         print("Tuner: viewWillDisappear")
         conductorDisappear()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     // MARK: - OBJC annotated
