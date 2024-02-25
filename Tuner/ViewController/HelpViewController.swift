@@ -53,6 +53,7 @@ extension HelpViewController: MFMailComposeViewControllerDelegate {
         let emailTitle = "Tuner XR 피드백"
         let messageBody =
         """
+        App Version: \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown")
         OS Version: \(UIDevice.current.systemVersion)
         Device: \(UIDevice.modelName)
         

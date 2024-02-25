@@ -953,6 +953,15 @@
                                     <action selector="btnToggleSideMenu:" destination="i0D-nr-fGj" eventType="touchUpInside" id="jUi-6o-ocp"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version: 0.0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Vl-ep-7Wd">
+                                <rect key="frame" x="54" y="535" width="308" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="WAZ-CN-pAS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" systemColor="opaqueSeparatorColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="x1i-71-2hd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -973,7 +982,10 @@
                             <constraint firstItem="zci-AZ-yZo" firstAttribute="leading" secondItem="x1i-71-2hd" secondAttribute="leading" constant="20" id="WFB-bn-rOK"/>
                             <constraint firstItem="zNa-dz-koH" firstAttribute="top" secondItem="g2j-6X-MMo" secondAttribute="bottom" constant="46" id="ZPI-h4-Urv"/>
                             <constraint firstItem="g2j-6X-MMo" firstAttribute="top" secondItem="0KR-ze-gIV" secondAttribute="bottom" constant="32" id="fHb-Vh-CNI"/>
+                            <constraint firstItem="7Vl-ep-7Wd" firstAttribute="top" secondItem="vuq-SY-IBx" secondAttribute="bottom" constant="8" symbolic="YES" id="gSi-kd-x4j"/>
+                            <constraint firstItem="7Vl-ep-7Wd" firstAttribute="leading" secondItem="vuq-SY-IBx" secondAttribute="leading" id="hJH-x2-IPK"/>
                             <constraint firstItem="0KR-ze-gIV" firstAttribute="leading" secondItem="hJI-xG-FkT" secondAttribute="leading" id="ij7-0T-jBv"/>
+                            <constraint firstItem="7Vl-ep-7Wd" firstAttribute="trailing" secondItem="vuq-SY-IBx" secondAttribute="trailing" id="kKZ-Rg-2tY"/>
                             <constraint firstItem="wF6-7i-eHW" firstAttribute="leading" secondItem="zNa-dz-koH" secondAttribute="leading" id="nOd-ve-QPi"/>
                             <constraint firstItem="0KR-ze-gIV" firstAttribute="top" secondItem="hJI-xG-FkT" secondAttribute="bottom" constant="8" id="pIS-ew-BzF"/>
                             <constraint firstItem="0hO-77-Dte" firstAttribute="leading" secondItem="wF6-7i-eHW" secondAttribute="leading" id="qOO-NN-0tz"/>
@@ -989,6 +1001,7 @@
                         <outlet property="btnRange1" destination="DtU-aV-HCs" id="acR-bq-Q5y"/>
                         <outlet property="btnRange2" destination="GJI-M1-cbc" id="Qoi-GB-5fg"/>
                         <outlet property="constrMenuButton" destination="7Ln-dn-moE" id="Uz1-3L-FBn"/>
+                        <outlet property="lblCurrentAppVersion" destination="7Vl-ep-7Wd" id="EVR-09-ImM"/>
                         <outlet property="segconMode" destination="zpm-XA-vg7" id="2OE-tx-3Cp"/>
                         <outlet property="segconNotation" destination="hJI-xG-FkT" id="wx6-77-6GX"/>
                         <outlet property="stackViewRange" destination="km1-Pp-TC6" id="rzR-aH-HY2"/>

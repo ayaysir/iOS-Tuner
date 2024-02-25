@@ -20,6 +20,7 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var btnOctave1: UIButton!
     @IBOutlet weak var btnOctave2: UIButton!
     @IBOutlet weak var btnPurchaseAdRemoval: UIButton!
+    @IBOutlet weak var lblCurrentAppVersion: UILabel!
     
     @IBOutlet weak var stackViewRange: UIStackView!
     @IBOutlet weak var constrMenuButton: NSLayoutConstraint!
@@ -44,6 +45,8 @@ class SettingViewController: UIViewController {
             
             self.setupBannerView()
         }
+        
+        lblCurrentAppVersion.text = "App Version: \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown")"
     }
     
     func loadAppearanceInfo() {
