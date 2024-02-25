@@ -330,7 +330,6 @@ extension SettingViewController: GADBannerViewDelegate {
  ===> 인앱 결제로 광고 제거
  */
 extension SettingViewController {
-    
     private func initIAP() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleIAPPurchase(_:)), name: .IAPHelperPurchaseNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hadnleIAPError(_:)), name: .IAPHelperErrorNotification, object: nil)
